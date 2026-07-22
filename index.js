@@ -12,7 +12,7 @@ import {
 // ================= FIREBASE =================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
+  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
   projectId: "dalubwikaan--26-8e646",
   storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
@@ -24,6 +24,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+
+console.log("🔥 Dashboard Firebase Connected!");
+
 
 
 
@@ -46,22 +50,21 @@ document.getElementById("totalExpenses");
 
 
 
-const expenseQuery = query(
-collection(db,"expenses"),
-orderBy("createdAt","desc")
-);
-
-
-
 const snapshot =
-await getDocs(expenseQuery);
+await getDocs(collection(db,"expenses"));
 
-
-
-container.innerHTML="";
 
 
 let totalExpenses = 0;
+
+
+
+if(container){
+
+container.innerHTML = "";
+
+}
+
 
 
 
@@ -71,12 +74,14 @@ snapshot.forEach((doc)=>{
 const expense = doc.data();
 
 
-totalExpenses += Number(expense.amount);
+totalExpenses += Number(expense.amount || 0);
 
+
+
+if(container){
 
 
 container.innerHTML += `
-
 
 <div class="expense">
 
@@ -92,7 +97,7 @@ ${expense.title}
 
 
 <p>
-💰 Amount: ₱${expense.amount.toLocaleString()}
+💰 Amount: ₱${Number(expense.amount).toLocaleString()}
 </p>
 
 
@@ -108,27 +113,40 @@ ${expense.remarks || ""}
 
 </div>
 
-
 `;
 
+}
 
 
 });
 
 
 
+if(totalExpenseDisplay){
+
 totalExpenseDisplay.innerHTML =
 "₱" + totalExpenses.toLocaleString();
+
+}
+
+
+
+console.log(
+"Total Expenses:",
+totalExpenses
+);
 
 
 
 return totalExpenses;
 
 
-
 }
 
+
+
 catch(error){
+
 
 console.error(
 "Expense Error:",
@@ -138,10 +156,12 @@ error
 
 return 0;
 
+
 }
 
 
 }
+
 
 
 
@@ -153,7 +173,6 @@ return 0;
 // ================= LOAD COLLECTIONS =================
 
 
-
 async function loadCollections(){
 
 
@@ -163,9 +182,6 @@ try{
 const snapshot =
 await getDocs(collection(db,"collections"));
 
-
-
-let totalCollection = 0;
 
 
 let firstYear = 0;
@@ -181,7 +197,6 @@ snapshot.forEach((doc)=>{
 const data = doc.data();
 
 
-
 firstYear += Number(data.firstYear || 0);
 
 secondYear += Number(data.secondYear || 0);
@@ -191,12 +206,11 @@ thirdYear += Number(data.thirdYear || 0);
 fourthYear += Number(data.fourthYear || 0);
 
 
-
 });
 
 
 
-totalCollection =
+const totalCollection =
 firstYear +
 secondYear +
 thirdYear +
@@ -204,29 +218,49 @@ fourthYear;
 
 
 
+
+if(document.getElementById("totalCollection")){
+
 document.getElementById("totalCollection").innerHTML =
 "₱" + totalCollection.toLocaleString();
 
+}
 
+
+
+if(document.getElementById("firstYear")){
 
 document.getElementById("firstYear").innerHTML =
 "₱" + firstYear.toLocaleString();
 
+}
 
+
+
+if(document.getElementById("secondYear")){
 
 document.getElementById("secondYear").innerHTML =
 "₱" + secondYear.toLocaleString();
 
+}
 
+
+
+if(document.getElementById("thirdYear")){
 
 document.getElementById("thirdYear").innerHTML =
 "₱" + thirdYear.toLocaleString();
 
+}
 
+
+
+if(document.getElementById("fourthYear")){
 
 document.getElementById("fourthYear").innerHTML =
 "₱" + fourthYear.toLocaleString();
 
+}
 
 
 
@@ -239,13 +273,23 @@ fourthYear
 
 
 
+console.log(
+"Total Collection:",
+totalCollection
+);
+
+
+
 return totalCollection;
 
 
 
 }
 
+
+
 catch(error){
+
 
 console.error(
 "Collection Error:",
@@ -255,10 +299,13 @@ error
 
 return 0;
 
+
 }
 
 
 }
+
+
 
 
 
@@ -270,8 +317,10 @@ return 0;
 // ================= PROJECT COUNT =================
 
 
-
 async function loadProjects(){
+
+
+try{
 
 
 const snapshot =
@@ -279,11 +328,39 @@ await getDocs(collection(db,"projects"));
 
 
 
-document.getElementById("projectCount").innerHTML =
+const projectDisplay =
+document.getElementById("projectCount");
+
+
+
+if(projectDisplay){
+
+projectDisplay.innerHTML =
 snapshot.size;
+
+}
+
 
 
 }
+
+
+
+catch(error){
+
+
+console.error(
+"Project Error:",
+error
+);
+
+
+}
+
+
+}
+
+
 
 
 
@@ -297,27 +374,38 @@ snapshot.size;
 async function calculateBalance(){
 
 
-const collectionTotal =
+const totalCollection =
 await loadCollections();
 
 
 
-const expenseTotal =
+const totalExpenses =
 await loadExpenses();
 
 
 
 const balance =
-collectionTotal - expenseTotal;
+totalCollection - totalExpenses;
 
 
 
-document.getElementById("currentBalance").innerHTML =
+const balanceDisplay =
+document.getElementById("currentBalance");
+
+
+
+if(balanceDisplay){
+
+
+balanceDisplay.innerHTML =
 "₱" + balance.toLocaleString();
 
 
+}
+
 
 }
+
 
 
 
@@ -337,13 +425,16 @@ fourth
 ){
 
 
-
 const canvas =
 document.getElementById("collectionChart");
 
 
 
-if(!canvas) return;
+if(!canvas){
+
+return;
+
+}
 
 
 
@@ -364,7 +455,6 @@ labels:[
 "4th Year"
 
 ],
-
 
 
 datasets:[{
@@ -399,7 +489,6 @@ responsive:true
 }
 
 
-
 });
 
 
@@ -412,9 +501,23 @@ responsive:true
 
 
 
-// START DASHBOARD
 
 
-calculateBalance();
+// ================= START =================
 
-loadProjects();
+
+async function startDashboard(){
+
+
+await calculateBalance();
+
+
+await loadProjects();
+
+
+
+}
+
+
+
+startDashboard();
