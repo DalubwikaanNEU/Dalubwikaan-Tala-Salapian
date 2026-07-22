@@ -1379,3 +1379,31 @@ color:#4e2d13;
 margin-top:15px;
 
 }
+
+.logoutBtn{
+
+background:#d32f2f;
+
+color:white;
+
+border:none;
+
+padding:12px 24px;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.logoutBtn:hover{
+
+background:#b71c1c;
+
+transform:translateY(-3px);
+
+}
