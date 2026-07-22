@@ -4,7 +4,9 @@ from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import {
     getAuth,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    setPersistence,
+    browserSessionPersistence
 }
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
@@ -20,18 +22,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// PALITAN MO LANG ITO KUNG MAGBABAGO ADMIN EMAIL MO
+// PALITAN ITO KUNG MAGBABAGO ANG ADMIN EMAIL
 const ADMIN_EMAIL = "admin@dalubwikaan.com";
 
 window.loginAdmin = async function () {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
-
     const message = document.getElementById("message");
+
     message.innerHTML = "";
 
     try {
+
+        // Huwag tandaan ang login pagkatapos ng session
+        await setPersistence(auth, browserSessionPersistence);
 
         const credential = await signInWithEmailAndPassword(
             auth,
@@ -39,27 +44,37 @@ window.loginAdmin = async function () {
             password
         );
 
-        // CHECK KUNG IKAW TALAGA ANG ADMIN
         if (credential.user.email !== ADMIN_EMAIL) {
 
             await signOut(auth);
 
-            message.innerHTML = "❌ You are not authorized to access the Admin Dashboard.";
+            message.innerHTML =
+                "❌ You are not authorized to access the Admin Dashboard.";
 
             return;
         }
 
         alert("✅ Welcome Admin!");
 
-        window.location.href = "admin.html";
+        window.location.replace("admin.html");
+
+    } catch (error) {
+
+        console.error(error);
+
+        switch (error.code) {
+
+            case "auth/invalid-credential":
+            case "auth/wrong-password":
+            case "auth/user-not-found":
+            case "auth/invalid-email":
+                message.innerHTML = "❌ Invalid email or password.";
+                break;
+
+            default:
+                message.innerHTML = "❌ " + error.message;
+        }
 
     }
-    catch (error) {
 
-        console.log(error);
-
-        message.innerHTML = "❌ Invalid email or password.";
-
-    }
-
-}
+};
