@@ -1,7 +1,7 @@
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // DASHBOARD.JS PART 1/4
-// FIREBASE CONNECTION + DASHBOARD LOADER
+// FIREBASE CONNECTION + COLLECTIONS + EXPENSES
 // =====================================================
 
 
@@ -20,6 +20,14 @@ getDocs
 
 }
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+
+// ================= CHART IMPORT =================
+
+
+import Chart from
+"https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
 
 
 
@@ -48,9 +56,10 @@ appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 
 
+// INITIALIZE FIREBASE
+
 
 const app = initializeApp(firebaseConfig);
-
 
 const db = getFirestore(app);
 
@@ -61,17 +70,157 @@ console.log("🔥 Dashboard Firebase Connected!");
 
 
 
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
+
+
+let dashboardData = {
+
+collections:[],
+expenses:[],
+projects:[],
+announcements:[]
+
+};
+
+
+
 
 // =====================================================
-// ================= LOAD COLLECTIONS ==================
+// LOAD ALL COLLECTION DATA
 // =====================================================
 
 
-async function loadCollections(){
+async function fetchDashboardData(){
+
+
+try{
+
+
+const collectionsSnap =
+await getDocs(
+collection(db,"collections")
+);
+
+
+
+dashboardData.collections =
+collectionsSnap.docs.map(doc=>({
+
+id:doc.id,
+
+...doc.data()
+
+}));
+
+
+
+
+
+const expensesSnap =
+await getDocs(
+collection(db,"expenses")
+);
+
+
+
+dashboardData.expenses =
+expensesSnap.docs.map(doc=>({
+
+id:doc.id,
+
+...doc.data()
+
+}));
+
+
+
+
+
+const projectsSnap =
+await getDocs(
+collection(db,"projects")
+);
+
+
+
+dashboardData.projects =
+projectsSnap.docs.map(doc=>({
+
+id:doc.id,
+
+...doc.data()
+
+}));
+
+
+
+
+
+
+const announcementsSnap =
+await getDocs(
+collection(db,"announcements")
+);
+
+
+
+dashboardData.announcements =
+announcementsSnap.docs.map(doc=>({
+
+id:doc.id,
+
+...doc.data()
+
+}));
+
+
+
+
+
+console.log(
+"📊 Dashboard Data Loaded",
+dashboardData
+);
+
+
+
+}
+
+
+catch(error){
+
+
+console.error(
+"Dashboard loading error:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+// =====================================================
+// DISPLAY COLLECTIONS
+// =====================================================
+
+
+function displayCollections(){
+
 
 
 const container =
-document.getElementById("dashboardCollectionContainer");
+document.getElementById(
+"dashboardCollectionContainer"
+);
+
 
 
 if(!container)
@@ -79,29 +228,14 @@ return;
 
 
 
-const snapshot =
-await getDocs(
-collection(db,"collections")
-);
-
-
-
 container.innerHTML="";
 
 
 
-let total = 0;
+dashboardData.collections.forEach(data=>{
 
 
-
-snapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-const amount =
+const total =
 
 Number(data.firstYear || 0)
 
@@ -119,15 +253,12 @@ Number(data.fourthYear || 0);
 
 
 
-total += amount;
-
-
 
 
 container.innerHTML += `
 
 
-<div class="expense">
+<div class="expense fade">
 
 
 <h3>
@@ -135,16 +266,32 @@ container.innerHTML += `
 </h3>
 
 
+
 <p>
-Collector:
+
+👤 Collector:
+
 ${data.collector || "N/A"}
+
 </p>
+
 
 
 <p>
-Amount:
-₱${amount.toLocaleString()}
+
+📅 Date:
+
+${data.date || "N/A"}
+
 </p>
+
+
+
+<h3>
+
+₱${total.toLocaleString()}
+
+</h3>
 
 
 </div>
@@ -158,40 +305,24 @@ Amount:
 
 
 
-
-// TOTAL COLLECTION DISPLAY
-
-
-const totalCollection =
-document.getElementById("totalCollection");
-
-
-if(totalCollection){
-
-totalCollection.innerHTML =
-"₱" + total.toLocaleString();
-
-}
-
-
-
 }
 
 
 
 
-
-
 // =====================================================
-// ================= LOAD EXPENSES =====================
+// DISPLAY EXPENSES
 // =====================================================
 
 
-async function loadExpenses(){
+function displayExpenses(){
 
 
 const container =
-document.getElementById("dashboardExpenseContainer");
+document.getElementById(
+"dashboardExpenseContainer"
+);
+
 
 
 if(!container)
@@ -199,38 +330,18 @@ return;
 
 
 
-const snapshot =
-await getDocs(
-collection(db,"expenses")
-);
-
-
-
 container.innerHTML="";
 
 
 
-let totalExpense = 0;
-
-
-
-snapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-totalExpense +=
-Number(data.amount || 0);
-
+dashboardData.expenses.forEach(data=>{
 
 
 
 container.innerHTML += `
 
 
-<div class="expense">
+<div class="expense fade">
 
 
 <h3>
@@ -238,12 +349,15 @@ container.innerHTML += `
 </h3>
 
 
+
 <p>
 
 Category:
+
 ${data.category || "N/A"}
 
 </p>
+
 
 
 <h3>
@@ -254,6 +368,7 @@ ${data.category || "N/A"}
 </h3>
 
 
+
 </div>
 
 
@@ -265,22 +380,6 @@ ${data.category || "N/A"}
 
 
 
-
-
-const totalExpenses =
-document.getElementById("totalExpenses");
-
-
-
-if(totalExpenses){
-
-totalExpenses.innerHTML =
-"₱" + totalExpense.toLocaleString();
-
-}
-
-
-
 }
 
 
@@ -289,38 +388,57 @@ totalExpenses.innerHTML =
 
 
 // =====================================================
-// ================= INITIAL LOAD ======================
+// INITIAL DATA LOAD
 // =====================================================
 
 
-loadCollections();
+async function loadDashboard(){
 
-loadExpenses();
+
+await fetchDashboardData();
+
+
+displayCollections();
+
+
+displayExpenses();
 
 
 
 console.log(
-"✅ Dashboard Loaded Successfully!"
+"✅ Dashboard Part 1 Loaded!"
 );
 
+
+
+}
+
+
+
+// NOTE:
+// loadDashboard() will continue in Part 4
+// after all functions are ready
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // DASHBOARD.JS PART 2/4
-// PROJECTS + ANNOUNCEMENTS LOADER
+// PROJECTS + ANNOUNCEMENTS DISPLAY
 // =====================================================
 
 
 
+
 // =====================================================
-// ================= LOAD PROJECTS =====================
+// DISPLAY PROJECTS
 // =====================================================
 
 
-async function loadProjects(){
+function displayProjects(){
 
 
 const container =
-document.getElementById("dashboardProjectContainer");
+document.getElementById(
+"dashboardProjectContainer"
+);
 
 
 
@@ -329,33 +447,16 @@ return;
 
 
 
-const snapshot =
-await getDocs(
-collection(db,"projects")
-);
-
-
-
 container.innerHTML="";
 
 
 
-let totalProjects = 0;
+dashboardData.projects.forEach(data=>{
 
 
 
-snapshot.forEach(item=>{
+let statusClass = "planning";
 
-
-const data=item.data();
-
-
-totalProjects++;
-
-
-
-
-let statusClass = "";
 
 
 if(data.status === "Completed"){
@@ -370,12 +471,6 @@ statusClass="ongoing";
 
 }
 
-else{
-
-statusClass="planning";
-
-}
-
 
 
 
@@ -383,11 +478,13 @@ statusClass="planning";
 container.innerHTML += `
 
 
-<div class="projectCard">
+<div class="projectCard fade">
 
 
 <h3>
+
 📂 ${data.title || "Untitled Project"}
+
 </h3>
 
 
@@ -400,12 +497,14 @@ ${data.description || "No description available."}
 
 
 
+
 <p class="projectBudget">
 
 ₱${Number(data.budget || 0)
 .toLocaleString()}
 
 </p>
+
 
 
 
@@ -421,11 +520,13 @@ ${data.description || "No description available."}
 
 
 
+
 <span class="badge ${statusClass}">
 
 ${data.status || "Planning"}
 
 </span>
+
 
 
 
@@ -440,23 +541,6 @@ ${data.status || "Planning"}
 
 
 
-
-
-
-const projectTotal =
-document.getElementById("totalProjects");
-
-
-
-if(projectTotal){
-
-projectTotal.innerHTML =
-totalProjects;
-
-}
-
-
-
 }
 
 
@@ -464,19 +548,19 @@ totalProjects;
 
 
 
-
-
 // =====================================================
-// ================= LOAD ANNOUNCEMENTS ================
+// DISPLAY ANNOUNCEMENTS
 // =====================================================
 
 
+function displayAnnouncements(){
 
-async function loadAnnouncements(){
 
 
 const container =
-document.getElementById("dashboardAnnouncementContainer");
+document.getElementById(
+"dashboardAnnouncementContainer"
+);
 
 
 
@@ -485,25 +569,15 @@ return;
 
 
 
-const snapshot =
-await getDocs(
-collection(db,"announcements")
-);
-
-
-
 container.innerHTML="";
 
 
 
-snapshot.forEach(item=>{
-
-
-const data=item.data();
+dashboardData.announcements.forEach(data=>{
 
 
 
-let priorityClass="";
+let priorityClass="low";
 
 
 
@@ -519,19 +593,13 @@ priorityClass="medium";
 
 }
 
-else{
-
-priorityClass="low";
-
-}
-
 
 
 
 container.innerHTML += `
 
 
-<div class="announcementCard ${priorityClass}">
+<div class="announcementCard ${priorityClass} fade">
 
 
 <h3>
@@ -542,17 +610,20 @@ container.innerHTML += `
 
 
 
+
 <p class="announcementMessage">
 
-${data.message || "No message"}
+${data.message || "No announcement message."}
 
 </p>
+
 
 
 
 <p class="announcementDate">
 
 Priority:
+
 ${data.priority || "Low"}
 
 </p>
@@ -577,30 +648,137 @@ ${data.priority || "Low"}
 
 
 
-
-
 // =====================================================
-// ================= REFRESH DASHBOARD =================
+// DASHBOARD SUMMARY CARDS
 // =====================================================
 
 
-
-async function refreshDashboard(){
-
-
-await loadCollections();
-
-await loadExpenses();
-
-await loadProjects();
-
-await loadAnnouncements();
+function updateDashboardCards(){
 
 
 
-console.log(
-"🔄 Dashboard Updated!"
+let totalCollection = 0;
+
+let totalExpense = 0;
+
+let totalProjects = 0;
+
+
+
+
+
+// COLLECTION TOTAL
+
+
+dashboardData.collections.forEach(data=>{
+
+
+totalCollection +=
+
+Number(data.firstYear || 0)
+
++
+
+Number(data.secondYear || 0)
+
++
+
+Number(data.thirdYear || 0)
+
++
+
+Number(data.fourthYear || 0);
+
+
+
+});
+
+
+
+
+
+
+// EXPENSE TOTAL
+
+
+dashboardData.expenses.forEach(data=>{
+
+
+totalExpense +=
+
+Number(data.amount || 0);
+
+
+
+});
+
+
+
+
+
+
+// PROJECT COUNT
+
+
+totalProjects =
+dashboardData.projects.length;
+
+
+
+
+
+
+// UPDATE HTML VALUES
+
+
+const collectionBox =
+document.getElementById(
+"totalCollection"
 );
+
+
+
+const expenseBox =
+document.getElementById(
+"totalExpenses"
+);
+
+
+
+const projectBox =
+document.getElementById(
+"totalProjects"
+);
+
+
+
+
+
+if(collectionBox){
+
+collectionBox.innerHTML =
+"₱"+totalCollection.toLocaleString();
+
+}
+
+
+
+if(expenseBox){
+
+expenseBox.innerHTML =
+"₱"+totalExpense.toLocaleString();
+
+}
+
+
+
+if(projectBox){
+
+projectBox.innerHTML =
+totalProjects;
+
+}
+
 
 
 
@@ -610,34 +788,50 @@ console.log(
 
 
 
-// INITIAL LOAD
+
+// =====================================================
+// PART 2 READY
+// =====================================================
 
 
-loadProjects();
-
-loadAnnouncements();
-
+console.log(
+"✅ Dashboard Part 2 Loaded!"
+);
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // DASHBOARD.JS PART 3/4
-// GLOBAL DASHBOARD SEARCH
+// GLOBAL DASHBOARD SEARCH SYSTEM
 // =====================================================
 
 
 
-// ================= DASHBOARD SEARCH ==================
+
+// =====================================================
+// SEARCH ELEMENTS
+// =====================================================
 
 
 const dashboardSearch =
-document.getElementById("dashboardSearch");
+document.getElementById(
+"dashboardSearch"
+);
+
 
 
 const dashboardSearchResults =
-document.getElementById("dashboardSearchResults");
+document.getElementById(
+"dashboardSearchResults"
+);
 
 
 
+
+
+
+// =====================================================
+// SEARCH LISTENER
+// =====================================================
 
 
 if(dashboardSearch){
@@ -645,7 +839,16 @@ if(dashboardSearch){
 
 dashboardSearch.addEventListener(
 "input",
-searchDashboard
+function(){
+
+
+searchDashboard(
+this.value
+);
+
+
+}
+
 );
 
 
@@ -655,16 +858,13 @@ searchDashboard
 
 
 
-async function searchDashboard(){
+
+// =====================================================
+// SEARCH FUNCTION
+// =====================================================
 
 
-
-const keyword =
-
-dashboardSearch.value
-.toLowerCase()
-.trim();
-
+function searchDashboard(keyword){
 
 
 
@@ -673,6 +873,17 @@ return;
 
 
 
+
+keyword =
+keyword
+.toLowerCase()
+.trim();
+
+
+
+
+
+// EMPTY SEARCH
 
 
 if(keyword===""){
@@ -683,8 +894,11 @@ dashboardSearchResults.innerHTML = `
 
 <div class="expense">
 
+
 <p>
-Type something to search...
+
+🔎 Type something to search...
+
 </p>
 
 
@@ -702,35 +916,23 @@ return;
 
 
 
+
 let results = "";
 
 
 
 
 
+
 // =====================================================
-// ================= COLLECTION SEARCH =================
+// SEARCH COLLECTIONS
 // =====================================================
 
 
-
-const collectionsSnapshot =
-
-await getDocs(
-collection(db,"collections")
-);
+dashboardData.collections.forEach(data=>{
 
 
-
-
-collectionsSnapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-const searchable = `
+const text = `
 
 ${data.week}
 
@@ -744,7 +946,8 @@ ${data.date}
 
 
 
-if(searchable.includes(keyword)){
+
+if(text.includes(keyword)){
 
 
 
@@ -767,14 +970,17 @@ Number(data.fourthYear || 0);
 
 
 
+
 results += `
 
 
-<div class="expense">
+<div class="expense fade">
 
 
 <h3>
+
 💰 Collection
+
 </h3>
 
 
@@ -782,6 +988,7 @@ results += `
 <p>
 
 Week:
+
 ${data.week || "N/A"}
 
 </p>
@@ -791,6 +998,7 @@ ${data.week || "N/A"}
 <p>
 
 Collector:
+
 ${data.collector || "N/A"}
 
 </p>
@@ -802,6 +1010,7 @@ ${data.collector || "N/A"}
 ₱${total.toLocaleString()}
 
 </h3>
+
 
 
 </div>
@@ -823,29 +1032,16 @@ ${data.collector || "N/A"}
 
 
 
+
 // =====================================================
-// ================= EXPENSE SEARCH ====================
+// SEARCH EXPENSES
 // =====================================================
 
 
-
-const expenseSnapshot =
-
-await getDocs(
-collection(db,"expenses")
-);
+dashboardData.expenses.forEach(data=>{
 
 
-
-
-expenseSnapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-const searchable = `
+const text = `
 
 ${data.title}
 
@@ -859,25 +1055,28 @@ ${data.remarks}
 
 
 
-if(searchable.includes(keyword)){
+
+if(text.includes(keyword)){
 
 
 
 results += `
 
 
-<div class="expense">
+<div class="expense fade">
 
 
 <h3>
+
 💸 Expense
+
 </h3>
 
 
 
 <p>
 
-${data.title || "No title"}
+${data.title || "No Title"}
 
 </p>
 
@@ -886,6 +1085,7 @@ ${data.title || "No title"}
 <p>
 
 Category:
+
 ${data.category || "N/A"}
 
 </p>
@@ -920,32 +1120,15 @@ ${data.category || "N/A"}
 
 
 
-
 // =====================================================
-// ================= PROJECT SEARCH ====================
+// SEARCH PROJECTS
 // =====================================================
 
 
-
-const projectSnapshot =
-
-await getDocs(
-collection(db,"projects")
-);
+dashboardData.projects.forEach(data=>{
 
 
-
-
-
-projectSnapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-
-const searchable = `
+const text = `
 
 ${data.title}
 
@@ -959,19 +1142,23 @@ ${data.status}
 
 
 
-if(searchable.includes(keyword)){
+
+if(text.includes(keyword)){
 
 
 
 results += `
 
 
-<div class="projectCard">
+<div class="projectCard fade">
 
 
 <h3>
+
 📂 Project
+
 </h3>
+
 
 
 <h3>
@@ -1018,30 +1205,15 @@ ${data.status || "Planning"}
 
 
 
-
 // =====================================================
-// =============== ANNOUNCEMENT SEARCH =================
+// SEARCH ANNOUNCEMENTS
 // =====================================================
 
 
-
-const announcementSnapshot =
-
-await getDocs(
-collection(db,"announcements")
-);
+dashboardData.announcements.forEach(data=>{
 
 
-
-
-announcementSnapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-const searchable = `
+const text = `
 
 ${data.title}
 
@@ -1056,14 +1228,14 @@ ${data.priority}
 
 
 
-if(searchable.includes(keyword)){
+if(text.includes(keyword)){
 
 
 
 results += `
 
 
-<div class="announcementCard">
+<div class="announcementCard fade">
 
 
 <h3>
@@ -1085,6 +1257,7 @@ ${data.message || ""}
 <p>
 
 Priority:
+
 ${data.priority || "Low"}
 
 </p>
@@ -1111,9 +1284,8 @@ ${data.priority || "Low"}
 
 
 // =====================================================
-// ================= DISPLAY RESULTS ===================
+// DISPLAY SEARCH RESULT
 // =====================================================
-
 
 
 if(results===""){
@@ -1126,14 +1298,16 @@ dashboardSearchResults.innerHTML = `
 
 
 <h3>
+
 ❌ No Results Found
+
 </h3>
 
 
 
 <p>
 
-No transparency records matched your search.
+No transparency record matched your search.
 
 </p>
 
@@ -1158,7 +1332,10 @@ dashboardSearchResults.innerHTML = results;
 
 
 
+
 }
+
+
 
 
 
@@ -1169,33 +1346,36 @@ console.log(
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // DASHBOARD.JS PART 4/4
-// CHARTS + FINAL DASHBOARD POLISH
+// CHART + FINAL INITIALIZATION
 // =====================================================
-
-
-
-// ================= CHART IMPORT =================
-
-
-import {
-
-Chart
-
-}
-from
-"https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
-
 
 
 
 
 // =====================================================
-// ================= DASHBOARD STATISTICS ==============
+// FINANCE CHART
 // =====================================================
 
 
+let financeChart = null;
 
-async function loadStatistics(){
+
+
+function createFinanceChart(){
+
+
+
+const canvas =
+document.getElementById(
+"financeChart"
+);
+
+
+
+if(!canvas)
+return;
+
+
 
 
 
@@ -1206,22 +1386,8 @@ let totalExpense = 0;
 
 
 
-// COLLECTION TOTAL
 
-
-const collectionSnapshot =
-
-await getDocs(
-collection(db,"collections")
-);
-
-
-
-collectionSnapshot.forEach(item=>{
-
-
-const data=item.data();
-
+dashboardData.collections.forEach(data=>{
 
 
 totalCollection +=
@@ -1248,28 +1414,12 @@ Number(data.fourthYear || 0);
 
 
 
-// EXPENSE TOTAL
-
-
-const expenseSnapshot =
-
-await getDocs(
-collection(db,"expenses")
-);
-
-
-
-
-expenseSnapshot.forEach(item=>{
-
-
-const data=item.data();
+dashboardData.expenses.forEach(data=>{
 
 
 totalExpense +=
 
 Number(data.amount || 0);
-
 
 
 });
@@ -1279,100 +1429,15 @@ Number(data.amount || 0);
 
 
 
-
-const collectionDisplay =
-
-document.getElementById(
-"totalCollection"
-);
-
-
-
-const expenseDisplay =
-
-document.getElementById(
-"totalExpenses"
-);
-
-
-
-
-if(collectionDisplay){
-
-collectionDisplay.innerHTML =
-
-"₱" +
-totalCollection.toLocaleString();
-
-}
-
-
-
-if(expenseDisplay){
-
-expenseDisplay.innerHTML =
-
-"₱" +
-totalExpense.toLocaleString();
-
-}
-
-
-
-
-createFinanceChart(
-totalCollection,
-totalExpense
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-// =====================================================
-// ================= FINANCE CHART =====================
-// =====================================================
-
-
-
-let financeChart=null;
-
-
-
-function createFinanceChart(
-collectionAmount,
-expenseAmount
-){
-
-
-
-const canvas =
-
-document.getElementById(
-"financeChart"
-);
-
-
-
-if(!canvas)
-return;
-
-
-
-
-
 if(financeChart){
+
 
 financeChart.destroy();
 
+
 }
+
+
 
 
 
@@ -1387,16 +1452,19 @@ canvas,
 type:"bar",
 
 
+
 data:{
+
 
 
 labels:[
 
-"Collection",
+"Collections",
 
 "Expenses"
 
 ],
+
 
 
 datasets:[{
@@ -1407,16 +1475,21 @@ label:"Amount (₱)",
 
 data:[
 
-collectionAmount,
+totalCollection,
 
-expenseAmount
+totalExpense
 
 ]
+
+
 
 }]
 
 
+
 },
+
+
 
 
 
@@ -1426,7 +1499,9 @@ options:{
 responsive:true,
 
 
+
 plugins:{
+
 
 
 legend:{
@@ -1438,10 +1513,13 @@ display:false
 }
 
 
+
 }
 
 
+
 }
+
 
 
 }
@@ -1459,24 +1537,24 @@ display:false
 
 
 
-
-
-
 // =====================================================
-// ================= ANIMATION =========================
+// ANIMATION ACTIVATOR
 // =====================================================
 
 
-
-function activateAnimation(){
+function activateDashboardAnimation(){
 
 
 
 const cards =
 
 document.querySelectorAll(
+
 ".card, .expense, .projectCard, .announcementCard"
+
 );
+
+
 
 
 
@@ -1501,34 +1579,52 @@ card.classList.add(
 
 
 
-
 // =====================================================
-// ================= AUTO REFRESH ======================
+// FINAL DASHBOARD LOAD
 // =====================================================
 
 
-
-async function updateDashboard(){
-
-
-await loadCollections();
-
-await loadExpenses();
-
-await loadProjects();
-
-await loadAnnouncements();
-
-await loadStatistics();
-
-
-
-activateAnimation();
+async function startDashboard(){
 
 
 
 console.log(
-"📊 Dashboard Fully Updated!"
+"⏳ Loading Dashboard..."
+);
+
+
+
+
+
+await loadDashboard();
+
+
+
+
+
+displayProjects();
+
+
+displayAnnouncements();
+
+
+
+updateDashboardCards();
+
+
+
+createFinanceChart();
+
+
+
+activateDashboardAnimation();
+
+
+
+
+
+console.log(
+"✅ Dalubwikaan Dashboard Fully Loaded!"
 );
 
 
@@ -1539,36 +1635,57 @@ console.log(
 
 
 
-// FIRST LOAD
 
 
-updateDashboard();
+// =====================================================
+// AUTO REFRESH
+// =====================================================
 
 
-
-
-
-// AUTO UPDATE EVERY 30 SECONDS
-
-
-setInterval(
-
-()=>{
-
-updateDashboard();
-
-},
-
-30000
+setInterval(async()=>{
 
 
 
-);
+await loadDashboard();
 
 
+
+displayCollections();
+
+
+displayExpenses();
+
+
+displayProjects();
+
+
+displayAnnouncements();
+
+
+updateDashboardCards();
+
+
+createFinanceChart();
 
 
 
 console.log(
-"✅ Dalubwikaan Dashboard System Complete!"
+"🔄 Dashboard Updated"
 );
+
+
+
+},60000);
+
+
+
+
+
+
+
+// =====================================================
+// START SYSTEM
+// =====================================================
+
+
+startDashboard();
