@@ -10,10 +10,9 @@ import {
 
 // ================= FIREBASE =================
 
-
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
+  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
@@ -36,6 +35,7 @@ const db = getFirestore(app);
 
 
 console.log("📊 Reports Firebase Connected!");
+
 
 
 
@@ -66,6 +66,10 @@ Number(monthFilter.value);
 let totalCollection = 0;
 
 let totalExpense = 0;
+
+
+
+let expenseHTML = "";
 
 
 
@@ -121,11 +125,18 @@ Number(data.fourthYear || 0);
 
 
 
+
+
+
 // ================= EXPENSES =================
 
 
 const expenseSnap =
 await getDocs(collection(db,"expenses"));
+
+
+
+let hasExpense = false;
 
 
 
@@ -146,16 +157,95 @@ const date = new Date(data.date);
 if(date.getMonth() === selectedMonth){
 
 
+hasExpense = true;
+
+
 totalExpense += Number(data.amount || 0);
 
 
+
+
+expenseHTML += `
+
+
+<tr>
+
+<td>
+${data.title || "No title"}
+</td>
+
+
+<td>
+${data.category || "-"}
+</td>
+
+
+<td>
+₱${Number(data.amount || 0).toLocaleString()}
+</td>
+
+
+<td>
+${data.date || "-"}
+</td>
+
+
+<td>
+${data.remarks || "-"}
+</td>
+
+
+</tr>
+
+
+`;
+
+
+
 }
 
 
 }
+
 
 
 });
+
+
+
+
+
+if(!hasExpense){
+
+
+expenseHTML = `
+
+<tr>
+
+<td colspan="5">
+
+No expense records for this month.
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+
+
+const expenseList =
+document.getElementById("expenseReportList");
+
+
+
+if(expenseList){
+
+expenseList.innerHTML = expenseHTML;
+
+}
 
 
 
@@ -168,26 +258,53 @@ totalExpense += Number(data.amount || 0);
 // ================= DISPLAY =================
 
 
-document.getElementById("reportCollection").innerHTML =
+
+const reportCollection =
+document.getElementById("reportCollection");
+
+
+const reportExpense =
+document.getElementById("reportExpense");
+
+
+const reportBalance =
+document.getElementById("reportBalance");
+
+
+
+
+
+if(reportCollection){
+
+reportCollection.innerHTML =
 
 "₱" + totalCollection.toLocaleString();
 
+}
 
 
 
-document.getElementById("reportExpense").innerHTML =
+if(reportExpense){
+
+reportExpense.innerHTML =
 
 "₱" + totalExpense.toLocaleString();
 
+}
 
 
 
-document.getElementById("reportBalance").innerHTML =
+if(reportBalance){
+
+reportBalance.innerHTML =
 
 "₱" +
 
 (totalCollection - totalExpense)
 .toLocaleString();
+
+}
+
 
 
 
@@ -267,7 +384,9 @@ reportMonth.innerHTML =
 if(generatedDate){
 
 generatedDate.innerHTML =
+
 "Generated: " +
+
 new Date().toLocaleDateString();
 
 }
@@ -306,21 +425,13 @@ function(){
 
 
 
-alert(
-"Preparing monthly report..."
+console.log(
+"Printing report..."
 );
 
 
 
-// try browser print
-
-setTimeout(()=>{
-
-
 window.print();
-
-
-},500);
 
 
 
@@ -357,8 +468,6 @@ function(){
 
 
 loadReport();
-
-displayReportInfo();
 
 
 });
