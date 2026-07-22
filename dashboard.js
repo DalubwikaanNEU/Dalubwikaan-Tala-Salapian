@@ -2,12 +2,11 @@
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // FINAL DASHBOARD.JS
 // PART 1/4
-// FIREBASE CONNECTION + DATA FETCHING
+// FIREBASE CONNECTION + DATA FETCH SYSTEM
 // =====================================================
 
 
 // ================= FIREBASE IMPORT =================
-
 
 import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -28,8 +27,6 @@ from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // ================= CHART IMPORT =================
 
-
-// ginagamit natin sa Part 4
 import Chart from 
 "https://cdn.jsdelivr.net/npm/chart.js/auto";
 
@@ -65,7 +62,9 @@ const firebaseConfig = {
 
 
 
-// ================= INITIALIZE FIREBASE =================
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
 
 const app = initializeApp(firebaseConfig);
@@ -76,7 +75,7 @@ const db = getFirestore(app);
 
 
 console.log(
-    "🔥 Firebase Connected"
+"🔥 Firebase Connected Successfully"
 );
 
 
@@ -85,8 +84,9 @@ console.log(
 
 
 
+
 // =====================================================
-// GLOBAL DATA STORAGE
+// GLOBAL DASHBOARD STORAGE
 // =====================================================
 
 
@@ -95,14 +95,32 @@ const dashboardData = {
 
     collections: [],
 
+
     expenses: [],
 
+
     projects: [],
+
 
     announcements: []
 
 
 };
+
+
+
+
+
+
+
+// =====================================================
+// CHART VARIABLE
+// =====================================================
+
+
+let collectionChart = null;
+
+
 
 
 
@@ -118,33 +136,21 @@ const dashboardData = {
 async function fetchDashboardData(){
 
 
-    try{
-
-
-        // ================= COLLECTIONS =================
-
-
-        const collectionSnapshot =
-
-        await getDocs(
-            collection(db,"collections")
-        );
+try{
 
 
 
-        dashboardData.collections =
+    // IMPORTANT:
+    // CLEAR OLD DATA PARA WALANG DUPLICATE
 
 
-        collectionSnapshot.docs.map(doc=>({
+    dashboardData.collections = [];
 
+    dashboardData.expenses = [];
 
-            id:doc.id,
+    dashboardData.projects = [];
 
-
-            ...doc.data()
-
-
-        }));
+    dashboardData.announcements = [];
 
 
 
@@ -152,142 +158,162 @@ async function fetchDashboardData(){
 
 
 
+    // ================= COLLECTIONS =================
 
 
-        // ================= EXPENSES =================
+    const collectionSnapshot = await getDocs(
 
+        collection(db,"collections")
 
-
-        const expenseSnapshot =
-
-
-        await getDocs(
-            collection(db,"expenses")
-        );
+    );
 
 
 
-        dashboardData.expenses =
+    collectionSnapshot.forEach(doc=>{
 
 
-        expenseSnapshot.docs.map(doc=>({
-
+        dashboardData.collections.push({
 
             id:doc.id,
 
-
             ...doc.data()
 
-
-        }));
-
+        });
 
 
-
+    });
 
 
 
 
 
-        // ================= PROJECTS =================
 
 
 
-        const projectSnapshot =
+
+    // ================= EXPENSES =================
 
 
-        await getDocs(
-            collection(db,"projects")
-        );
+    const expenseSnapshot = await getDocs(
+
+        collection(db,"expenses")
+
+    );
 
 
 
-        dashboardData.projects =
+    expenseSnapshot.forEach(doc=>{
 
 
-        projectSnapshot.docs.map(doc=>({
-
+        dashboardData.expenses.push({
 
             id:doc.id,
 
-
             ...doc.data()
 
-
-        }));
-
+        });
 
 
-
+    });
 
 
 
 
 
-        // ================= ANNOUNCEMENTS =================
 
 
 
-        const announcementSnapshot =
+
+    // ================= PROJECTS =================
 
 
-        await getDocs(
-            collection(db,"announcements")
-        );
+    const projectSnapshot = await getDocs(
+
+        collection(db,"projects")
+
+    );
 
 
 
-        dashboardData.announcements =
+    projectSnapshot.forEach(doc=>{
 
 
-        announcementSnapshot.docs.map(doc=>({
-
+        dashboardData.projects.push({
 
             id:doc.id,
 
+            ...doc.data()
+
+        });
+
+
+    });
+
+
+
+
+
+
+
+
+
+    // ================= ANNOUNCEMENTS =================
+
+
+    const announcementSnapshot = await getDocs(
+
+        collection(db,"announcements")
+
+    );
+
+
+
+    announcementSnapshot.forEach(doc=>{
+
+
+        dashboardData.announcements.push({
+
+            id:doc.id,
 
             ...doc.data()
 
-
-        }));
-
+        });
 
 
-
+    });
 
 
 
 
 
-        console.log(
-
-            "📊 Dashboard Data Loaded",
-
-            dashboardData
-
-        );
 
 
 
-    }
+
+    console.log(
+        "📊 Dashboard Data Loaded",
+        dashboardData
+    );
 
 
 
-    catch(error){
+}
+
+catch(error){
 
 
 
-        console.error(
+    console.error(
 
-            "❌ Firebase Loading Error:",
+        "❌ Firebase Fetch Error:",
 
-            error
+        error
 
-        );
+    );
 
 
 
-    }
+}
 
 
 
@@ -299,8 +325,10 @@ async function fetchDashboardData(){
 
 
 
+
+
 // =====================================================
-// MONEY FORMAT HELPER
+// MONEY FORMAT FUNCTION
 // =====================================================
 
 
@@ -314,6 +342,7 @@ function formatMoney(value){
     .toLocaleString();
 
 
+
 }
 
 
@@ -322,8 +351,10 @@ function formatMoney(value){
 
 
 
+
+
 // =====================================================
-// COLLECTION TOTAL CALCULATOR
+// TOTAL COLLECTION CALCULATION
 // =====================================================
 
 
@@ -331,45 +362,36 @@ function calculateCollectionTotal(){
 
 
 
-    let total = 0;
+let total = 0;
 
 
 
-    dashboardData.collections.forEach(data=>{
+dashboardData.collections.forEach(data=>{
+
+
+    total +=
+
+    Number(data.firstYear || 0)
+
+    +
+
+    Number(data.secondYear || 0)
+
+    +
+
+    Number(data.thirdYear || 0)
+
+    +
+
+    Number(data.fourthYear || 0);
 
 
 
-        total +=
-
-
-        Number(data.firstYear || 0)
-
-
-        +
-
-
-        Number(data.secondYear || 0)
-
-
-        +
-
-
-        Number(data.thirdYear || 0)
-
-
-        +
-
-
-        Number(data.fourthYear || 0);
+});
 
 
 
-    });
-
-
-
-
-    return total;
+return total;
 
 
 
@@ -381,8 +403,10 @@ function calculateCollectionTotal(){
 
 
 
+
+
 // =====================================================
-// EXPENSE TOTAL CALCULATOR
+// TOTAL EXPENSE CALCULATION
 // =====================================================
 
 
@@ -390,30 +414,33 @@ function calculateExpenseTotal(){
 
 
 
-    let total = 0;
+let total = 0;
 
 
 
-    dashboardData.expenses.forEach(data=>{
+dashboardData.expenses.forEach(data=>{
 
 
-        total += Number(
+    total += Number(
 
-            data.amount || 0
+        data.amount || 0
 
-        );
-
-
-
-    });
+    );
 
 
 
-    return total;
+});
+
+
+
+return total;
 
 
 
 }
+
+
+
 
 
 
@@ -422,42 +449,43 @@ function calculateExpenseTotal(){
 
 console.log(
 
-"✅ Dashboard Part 1 Ready"
+"✅ Dashboard PART 1 Ready"
 
 );
+
+
+
+// =====================================================
+// END OF PART 1
+// NEXT: DISPLAY SYSTEM + DASHBOARD CARDS
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // FINAL DASHBOARD.JS
 // PART 2/4
-// DISPLAY CONTENT + DASHBOARD SUMMARY
+// DISPLAY SYSTEM + DASHBOARD SUMMARY
 // =====================================================
 
 
 
-
 // =====================================================
-// DISPLAY COLLECTION RECORDS
+// DISPLAY COLLECTIONS
 // =====================================================
 
 
 function displayCollections(){
 
 
-    const container =
-
-    document.getElementById(
+    const container = document.getElementById(
         "collectionContainer"
     );
-
 
 
     if(!container) return;
 
 
-
     container.innerHTML = "";
-
 
 
 
@@ -476,12 +504,9 @@ function displayCollections(){
 
         `;
 
-
         return;
 
-
     }
-
 
 
 
@@ -491,9 +516,7 @@ function displayCollections(){
     dashboardData.collections.forEach(data=>{
 
 
-
         const total =
-
 
         Number(data.firstYear || 0)
 
@@ -512,8 +535,6 @@ function displayCollections(){
 
 
 
-
-
         container.innerHTML += `
 
 
@@ -527,20 +548,23 @@ function displayCollections(){
 
 
             <p>
-            👤 ${data.collector || "N/A"}
+            👤 Collector:
+            ${data.collector || "N/A"}
             </p>
 
 
 
             <p>
-            📅 ${data.date || "N/A"}
+            📅 Date:
+            ${data.date || "N/A"}
             </p>
 
 
 
-
             <h3>
+
             ${formatMoney(total)}
+
             </h3>
 
 
@@ -549,7 +573,6 @@ function displayCollections(){
 
 
         `;
-
 
 
     });
@@ -565,17 +588,16 @@ function displayCollections(){
 
 
 
+
 // =====================================================
-// DISPLAY EXPENSE RECORDS
+// DISPLAY EXPENSES
 // =====================================================
 
 
 function displayExpenses(){
 
 
-    const container =
-
-    document.getElementById(
+    const container = document.getElementById(
         "expenseContainer"
     );
 
@@ -592,12 +614,10 @@ function displayExpenses(){
 
 
 
-
     if(dashboardData.expenses.length === 0){
 
 
         container.innerHTML = `
-
 
         <div class="expense">
 
@@ -605,9 +625,7 @@ function displayExpenses(){
             No Expense Records
             </h3>
 
-
         </div>
-
 
         `;
 
@@ -626,8 +644,6 @@ function displayExpenses(){
 
 
 
-
-
         container.innerHTML += `
 
 
@@ -635,13 +651,16 @@ function displayExpenses(){
 
 
             <h3>
+
             💸 ${data.title || "Expense"}
+
             </h3>
 
 
 
+            <p>
 
-            <p class="expenseCategory">
+            📂 Category:
 
             ${data.category || "Others"}
 
@@ -650,7 +669,7 @@ function displayExpenses(){
 
 
 
-            <h3 class="expenseAmount">
+            <h3>
 
             ${formatMoney(data.amount)}
 
@@ -658,9 +677,10 @@ function displayExpenses(){
 
 
 
-            <p class="expenseDate">
 
-            ${data.date || "No date"}
+            <p>
+
+            📅 ${data.date || "No Date"}
 
             </p>
 
@@ -669,8 +689,8 @@ function displayExpenses(){
         </div>
 
 
-        `;
 
+        `;
 
 
     });
@@ -678,6 +698,7 @@ function displayExpenses(){
 
 
 }
+
 
 
 
@@ -695,9 +716,7 @@ function displayProjects(){
 
 
 
-    const container =
-
-    document.getElementById(
+    const container = document.getElementById(
         "projectContainer"
     );
 
@@ -707,7 +726,7 @@ function displayProjects(){
 
 
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
 
 
@@ -722,9 +741,11 @@ function displayProjects(){
 
         <div class="projectCard">
 
+
             <h3>
             No Projects Available
             </h3>
+
 
         </div>
 
@@ -743,51 +764,26 @@ function displayProjects(){
 
 
 
-
     dashboardData.projects.forEach(data=>{
-
-
-
-        let statusClass = "planning";
-
-
-
-        if(data.status === "Completed"){
-
-            statusClass="completed";
-
-        }
-
-
-
-        else if(data.status === "Ongoing"){
-
-            statusClass="ongoing";
-
-        }
-
-
-
-
-
 
 
 
         container.innerHTML += `
 
 
+
         <div class="projectCard fade">
 
 
-
             <h3>
+
             📂 ${data.title || "Untitled Project"}
+
             </h3>
 
 
 
-
-            <p class="projectInfo">
+            <p>
 
             ${data.description || "No description"}
 
@@ -795,9 +791,7 @@ function displayProjects(){
 
 
 
-
-
-            <h3 class="projectBudget">
+            <h3>
 
             ${formatMoney(data.budget)}
 
@@ -806,8 +800,7 @@ function displayProjects(){
 
 
 
-
-            <span class="badge ${statusClass}">
+            <span class="badge">
 
             ${data.status || "Planning"}
 
@@ -835,6 +828,7 @@ function displayProjects(){
 
 
 
+
 // =====================================================
 // DISPLAY ANNOUNCEMENTS
 // =====================================================
@@ -844,9 +838,7 @@ function displayAnnouncements(){
 
 
 
-    const container =
-
-    document.getElementById(
+    const container = document.getElementById(
         "announcementContainer"
     );
 
@@ -856,7 +848,7 @@ function displayAnnouncements(){
 
 
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
 
 
@@ -867,33 +859,11 @@ function displayAnnouncements(){
 
 
 
-        let priority="low";
-
-
-
-        if(data.priority==="High"){
-
-            priority="high";
-
-        }
-
-
-        else if(data.priority==="Medium"){
-
-            priority="medium";
-
-        }
-
-
-
-
-
-
-
         container.innerHTML += `
 
 
-        <div class="announcementCard ${priority} fade">
+
+        <div class="announcementCard fade">
 
 
             <h3>
@@ -905,7 +875,7 @@ function displayAnnouncements(){
 
 
 
-            <p class="announcementMessage">
+            <p>
 
             ${data.message || "No message"}
 
@@ -914,9 +884,10 @@ function displayAnnouncements(){
 
 
 
-            <p class="announcementDate">
+            <p>
 
             Priority:
+
             ${data.priority || "Low"}
 
             </p>
@@ -924,6 +895,7 @@ function displayAnnouncements(){
 
 
         </div>
+
 
 
         `;
@@ -945,7 +917,7 @@ function displayAnnouncements(){
 
 
 // =====================================================
-// UPDATE SUMMARY CARDS
+// UPDATE DASHBOARD SUMMARY CARDS
 // =====================================================
 
 
@@ -960,9 +932,11 @@ function updateDashboardCards(){
 
 
 
+
     const expenseTotal =
 
     calculateExpenseTotal();
+
 
 
 
@@ -977,36 +951,24 @@ function updateDashboardCards(){
 
 
 
-    const collectionBox =
 
-    document.getElementById(
+
+    const collectionBox = document.getElementById(
         "totalCollection"
     );
 
 
-
-
-    const expenseBox =
-
-    document.getElementById(
+    const expenseBox = document.getElementById(
         "totalExpenses"
     );
 
 
-
-
-    const balanceBox =
-
-    document.getElementById(
+    const balanceBox = document.getElementById(
         "currentBalance"
     );
 
 
-
-
-    const projectBox =
-
-    document.getElementById(
+    const projectBox = document.getElementById(
         "projectCount"
     );
 
@@ -1019,7 +981,6 @@ function updateDashboardCards(){
     if(collectionBox){
 
         collectionBox.innerHTML =
-
         formatMoney(collectionTotal);
 
     }
@@ -1027,11 +988,9 @@ function updateDashboardCards(){
 
 
 
-
     if(expenseBox){
 
         expenseBox.innerHTML =
-
         formatMoney(expenseTotal);
 
     }
@@ -1039,12 +998,9 @@ function updateDashboardCards(){
 
 
 
-
-
     if(balanceBox){
 
         balanceBox.innerHTML =
-
         formatMoney(balance);
 
     }
@@ -1052,16 +1008,12 @@ function updateDashboardCards(){
 
 
 
-
-
     if(projectBox){
 
         projectBox.innerHTML =
-
         dashboardData.projects.length;
 
     }
-
 
 
 
@@ -1072,8 +1024,9 @@ function updateDashboardCards(){
 
 
 
+
 console.log(
-"✅ Dashboard Part 2 Ready"
+"✅ Dashboard Part 2 Loaded"
 );
 
 // =====================================================
@@ -1088,24 +1041,13 @@ console.log(
 
 
 
+
 // =====================================================
-// SEARCH ELEMENTS
+// SEARCH SYSTEM VARIABLES
 // =====================================================
 
 
-const dashboardSearch =
-
-document.getElementById(
-    "dashboardSearch"
-);
-
-
-
-const dashboardSearchResults =
-
-document.getElementById(
-    "dashboardSearchResults"
-);
+let searchInitialized = false;
 
 
 
@@ -1116,32 +1058,116 @@ document.getElementById(
 
 
 // =====================================================
-// SEARCH EVENT
+// SETUP SEARCH
 // =====================================================
 
 
-if(dashboardSearch){
+function setupSearch(){
 
 
 
-    dashboardSearch.addEventListener(
+    if(searchInitialized)
+
+    return;
+
+
+
+    const searchInput = document.getElementById(
+
+        "dashboardSearch"
+
+    );
+
+
+
+    const searchResults = document.getElementById(
+
+        "dashboardSearchResults"
+
+    );
+
+
+
+
+
+    if(!searchInput || !searchResults){
+
+
+
+        console.log(
+
+            "🔎 Search elements not found"
+
+        );
+
+
+        return;
+
+
+
+    }
+
+
+
+
+
+
+    searchInitialized = true;
+
+
+
+
+
+
+
+    searchInput.addEventListener(
 
         "input",
 
         ()=>{
 
 
-            searchDashboard(
 
-                dashboardSearch.value
+            const keyword =
+
+            searchInput.value
+
+            .toLowerCase()
+
+            .trim();
+
+
+
+
+
+            performSearch(
+
+                keyword,
+
+                searchResults
 
             );
+
 
 
         }
 
 
+
     );
+
+
+
+
+
+
+
+    console.log(
+
+        "🔎 Search Activated"
+
+    );
+
 
 
 }
@@ -1154,51 +1180,33 @@ if(dashboardSearch){
 
 
 
+
+
 // =====================================================
-// MAIN SEARCH FUNCTION
+// SEARCH FUNCTION
 // =====================================================
 
 
-function searchDashboard(keyword){
-
-
-
-    if(!dashboardSearchResults)
-
-    return;
+function performSearch(keyword, resultBox){
 
 
 
 
 
-    keyword =
-
-    keyword
-
-    .toLowerCase()
-
-    .trim();
+    resultBox.innerHTML = "";
 
 
 
 
-
-
-
-
-    // EMPTY SEARCH
 
 
     if(keyword === ""){
 
 
-        dashboardSearchResults.innerHTML = "";
-
         return;
 
 
     }
-
 
 
 
@@ -1216,9 +1224,9 @@ function searchDashboard(keyword){
 
 
 
-    // =====================================================
+    // =================================================
     // SEARCH COLLECTIONS
-    // =====================================================
+    // =================================================
 
 
 
@@ -1226,13 +1234,15 @@ function searchDashboard(keyword){
 
 
 
-        const text = `
+        const content = `
 
-        ${data.week}
 
-        ${data.collector}
+        ${data.week || ""}
 
-        ${data.date}
+        ${data.collector || ""}
+
+        ${data.date || ""}
+
 
         `
 
@@ -1244,7 +1254,8 @@ function searchDashboard(keyword){
 
 
 
-        if(text.includes(keyword)){
+
+        if(content.includes(keyword)){
 
 
 
@@ -1274,6 +1285,7 @@ function searchDashboard(keyword){
             results += `
 
 
+
             <div class="expense fade">
 
 
@@ -1284,27 +1296,20 @@ function searchDashboard(keyword){
 
 
                 <p>
-                Week:
-                ${data.week || "N/A"}
+                ${data.week || "No Week"}
                 </p>
+
 
 
 
                 <p>
-                Collector:
-                ${data.collector || "N/A"}
+                ${formatMoney(total)}
                 </p>
 
 
 
-
-                <h3>
-                ${formatMoney(total)}
-                </h3>
-
-
-
             </div>
+
 
 
             `;
@@ -1325,9 +1330,9 @@ function searchDashboard(keyword){
 
 
 
-    // =====================================================
+    // =================================================
     // SEARCH EXPENSES
-    // =====================================================
+    // =================================================
 
 
 
@@ -1335,13 +1340,18 @@ function searchDashboard(keyword){
 
 
 
-        const text = `
+        const content = `
 
-        ${data.title}
 
-        ${data.category}
+        ${data.title || ""}
 
-        ${data.remarks}
+        ${data.category || ""}
+
+        ${data.date || ""}
+
+        ${data.remarks || ""}
+
+
 
         `
 
@@ -1353,11 +1363,12 @@ function searchDashboard(keyword){
 
 
 
-        if(text.includes(keyword)){
+        if(content.includes(keyword)){
 
 
 
             results += `
+
 
 
             <div class="expense fade">
@@ -1369,6 +1380,7 @@ function searchDashboard(keyword){
 
 
 
+
                 <p>
                 Category:
                 ${data.category || "Others"}
@@ -1376,15 +1388,17 @@ function searchDashboard(keyword){
 
 
 
-                <h3 class="expenseAmount">
+
+                <p>
 
                 ${formatMoney(data.amount)}
 
-                </h3>
+                </p>
 
 
 
             </div>
+
 
 
             `;
@@ -1405,9 +1419,9 @@ function searchDashboard(keyword){
 
 
 
-    // =====================================================
+    // =================================================
     // SEARCH PROJECTS
-    // =====================================================
+    // =================================================
 
 
 
@@ -1415,13 +1429,16 @@ function searchDashboard(keyword){
 
 
 
-        const text = `
+        const content = `
 
-        ${data.title}
 
-        ${data.description}
+        ${data.title || ""}
 
-        ${data.status}
+        ${data.description || ""}
+
+        ${data.status || ""}
+
+
 
         `
 
@@ -1433,12 +1450,12 @@ function searchDashboard(keyword){
 
 
 
-
-        if(text.includes(keyword)){
+        if(content.includes(keyword)){
 
 
 
             results += `
+
 
 
             <div class="projectCard fade">
@@ -1450,21 +1467,27 @@ function searchDashboard(keyword){
 
 
 
+
                 <p>
+
                 ${data.description || ""}
+
                 </p>
 
 
 
-                <span class="badge">
 
+                <p>
+
+                Status:
                 ${data.status || "Planning"}
 
-                </span>
+                </p>
 
 
 
             </div>
+
 
 
             `;
@@ -1485,9 +1508,9 @@ function searchDashboard(keyword){
 
 
 
-    // =====================================================
+    // =================================================
     // SEARCH ANNOUNCEMENTS
-    // =====================================================
+    // =================================================
 
 
 
@@ -1495,13 +1518,16 @@ function searchDashboard(keyword){
 
 
 
-        const text = `
+        const content = `
 
-        ${data.title}
 
-        ${data.message}
+        ${data.title || ""}
 
-        ${data.priority}
+        ${data.message || ""}
+
+        ${data.priority || ""}
+
+
 
         `
 
@@ -1513,24 +1539,27 @@ function searchDashboard(keyword){
 
 
 
-        if(text.includes(keyword)){
+        if(content.includes(keyword)){
 
 
 
             results += `
 
 
+
             <div class="announcementCard fade">
 
 
                 <h3>
+
                 📢 ${data.title || "Announcement"}
+
                 </h3>
 
 
 
 
-                <p class="announcementMessage">
+                <p>
 
                 ${data.message || ""}
 
@@ -1552,6 +1581,7 @@ function searchDashboard(keyword){
             </div>
 
 
+
             `;
 
 
@@ -1570,9 +1600,9 @@ function searchDashboard(keyword){
 
 
 
-    // =====================================================
-    // DISPLAY RESULT
-    // =====================================================
+    // =================================================
+    // SHOW RESULTS
+    // =================================================
 
 
 
@@ -1580,21 +1610,17 @@ function searchDashboard(keyword){
 
 
 
-        dashboardSearchResults.innerHTML = `
+        resultBox.innerHTML = `
 
 
-        <div class="expense fade">
+        <div class="expense">
 
 
             <h3>
-            ❌ No Result Found
+
+            ❌ No Record Found
+
             </h3>
-
-
-
-            <p>
-            No transparency record matched.
-            </p>
 
 
         </div>
@@ -1603,17 +1629,17 @@ function searchDashboard(keyword){
         `;
 
 
+
     }
-
-
 
     else{
 
 
-        dashboardSearchResults.innerHTML = results;
+        resultBox.innerHTML = results;
 
 
     }
+
 
 
 
@@ -1630,15 +1656,23 @@ function searchDashboard(keyword){
 
 console.log(
 
-"🔎 Dashboard Search Activated"
+"✅ Dashboard Part 3 Loaded"
 
 );
+
+
+
+// =====================================================
+// END PART 3
+// NEXT:
+// CHART + FINAL STARTUP SYSTEM
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
 // FINAL DASHBOARD.JS
 // PART 4/4
-// CHART + FINAL INITIALIZATION
+// CHART + FINAL STARTUP SYSTEM
 // =====================================================
 
 
@@ -1646,33 +1680,41 @@ console.log(
 
 
 
+
 // =====================================================
-// COLLECTION STATISTICS CHART
+// CREATE COLLECTION CHART
 // =====================================================
-
-
-let collectionChart = null;
-
-
-
-
 
 
 function createCollectionChart(){
 
 
 
-    const canvas =
+    const canvas = document.getElementById(
 
-    document.getElementById(
         "collectionChart"
+
     );
 
 
 
-    if(!canvas)
 
-    return;
+
+    if(!canvas){
+
+
+        console.log(
+
+            "📊 Chart canvas not found"
+
+        );
+
+
+        return;
+
+
+    }
+
 
 
 
@@ -1697,27 +1739,41 @@ function createCollectionChart(){
 
 
 
-        firstYear +=
+        firstYear += Number(
 
-        Number(data.firstYear || 0);
+            data.firstYear || 0
 
-
-
-        secondYear +=
-
-        Number(data.secondYear || 0);
+        );
 
 
 
-        thirdYear +=
-
-        Number(data.thirdYear || 0);
 
 
+        secondYear += Number(
 
-        fourthYear +=
+            data.secondYear || 0
 
-        Number(data.fourthYear || 0);
+        );
+
+
+
+
+
+        thirdYear += Number(
+
+            data.thirdYear || 0
+
+        );
+
+
+
+
+
+        fourthYear += Number(
+
+            data.fourthYear || 0
+
+        );
 
 
 
@@ -1730,11 +1786,15 @@ function createCollectionChart(){
 
 
 
+    // REMOVE OLD CHART
+
 
     if(collectionChart){
 
 
+
         collectionChart.destroy();
+
 
 
     }
@@ -1752,86 +1812,72 @@ function createCollectionChart(){
         {
 
 
-        type:"bar",
 
-
-
-        data:{
-
-
-
-            labels:[
-
-                "1st Year",
-
-                "2nd Year",
-
-                "3rd Year",
-
-                "4th Year"
-
-            ],
+            type:"bar",
 
 
 
 
 
-            datasets:[{
-
-
-                label:
-
-                "Collection Amount (₱)",
+            data:{
 
 
 
-                data:[
-
-                    firstYear,
-
-                    secondYear,
-
-                    thirdYear,
-
-                    fourthYear
-
-                ]
+                labels:[
 
 
+                    "1st Year",
 
-            }]
+                    "2nd Year",
+
+                    "3rd Year",
+
+                    "4th Year"
 
 
 
-        },
+                ],
 
 
 
 
 
-
-
-        options:{
-
-
-
-            responsive:true,
-
-            maintainAspectRatio:false,
+                datasets:[{
 
 
 
-            plugins:{
+                    label:
+
+                    "Collection Amount (₱)",
 
 
 
-                legend:{
 
 
-                    display:true
+                    data:[
 
 
-                }
+
+                        firstYear,
+
+                        secondYear,
+
+                        thirdYear,
+
+                        fourthYear
+
+
+
+                    ],
+
+
+
+
+                    borderWidth:2
+
+
+
+                }]
 
 
 
@@ -1841,15 +1887,84 @@ function createCollectionChart(){
 
 
 
-            scales:{
+
+
+            options:{
 
 
 
-                y:{
+                responsive:true,
+
+
+                maintainAspectRatio:false,
 
 
 
-                    beginAtZero:true
+
+
+                plugins:{
+
+
+
+                    legend:{
+
+
+                        display:true,
+
+
+                        position:"bottom"
+
+
+
+                    }
+
+
+
+                },
+
+
+
+
+
+
+
+                scales:{
+
+
+
+                    y:{
+
+
+
+                        beginAtZero:true,
+
+
+
+
+
+                        ticks:{
+
+
+
+                            callback:function(value){
+
+
+
+                                return "₱" +
+
+                                value.toLocaleString();
+
+
+
+                            }
+
+
+
+                        }
+
+
+
+                    }
 
 
 
@@ -1865,9 +1980,17 @@ function createCollectionChart(){
 
 
 
-        }
+    );
 
 
+
+
+
+
+
+    console.log(
+
+        "📊 Collection Chart Loaded"
 
     );
 
@@ -1885,9 +2008,8 @@ function createCollectionChart(){
 
 
 
-
 // =====================================================
-// SIMPLE ANIMATION
+// ACTIVATE SIMPLE ANIMATION
 // =====================================================
 
 
@@ -1895,13 +2017,16 @@ function activateAnimations(){
 
 
 
-    const elements =
+    const elements = document.querySelectorAll(
 
-    document.querySelectorAll(
 
-        ".card, .expense, .projectCard, .announcementCard"
+        ".expense, .projectCard, .announcementCard"
+
 
     );
+
+
+
 
 
 
@@ -1929,6 +2054,8 @@ function activateAnimations(){
 
 
 
+
+
 // =====================================================
 // FINAL DASHBOARD START
 // =====================================================
@@ -1944,12 +2071,18 @@ async function startDashboard(){
 
         console.log(
 
-            "⏳ Loading Dashboard..."
+            "⏳ Starting Dashboard..."
 
         );
 
 
 
+
+
+
+
+
+        // FETCH FIREBASE DATA
 
 
         await fetchDashboardData();
@@ -1959,28 +2092,66 @@ async function startDashboard(){
 
 
 
-        displayCollections();
 
+
+        // DISPLAY DATA
+
+
+        displayCollections();
 
 
         displayExpenses();
 
 
-
         displayProjects();
-
 
 
         displayAnnouncements();
 
 
 
+
+
+
+
+
+        // UPDATE SUMMARY
+
+
         updateDashboardCards();
 
 
 
+
+
+
+
+
+        // CREATE CHART
+
+
         createCollectionChart();
 
+
+
+
+
+
+
+
+        // ENABLE SEARCH
+
+
+        setupSearch();
+
+
+
+
+
+
+
+
+        // ANIMATION
 
 
         activateAnimations();
@@ -1990,9 +2161,11 @@ async function startDashboard(){
 
 
 
+
+
         console.log(
 
-            "✅ Dalubwikaan Dashboard Loaded!"
+            "✅ Dalubwikaan Dashboard Ready"
 
         );
 
@@ -2010,7 +2183,7 @@ async function startDashboard(){
 
         console.error(
 
-            "Dashboard Start Error:",
+            "❌ Dashboard Start Error:",
 
             error
 
@@ -2032,52 +2205,87 @@ async function startDashboard(){
 
 
 
+
+
 // =====================================================
-// AUTO REFRESH EVERY 1 MINUTE
+// WINDOW RESIZE CHART FIX
 // =====================================================
 
 
-setInterval(async()=>{
+window.addEventListener(
+
+    "resize",
+
+    ()=>{
 
 
 
-    await fetchDashboardData();
+        if(collectionChart){
 
 
 
-
-    displayCollections();
-
-
-
-    displayExpenses();
+            collectionChart.resize();
 
 
 
-    displayProjects();
+        }
 
 
 
-    displayAnnouncements();
+    }
 
 
 
-    updateDashboardCards();
-
-
-
-    createCollectionChart();
+);
 
 
 
 
 
-    console.log(
 
-        "🔄 Dashboard Updated"
 
-    );
 
+
+
+
+// =====================================================
+// INITIAL LOAD
+// =====================================================
+
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+
+        startDashboard();
+
+
+    }
+
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================================
+// AUTO REFRESH EVERY 60 SECONDS
+// =====================================================
+
+
+setInterval(()=>{
+
+
+
+    startDashboard();
 
 
 
@@ -2091,33 +2299,14 @@ setInterval(async()=>{
 
 
 
-// =====================================================
-// RUN DASHBOARD
-// =====================================================
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-    startDashboard();
-
-
-
-});
-
-
-
-
-
-
-
-
 console.log(
 
-"🚀 Dashboard System Ready"
+"🚀 FINAL DASHBOARD SYSTEM LOADED"
 
 );
+
+
+
+// =====================================================
+// END OF DASHBOARD.JS
+// =====================================================
