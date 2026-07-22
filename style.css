@@ -1,7 +1,7 @@
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
    POLISHED STYLE.CSS
-   PART 1/3
+   PART 1/4
 ========================================================== */
 
 
@@ -28,7 +28,8 @@
 }
 
 
-/* ================= DARK VARIABLES ================= */
+
+/* ================= DARK MODE ================= */
 
 body.dark{
 
@@ -53,6 +54,7 @@ body.dark{
     box-sizing:border-box;
 
 }
+
 
 
 html{
@@ -143,6 +145,9 @@ body.dark .logo{
 
 
 
+/* ================= NAV LINKS ================= */
+
+
 nav{
 
     display:flex;
@@ -185,6 +190,9 @@ nav a:hover{
 
 
 
+/* ================= THEME BUTTON ================= */
+
+
 .themeBtn{
 
     border:none;
@@ -214,6 +222,7 @@ nav a:hover{
     background:var(--secondary);
 
 }
+
 
 
 
@@ -290,7 +299,9 @@ body.dark .hero h1{
 
 
 
-/* ================= DASHBOARD ================= */
+
+
+/* ================= DASHBOARD CARDS ================= */
 
 
 .dashboard{
@@ -401,8 +412,9 @@ body.dark .card h2{
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
    POLISHED STYLE.CSS
-   PART 2/3
+   PART 2/4
 ========================================================== */
+
 
 
 /* ================= YEAR SECTION ================= */
@@ -442,6 +454,8 @@ body.dark .yearSection h2{
 
 
 
+
+
 .yearCards{
 
     display:grid;
@@ -452,6 +466,8 @@ body.dark .yearSection h2{
     gap:25px;
 
 }
+
+
 
 
 
@@ -524,6 +540,9 @@ body.dark .yearSection h2{
 
 
 
+
+
+
 /* ================= CHART ================= */
 
 
@@ -536,6 +555,8 @@ body.dark .yearSection h2{
     padding:10px 30px 60px;
 
 }
+
+
 
 
 
@@ -575,6 +596,8 @@ body.dark .chartCard h2{
 
 
 
+
+
 .chartCard canvas{
 
     width:100% !important;
@@ -587,7 +610,9 @@ body.dark .chartCard h2{
 
 
 
-/* ================= EXPENSES ================= */
+
+
+/* ================= EXPENSE SECTION ================= */
 
 
 .recentExpenses{
@@ -599,6 +624,8 @@ body.dark .chartCard h2{
     padding:20px 30px 70px;
 
 }
+
+
 
 
 
@@ -624,6 +651,8 @@ body.dark .recentExpenses h2{
 
 
 
+
+
 #expenseContainer{
 
     display:grid;
@@ -634,6 +663,10 @@ body.dark .recentExpenses h2{
     gap:22px;
 
 }
+
+
+
+
 
 
 
@@ -663,6 +696,8 @@ body.dark .recentExpenses h2{
 
 
 
+
+
 .expense h3{
 
     color:var(--text);
@@ -670,6 +705,8 @@ body.dark .recentExpenses h2{
     margin-bottom:12px;
 
 }
+
+
 
 
 
@@ -687,6 +724,8 @@ body.dark .recentExpenses h2{
 
 
 
+
+
 .expenseDate{
 
     color:var(--muted);
@@ -694,6 +733,8 @@ body.dark .recentExpenses h2{
     font-size:14px;
 
 }
+
+
 
 
 
@@ -720,7 +761,11 @@ body.dark .recentExpenses h2{
 
 
 
-/* ================= PROJECTS ================= */
+
+
+
+
+/* ================= PROJECT SECTION ================= */
 
 
 .projectSection{
@@ -732,6 +777,8 @@ body.dark .recentExpenses h2{
     padding:10px 30px 80px;
 
 }
+
+
 
 
 
@@ -757,6 +804,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 #projectContainer{
 
     display:grid;
@@ -767,6 +816,10 @@ body.dark .projectSection h2{
     gap:25px;
 
 }
+
+
+
+
 
 
 
@@ -790,11 +843,15 @@ body.dark .projectSection h2{
 
 
 
+
+
 .projectCard:hover{
 
     transform:translateY(-10px);
 
 }
+
+
 
 
 
@@ -808,9 +865,11 @@ body.dark .projectSection h2{
 
     top:0;
 
+
     width:100%;
 
     height:7px;
+
 
     background:linear-gradient(
         to right,
@@ -822,6 +881,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 .projectCard h3{
 
     margin-bottom:15px;
@@ -829,6 +890,8 @@ body.dark .projectSection h2{
     color:var(--text);
 
 }
+
+
 
 
 
@@ -846,6 +909,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 .projectInfo{
 
     color:var(--muted);
@@ -853,6 +918,8 @@ body.dark .projectSection h2{
     line-height:1.8;
 
 }
+
+
 
 
 
@@ -879,6 +946,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 .completed{
 
     background:#dff6e4;
@@ -886,6 +955,8 @@ body.dark .projectSection h2{
     color:#2d8a45;
 
 }
+
+
 
 
 
@@ -899,6 +970,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 .planning{
 
     background:#fff3cf;
@@ -906,6 +979,9 @@ body.dark .projectSection h2{
     color:#b77a00;
 
 }
+
+
+
 
 
 
@@ -941,6 +1017,8 @@ body.dark .projectSection h2{
 
 
 
+
+
 .btn:hover{
 
     background:var(--secondary);
@@ -952,8 +1030,9 @@ body.dark .projectSection h2{
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
    POLISHED STYLE.CSS
-   PART 3/3
+   PART 3/4
 ========================================================== */
+
 
 
 /* ================= FOOTER ================= */
@@ -995,6 +1074,8 @@ body.dark footer{
 
 
 
+
+
 /* ================= TABLE ================= */
 
 
@@ -1016,6 +1097,8 @@ table{
 
 
 
+
+
 table th{
 
     background:var(--primary);
@@ -1025,6 +1108,8 @@ table th{
     padding:18px;
 
 }
+
+
 
 
 
@@ -1040,11 +1125,15 @@ table td{
 
 
 
+
+
 body.dark table td{
 
     border-color:#333;
 
 }
+
+
 
 
 
@@ -1056,11 +1145,17 @@ table tr:hover{
 
 
 
+
+
 body.dark table tr:hover{
 
     background:#2a2a2a;
 
 }
+
+
+
+
 
 
 
@@ -1095,6 +1190,8 @@ textarea{
 
 
 
+
+
 input:focus,
 select:focus,
 textarea:focus{
@@ -1102,6 +1199,8 @@ textarea:focus{
     border-color:var(--primary);
 
 }
+
+
 
 
 
@@ -1119,14 +1218,40 @@ label{
 
 
 
-/* ================= SEARCH ================= */
 
 
-.searchBox{
 
-    max-width:500px;
 
-    margin:30px auto;
+/* ================= DASHBOARD SEARCH ================= */
+
+
+/* 
+IMPORTANT:
+Ilalagay ang search section sa ilalim ng navbar,
+hindi sa loob ng header.
+*/
+
+
+.searchSection{
+
+
+    max-width:1200px;
+
+
+    margin:60px auto 40px;
+
+
+    padding:30px;
+
+
+    background:var(--white);
+
+
+    border-radius:25px;
+
+
+    box-shadow:var(--shadow);
+
 
 }
 
@@ -1134,46 +1259,262 @@ label{
 
 
 
-/* ================= STAT CARD ================= */
+.searchSection h2{
+
+
+    color:var(--primary);
+
+
+    font-family:'Patrick Hand',cursive;
+
+
+    font-size:32px;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+body.dark .searchSection h2{
+
+
+    color:var(--accent);
+
+
+}
+
+
+
+
+
+
+
+#dashboardSearch{
+
+
+    width:100%;
+
+
+    padding:16px 25px;
+
+
+    border-radius:50px;
+
+
+    border:2px solid var(--accent);
+
+
+    font-size:16px;
+
+
+    outline:none;
+
+
+    background:var(--white);
+
+
+    color:var(--text);
+
+
+}
+
+
+
+
+
+#dashboardSearch:focus{
+
+
+    border-color:var(--primary);
+
+
+}
+
+
+
+
+
+#dashboardSearchResults{
+
+
+    margin-top:25px;
+
+
+    display:grid;
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+
+
+#dashboardSearchResults .expense,
+#dashboardSearchResults .projectCard,
+#dashboardSearchResults .announcementCard{
+
+
+    animation:fade .4s ease;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ================= OLD SEARCH FIX ================= */
+
+
+#searchResults{
+
+
+    margin-top:25px;
+
+
+    display:grid;
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+
+#searchResults .expense{
+
+
+    animation:fade .4s ease;
+
+
+}
+
+
+
+
+
+#globalSearch{
+
+
+    margin-top:15px;
+
+
+    border:2px solid var(--accent);
+
+
+}
+
+
+
+
+
+#searchResults .expense h2{
+
+
+    font-size:22px;
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+
+
+body.dark #searchResults .expense h2{
+
+
+    color:var(--accent);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ================= STAT CARDS ================= */
 
 
 .statCard{
 
+
     background:var(--white);
+
 
     border-radius:20px;
 
+
     padding:30px;
+
 
     box-shadow:var(--shadow);
 
+
     text-align:center;
 
+
 }
+
+
 
 
 
 .statCard h2{
 
+
     color:var(--primary);
+
 
     font-size:42px;
 
+
 }
+
+
 
 
 
 body.dark .statCard h2{
 
+
     color:var(--accent);
 
+
 }
+
+
 
 
 
 .statCard span{
 
+
     color:var(--muted);
+
 
 }
 
@@ -1181,104 +1522,158 @@ body.dark .statCard h2{
 
 
 
-/* ================= ANNOUNCEMENT DESIGN ================= */
+
+
+
+
+/* ================= ANNOUNCEMENTS ================= */
 
 
 .announcementContainer{
 
+
     max-width:1100px;
+
 
     margin:40px auto;
 
+
     padding:20px;
 
+
 }
+
+
 
 
 
 .announcementSection h2{
 
+
     text-align:center;
+
 
     font-size:30px;
 
+
     margin-bottom:30px;
 
+
 }
+
+
+
+
 
 
 
 .announcementCard{
 
+
     background:var(--white);
+
 
     padding:25px;
 
+
     border-radius:20px;
+
 
     margin-bottom:25px;
 
+
     box-shadow:var(--shadow);
+
 
     border-left:8px solid #6b4f2a;
 
+
     transition:.3s;
 
+
 }
+
+
 
 
 
 .announcementCard:hover{
 
+
     transform:translateY(-5px);
 
+
 }
+
+
 
 
 
 .announcementCard.high{
 
+
     border-left-color:#d9534f;
 
+
 }
+
+
 
 
 
 .announcementCard.medium{
 
+
     border-left-color:#f0ad4e;
 
+
 }
+
+
 
 
 
 .announcementCard.low{
 
+
     border-left-color:#5cb85c;
 
+
 }
+
+
 
 
 
 .announcementMessage{
 
+
     font-size:16px;
+
 
     line-height:1.7;
 
+
     margin-top:20px;
 
+
 }
+
+
 
 
 
 .announcementDate{
 
+
     margin-top:20px;
+
 
     font-size:13px;
 
+
     color:var(--muted);
+
 
 }
 
@@ -1286,22 +1681,33 @@ body.dark .statCard h2{
 
 
 
-/* ================= LOGIN / ADMIN ================= */
+
+
+
+
+/* ================= ADMIN LOGIN ================= */
 
 
 .adminContainer{
 
+
     max-width:500px;
+
 
     margin:60px auto;
 
+
     padding:30px;
+
 
     background:var(--white);
 
+
     border-radius:25px;
 
+
     box-shadow:var(--shadow);
+
 
 }
 
@@ -1311,35 +1717,53 @@ body.dark .statCard h2{
 
 .logoutBtn{
 
+
     background:#d32f2f;
+
 
     color:white;
 
+
     border:none;
+
 
     padding:12px 24px;
 
+
     border-radius:10px;
+
 
     font-weight:bold;
 
+
     cursor:pointer;
+
 
     transition:.3s;
 
+
 }
+
+
 
 
 
 .logoutBtn:hover{
 
+
     background:#b71c1c;
+
 
     transform:translateY(-3px);
 
+
 }
 
-
+/* ==========================================================
+   DALUBWIKAAN TRANSPARENCY PORTAL
+   POLISHED STYLE.CSS
+   PART 4/4
+========================================================== */
 
 
 
@@ -1368,6 +1792,8 @@ body.dark .glass{
 
 
 
+
+
 /* ================= ANIMATION ================= */
 
 
@@ -1381,6 +1807,7 @@ body.dark .glass{
 
 @keyframes fade{
 
+
     from{
 
         opacity:0;
@@ -1388,6 +1815,7 @@ body.dark .glass{
         transform:translateY(20px);
 
     }
+
 
 
     to{
@@ -1398,25 +1826,36 @@ body.dark .glass{
 
     }
 
+
 }
+
+
+
+
 
 
 
 .float{
 
+
     animation:float 4s ease-in-out infinite;
+
 
 }
 
 
 
+
+
 @keyframes float{
+
 
     0%{
 
         transform:translateY(0);
 
     }
+
 
 
     50%{
@@ -1426,13 +1865,17 @@ body.dark .glass{
     }
 
 
+
     100%{
 
         transform:translateY(0);
 
     }
 
+
 }
+
+
 
 
 
@@ -1449,11 +1892,15 @@ body.dark .glass{
 
 
 
+
+
 ::-webkit-scrollbar-track{
 
     background:#efe4d5;
 
 }
+
+
 
 
 
@@ -1469,40 +1916,117 @@ body.dark .glass{
 
 
 
+
+
+/* ================= DARK MODE FIX ================= */
+
+
+body.dark .announcementCard,
+body.dark .adminContainer,
+body.dark .searchSection,
+body.dark .statCard{
+
+
+    background:#1e1e1e;
+
+    color:white;
+
+
+}
+
+
+
+
+
+body.dark .announcementMessage{
+
+
+    color:#eeeeee;
+
+
+}
+
+
+
+
+
+body.dark .announcementDate{
+
+
+    color:#aaaaaa;
+
+
+}
+
+
+
+
+
+body.dark .yearCard,
+body.dark .chartCard,
+body.dark .expense,
+body.dark .projectCard{
+
+
+    border-color:#333;
+
+
+}
+
+
+
+
+
+
+
 /* ================= RESPONSIVE ================= */
+
 
 
 @media(max-width:1100px){
 
 
+
 header{
+
 
     padding:20px;
 
-    flex-direction:column;
 
 }
+
 
 
 nav{
 
-    margin-top:20px;
 
     flex-wrap:wrap;
 
+
     justify-content:center;
 
+
 }
+
+
+
 
 
 .hero h1{
 
+
     font-size:45px;
 
+
 }
 
 
+
 }
+
+
+
+
 
 
 
@@ -1511,50 +2035,96 @@ nav{
 @media(max-width:768px){
 
 
+
 .dashboard{
+
 
     grid-template-columns:1fr;
 
+
 }
+
+
+
 
 
 .yearCards{
 
+
     grid-template-columns:1fr;
 
+
 }
+
+
+
 
 
 #expenseContainer,
 #projectContainer{
 
+
     grid-template-columns:1fr;
 
+
 }
+
+
+
 
 
 .chartCard canvas{
 
+
     height:300px !important;
 
+
 }
+
+
+
 
 
 .hero{
 
+
     padding:60px 20px;
 
+
 }
+
+
+
 
 
 .hero h1{
 
+
     font-size:38px;
 
+
 }
 
 
+
+
+
+.searchSection{
+
+
+    margin:40px 20px;
+
+
 }
+
+
+
+}
+
+
+
+
+
 
 
 
@@ -1562,213 +2132,119 @@ nav{
 @media(max-width:480px){
 
 
+
 .logo{
+
 
     font-size:22px;
 
+
 }
+
+
+
 
 
 nav{
 
+
     gap:12px;
 
+
 }
+
+
+
 
 
 nav a{
 
+
     font-size:14px;
 
+
 }
+
+
+
 
 
 .card{
 
+
     padding:25px;
 
+
 }
+
+
+
 
 
 .card h2{
 
+
     font-size:32px;
 
+
 }
+
+
+
 
 
 .yearCard h1{
 
+
     font-size:34px;
 
+
 }
+
+
+
 
 
 footer{
 
+
     font-size:14px;
 
-}
-
 
 }
 
 
-
-
-
-/* ================= SELECTION ================= */
-
-
-::selection{
-
-    background:var(--primary);
-
-    color:white;
-
-}
-
-/* ================= EXTRA DARK MODE FIX ================= */
-
-body.dark .announcementCard,
-body.dark .adminContainer{
-
-    background:#1e1e1e;
-
-    color:white;
-
-}
-
-
-body.dark .announcementMessage{
-
-    color:#eeeeee;
-
-}
-
-
-body.dark .announcementDate{
-
-    color:#aaaaaa;
-
-}
-
-
-body.dark .yearCard,
-body.dark .chartCard,
-body.dark .expense,
-body.dark .projectCard{
-
-    border-color:#333;
-
-}
-
-#searchResults{
-
-margin-top:25px;
-
-display:grid;
-
-gap:20px;
-
-}
-
-
-#searchResults .expense{
-
-animation:fade .4s ease;
-
-}
-
-/* ================= GLOBAL SEARCH FIX ================= */
-
-#globalSearch{
-
-    margin-top:15px;
-    border:2px solid var(--accent);
-
-}
-
-
-#searchResults{
-
-    margin-top:25px;
-
-}
-
-
-
-#searchResults .expense h2{
-
-    font-size:22px;
-    color:var(--primary);
-
-}
-
-
-body.dark #searchResults .expense h2{
-
-    color:var(--accent);
-
-}
-
-/* ================= DASHBOARD SEARCH ================= */
-
-
-.searchSection{
-
-max-width:1200px;
-
-margin:40px auto;
-
-padding:30px;
-
-background:var(--white);
-
-border-radius:25px;
-
-box-shadow:var(--shadow);
-
-}
 
 
 
 .searchSection h2{
 
-color:var(--primary);
 
-font-family:'Patrick Hand',cursive;
+    font-size:26px;
 
-font-size:32px;
-
-margin-bottom:20px;
 
 }
 
 
 
-#dashboardSearch{
-
-width:100%;
-
-padding:16px;
-
-border-radius:50px;
-
-border:2px solid var(--accent);
-
-font-size:16px;
-
 }
 
 
 
-#dashboardSearchResults{
 
-margin-top:25px;
 
-display:grid;
 
-gap:20px;
+
+/* ================= TEXT SELECTION ================= */
+
+
+::selection{
+
+
+    background:var(--primary);
+
+
+    color:white;
+
 
 }
