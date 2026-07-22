@@ -1,0 +1,29 @@
+{
+    "organization": "Dalubwikaan",
+    "schoolYear": "2026-2027",
+    "semester": "First Semester",
+
+    "weeks":[
+
+        {
+            "id":1,
+
+            "week":"Week 1",
+
+            "date":"August 10, 2026",
+
+            "collector":"Treasurer",
+
+            "first":0,
+
+            "second":0,
+
+            "third":0,
+
+            "fourth":0,
+
+            "remarks":"Weekly collection"
+        }
+
+    ]
+}
