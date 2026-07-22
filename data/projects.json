@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "title": "Freshmen Orientation",
+        "description": "Orientation program for incoming first-year Filipino majors.",
+        "budget": 5000,
+        "spent": 3500,
+        "status": "Ongoing",
+        "startDate": "2026-08-10",
+        "endDate": "2026-08-20",
+        "personInCharge": "Dalubwikaan Executive Board",
+        "remarks": "Food, certificates, and orientation materials."
+    }
+] 
