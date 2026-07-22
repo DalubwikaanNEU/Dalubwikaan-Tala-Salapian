@@ -10,7 +10,7 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+    apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
     authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
     projectId: "dalubwikaan--26-8e646",
     storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-console.log("💰 Collections Connected!");
+// ================= DATA =================
 
 let collectionsData = [];
 
@@ -30,49 +30,48 @@ let collectionsData = [];
 
 async function loadCollections() {
 
-    const snapshot = await getDocs(collection(db, "collections"));
+    try {
 
-    collectionsData = [];
+        const snapshot = await getDocs(collection(db, "collections"));
 
-    snapshot.forEach((doc) => {
+        collectionsData = [];
 
-        collectionsData.push({
-            id: doc.id,
-            ...doc.data()
+        snapshot.forEach((doc) => {
+
+            collectionsData.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
         });
 
-    });
+        displayCollections(collectionsData);
 
-    collectionsData.sort((a, b) => {
+    } catch (error) {
 
-        const A = a.createdAt?.seconds || 0;
-        const B = b.createdAt?.seconds || 0;
+        console.error(error);
 
-        return B - A;
+        document.getElementById("collectionList").innerHTML =
+            "<p>Failed to load collections.</p>";
 
-    });
-
-    displayCollections(collectionsData);
+    }
 
 }
 
 // ================= DISPLAY =================
 
-function displayCollections(list) {
+function displayCollections(dataList) {
 
     const container = document.getElementById("collectionList");
-
-    const totalDisplay = document.getElementById("totalCollection");
-
-    const countDisplay = document.getElementById("collectionCount");
 
     container.innerHTML = "";
 
     let grandTotal = 0;
 
-    countDisplay.innerHTML = list.length;
+    document.getElementById("collectionCount").textContent =
+        dataList.length;
 
-    list.forEach((data) => {
+    dataList.forEach(data => {
 
         const total =
             Number(data.firstYear || 0) +
@@ -84,32 +83,27 @@ function displayCollections(list) {
 
         container.innerHTML += `
 
-<div class="expense">
+<div class="card">
 
-<h2>💰 ${data.week}</h2>
+<h3>${data.week || "No Week"}</h3>
 
-<p>📅 ${data.date}</p>
+<p>📅 ${data.date || "-"}</p>
 
-<p>👤 <strong>${data.collector}</strong></p>
-
-<hr>
-
-<p>1️⃣ First Year :
-₱${Number(data.firstYear || 0).toLocaleString()}</p>
-
-<p>2️⃣ Second Year :
-₱${Number(data.secondYear || 0).toLocaleString()}</p>
-
-<p>3️⃣ Third Year :
-₱${Number(data.thirdYear || 0).toLocaleString()}</p>
-
-<p>4️⃣ Fourth Year :
-₱${Number(data.fourthYear || 0).toLocaleString()}</p>
+<p>👤 ${data.collector || "-"}</p>
 
 <hr>
 
-<h3>💵 Total:
-₱${total.toLocaleString()}</h3>
+<p>1st Year : ₱${Number(data.firstYear || 0).toLocaleString()}</p>
+
+<p>2nd Year : ₱${Number(data.secondYear || 0).toLocaleString()}</p>
+
+<p>3rd Year : ₱${Number(data.thirdYear || 0).toLocaleString()}</p>
+
+<p>4th Year : ₱${Number(data.fourthYear || 0).toLocaleString()}</p>
+
+<hr>
+
+<h2>₱${total.toLocaleString()}</h2>
 
 </div>
 
@@ -117,40 +111,45 @@ function displayCollections(list) {
 
     });
 
-    totalDisplay.innerHTML = "₱" + grandTotal.toLocaleString();
+    document.getElementById("totalCollection").textContent =
+        "₱" + grandTotal.toLocaleString();
 
 }
 
-// ================= SEARCH + FILTER =================
+// ================= SEARCH =================
 
 function filterCollections() {
 
-    const keyword = document
-        .getElementById("searchCollection")
+    const keyword =
+        document.getElementById("searchCollection")
         .value
         .toLowerCase();
 
-    const year = document
-        .getElementById("yearFilter")
-        .value;
+    const year =
+        document.getElementById("yearFilter").value;
 
-    const filtered = collectionsData.filter((item) => {
+    const filtered = collectionsData.filter(item => {
 
         const matchSearch =
             (item.week || "").toLowerCase().includes(keyword) ||
             (item.collector || "").toLowerCase().includes(keyword);
 
-        if (year === "all") return matchSearch;
+        if (year === "all")
+            return matchSearch;
 
         let amount = 0;
 
-        if (year === "1") amount = Number(item.firstYear || 0);
+        if (year === "1")
+            amount = Number(item.firstYear || 0);
 
-        if (year === "2") amount = Number(item.secondYear || 0);
+        if (year === "2")
+            amount = Number(item.secondYear || 0);
 
-        if (year === "3") amount = Number(item.thirdYear || 0);
+        if (year === "3")
+            amount = Number(item.thirdYear || 0);
 
-        if (year === "4") amount = Number(item.fourthYear || 0);
+        if (year === "4")
+            amount = Number(item.fourthYear || 0);
 
         return matchSearch && amount > 0;
 
@@ -162,12 +161,10 @@ function filterCollections() {
 
 // ================= EVENTS =================
 
-document
-.getElementById("searchCollection")
+document.getElementById("searchCollection")
 .addEventListener("input", filterCollections);
 
-document
-.getElementById("yearFilter")
+document.getElementById("yearFilter")
 .addEventListener("change", filterCollections);
 
 // ================= START =================
