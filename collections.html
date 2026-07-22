@@ -1,91 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dalubwikaan • Collections</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Dalubwikaan | Collections</title>
 
-    <script type="module" src="collections.js" defer></script>
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
 <header>
-    <h1>📚 Dalubwikaan Transparency Portal</h1>
 
-    <nav>
-        <a href="index.html">Dashboard</a>
-        <a href="collections.html" class="active">Collections</a>
-        <a href="expenses.html">Expenses</a>
-        <a href="projects.html">Projects</a>
-        <a href="announcements.html">Announcements</a>
-        <a href="login.html">Admin</a>
-    </nav>
+<div class="logo">
+📚 DALUBWIKAAN
+</div>
+
+<nav>
+
+<a href="index.html">Dashboard</a>
+
+<a href="collections.html" class="active">Collections</a>
+
+<a href="expenses.html">Expenses</a>
+
+<a href="projects.html">Projects</a>
+
+<a href="reports.html">Reports</a>
+
+<a href="announcements.html">Announcements</a>
+
+<a href="login.html">🔐 Admin</a>
+
+<button id="themeToggle" class="themeBtn">
+🌙 Dark Mode
+</button>
+
+</nav>
+
 </header>
 
 <main class="container">
 
-    <div class="card">
-        <h2>Collection Summary</h2>
+<h1 class="pageTitle">
+💰 Collection Transparency
+</h1>
 
-        <div class="summary-grid">
+<div class="dashboard">
 
-            <div class="summary-card">
-                <h3>Total Collection</h3>
-                <p id="totalCollection">₱0</p>
-            </div>
+<div class="card">
 
-            <div class="summary-card">
-                <h3>Total Records</h3>
-                <p id="collectionCount">0</p>
-            </div>
+<h3>Total Collection</h3>
 
-        </div>
-    </div>
+<h1 id="totalCollection">
+₱0
+</h1>
 
-    <div class="card">
+</div>
 
-        <h2>Search Collections</h2>
+<div class="card">
 
-        <input
-            type="text"
-            id="searchCollection"
-            placeholder="Search by week or collector..."
-        >
+<h3>Total Records</h3>
 
-        <br><br>
+<h1 id="collectionCount">
+0
+</h1>
 
-        <select id="yearFilter">
+</div>
 
-            <option value="all">All Year Levels</option>
+</div>
 
-            <option value="1">1st Year</option>
+<section class="searchBox">
 
-            <option value="2">2nd Year</option>
+<input
 
-            <option value="3">3rd Year</option>
+type="text"
 
-            <option value="4">4th Year</option>
+id="searchCollection"
 
-        </select>
+placeholder="🔍 Search week, collector..."
 
-    </div>
+>
 
-    <div class="card">
+<select id="yearFilter">
 
-        <h2>Collection Records</h2>
+<option value="all">All Year Levels</option>
 
-        <div id="collectionList">
+<option value="1">1st Year</option>
 
-            <p>Loading collections...</p>
+<option value="2">2nd Year</option>
 
-        </div>
+<option value="3">3rd Year</option>
 
-    </div>
+<option value="4">4th Year</option>
+
+</select>
+
+</section>
+
+<section>
+
+<div id="collectionList" class="gridCards">
+
+<div class="expense">
+
+Loading collection records...
+
+</div>
+
+</div>
+
+</section>
 
 </main>
 
+<footer>
+
+© 2026 Dalubwikaan Transparency Portal
+
+</footer>
+
+<script src="theme.js"></script>
+
+<script type="module" src="collections.js"></script>
+
 </body>
+
 </html>
