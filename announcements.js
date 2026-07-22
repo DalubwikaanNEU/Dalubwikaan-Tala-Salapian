@@ -13,351 +13,298 @@ import {
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
-
-authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
-
-projectId: "dalubwikaan--26-8e646",
-
-storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
-
-messagingSenderId: "409516392020",
-
-appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+    authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+    projectId: "dalubwikaan--26-8e646",
+    storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+    messagingSenderId: "409516392020",
+    appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 };
 
 
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 
-console.log("📢 Announcement Firebase Connected!");
+console.log("📢 Announcements Connected!");
 
 
 
-
-
-// ================= LOAD ANNOUNCEMENTS =================
+// ================= LOAD =================
 
 
 async function loadAnnouncements(){
 
+    const container = document.getElementById("announcementList");
 
-const container =
-document.getElementById("announcementList");
 
+    if(!container) return;
 
 
-if(!container) return;
+    try{
 
 
+        const q = query(
 
-try{
+            collection(db,"announcements"),
 
+            orderBy("createdAt","desc")
 
-const announcementQuery = query(
+        );
 
-collection(db,"announcements"),
 
-orderBy("createdAt","desc")
+        const snapshot = await getDocs(q);
 
-);
 
 
+        container.innerHTML = "";
 
-const snapshot =
-await getDocs(announcementQuery);
 
 
+        if(snapshot.empty){
 
-container.innerHTML = "";
 
+            container.innerHTML = `
 
+            <div class="announcementCard">
 
-if(snapshot.empty){
+                <h3>
+                📭 No Announcements Yet
+                </h3>
 
+                <p>
+                No announcements have been posted.
+                </p>
 
-container.innerHTML = `
+            </div>
 
-<div class="announcementCard">
+            `;
 
-<h3>
-📭 No Announcements Yet
-</h3>
+            return;
 
-<p>
-There are currently no posted announcements.
-</p>
+        }
 
-</div>
 
-`;
 
 
-return;
 
-}
+        let dataList = [];
 
 
 
+        snapshot.forEach((doc)=>{
 
+            dataList.push({
 
+                id:doc.id,
 
+                ...doc.data()
 
-let announcements = [];
+            });
 
 
+        });
 
-snapshot.forEach((doc)=>{
 
 
-const data = doc.data();
 
 
-announcements.push(data);
+        // HIGH PRIORITY FIRST
 
+        const priorityOrder = {
 
-});
+            "High":1,
 
+            "Medium":2,
 
+            "Low":3
 
+        };
 
 
 
+        dataList.sort((a,b)=>{
 
-// PRIORITY SORTING
 
-const priorityRank = {
+            return (
 
-"High":1,
+                (priorityOrder[a.priority] || 3)
 
-"Medium":2,
+                -
 
-"Low":3
+                (priorityOrder[b.priority] || 3)
 
-};
+            );
 
 
+        });
 
-announcements.sort((a,b)=>{
 
 
-return (
 
-(priorityRank[a.priority] || 3)
 
--
 
-(priorityRank[b.priority] || 3)
 
-);
+        dataList.forEach((data)=>{
 
-});
 
 
+            let badgeText = "🟢 LOW";
 
+            let badgeClass = "low";
 
 
 
+            if(data.priority === "High"){
 
+                badgeText = "🔴 HIGH";
 
-announcements.forEach((data)=>{
+                badgeClass = "high";
 
+            }
 
 
-let badge = "";
+            else if(data.priority === "Medium"){
 
-let badgeClass = "";
 
+                badgeText = "🟡 MEDIUM";
 
+                badgeClass = "medium";
 
-if(data.priority === "High"){
+            }
 
 
-badge = "🔴 HIGH";
 
-badgeClass = "high";
 
 
-}
+            let datePosted = "No Date";
 
 
-else if(data.priority === "Medium"){
 
+            if(data.createdAt?.seconds){
 
-badge = "🟡 MEDIUM";
 
-badgeClass = "medium";
+                datePosted = new Date(
 
+                    data.createdAt.seconds * 1000
 
-}
+                ).toLocaleDateString(
+                    "en-PH",
+                    {
+                        year:"numeric",
+                        month:"long",
+                        day:"numeric"
+                    }
+                );
 
 
-else{
+            }
 
 
-badge = "🟢 LOW";
 
-badgeClass = "low";
 
 
-}
 
 
+            container.innerHTML += `
 
 
+            <div class="announcementCard ${badgeClass}">
 
 
+                <div class="announcementTop">
 
-let datePosted = "No date";
 
+                    <h2>
 
+                    📢 ${data.title || "Untitled Announcement"}
 
-if(data.createdAt){
+                    </h2>
 
 
 
-if(data.createdAt.seconds){
+                    <span class="priorityBadge">
 
+                    ${badgeText}
 
-datePosted =
-new Date(
-data.createdAt.seconds * 1000
-)
-.toLocaleDateString(
-"en-PH",
-{
-year:"numeric",
-month:"long",
-day:"numeric"
-}
-);
+                    </span>
 
 
-}
+                </div>
 
 
-else if(data.createdAt instanceof Date){
 
 
-datePosted =
-data.createdAt.toLocaleDateString();
 
+                <p class="announcementMessage">
 
-}
+                ${data.message || "No message available."}
 
+                </p>
 
-}
 
 
 
 
+                <p class="announcementDate">
 
+                📅 Posted: ${datePosted}
 
+                </p>
 
 
 
-container.innerHTML += `
+            </div>
 
 
-<div class="announcementCard fadeIn">
+            `;
 
 
-<div class="announcementHeader">
+        });
 
 
-<h2>
-📢 ${data.title || "Untitled Announcement"}
-</h2>
 
 
-<span class="priority ${badgeClass}">
+    }
 
-${badge}
 
-</span>
+    catch(error){
 
 
-</div>
+        console.error(
+            "Announcement Error:",
+            error
+        );
 
 
+        container.innerHTML = `
 
 
-<p class="announcementMessage">
+        <div class="announcementCard">
 
-${data.message || "No message provided."}
 
-</p>
+            <h3>
+            ❌ Failed Loading Announcements
+            </h3>
 
 
+            <p>
+            ${error.message}
+            </p>
 
 
-<div class="announcementFooter">
+        </div>
 
-📅 Posted: ${datePosted}
 
-</div>
+        `;
 
 
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
+    }
 
 
 
 }
-
-catch(error){
-
-
-console.error(
-"Announcement Error:",
-error
-);
-
-
-
-container.innerHTML = `
-
-
-<div class="announcementCard">
-
-
-<h3>
-❌ Failed to Load Announcements
-</h3>
-
-
-<p>
-${error.message}
-</p>
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-}
-
 
 
 
