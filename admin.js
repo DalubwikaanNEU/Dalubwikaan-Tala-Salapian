@@ -1,9 +1,9 @@
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
-// ADMIN.JS PART 1/4
-// FIREBASE + AUTH + COLLECTIONS
+// FINAL ADMIN.JS
+// PART 1/4
+// FIREBASE + AUTH + COLLECTION MANAGEMENT
 // =====================================================
-
 
 
 // ================= FIREBASE IMPORT =================
@@ -12,7 +12,6 @@
 import { initializeApp }
 
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-
 
 
 import {
@@ -31,7 +30,6 @@ updateDoc
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-
 import {
 
 getAuth,
@@ -44,10 +42,9 @@ from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 
 
-
-
-// ================= FIREBASE CONFIG =================
-
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
 
 
 const firebaseConfig = {
@@ -72,8 +69,9 @@ appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 
 
-// ================= INITIALIZE FIREBASE =================
-
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
 
 const app = initializeApp(firebaseConfig);
@@ -86,7 +84,9 @@ const auth = getAuth(app);
 
 
 
-console.log("🔥 Dalubwikaan Firebase Connected!");
+console.log(
+"🔥 Dalubwikaan Firebase Connected"
+);
 
 
 
@@ -95,12 +95,36 @@ console.log("🔥 Dalubwikaan Firebase Connected!");
 
 
 // =====================================================
-// ================= AUTH LOGOUT =======================
+// GLOBAL EDIT VARIABLES
 // =====================================================
 
 
+let editingCollectionID = null;
 
-const logoutBtn = document.getElementById("logoutBtn");
+
+
+
+
+
+
+
+// =====================================================
+// LOGOUT SYSTEM (ONLY ONE)
+// =====================================================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+const logoutBtn =
+
+document.getElementById(
+"logoutBtn"
+);
 
 
 
@@ -108,7 +132,9 @@ if(logoutBtn){
 
 
 logoutBtn.addEventListener(
+
 "click",
+
 async()=>{
 
 
@@ -119,11 +145,14 @@ await signOut(auth);
 
 
 
-alert("✅ Logged out successfully!");
+alert(
+"✅ Logged out successfully!"
+);
 
 
 
-window.location.href="login.html";
+window.location.href =
+"login.html";
 
 
 
@@ -132,10 +161,25 @@ window.location.href="login.html";
 catch(error){
 
 
-console.error(error);
+console.error(
+error
+);
 
 
-alert("❌ Logout failed!");
+alert(
+"❌ Logout failed"
+);
+
+
+
+}
+
+
+
+}
+
+
+);
 
 
 
@@ -148,7 +192,6 @@ alert("❌ Logout failed!");
 );
 
 
-}
 
 
 
@@ -157,17 +200,8 @@ alert("❌ Logout failed!");
 
 
 // =====================================================
-// ================= COLLECTIONS ========================
+// COLLECTION SAVE SYSTEM
 // =====================================================
-
-
-
-let editingCollectionID = null;
-
-
-
-
-
 
 
 window.saveCollection = async function(){
@@ -181,22 +215,31 @@ try{
 const collectionData = {
 
 
+
 week:
 
-document.getElementById("week").value.trim(),
+document.getElementById(
+"week"
+).value.trim(),
 
 
 
 date:
 
-document.getElementById("collectionDate").value,
+document.getElementById(
+"collectionDate"
+).value,
 
 
 
 firstYear:
 
 Number(
-document.getElementById("firstYearCollection").value || 0
+
+document.getElementById(
+"firstYearCollection"
+).value || 0
+
 ),
 
 
@@ -204,7 +247,11 @@ document.getElementById("firstYearCollection").value || 0
 secondYear:
 
 Number(
-document.getElementById("secondYearCollection").value || 0
+
+document.getElementById(
+"secondYearCollection"
+).value || 0
+
 ),
 
 
@@ -212,7 +259,11 @@ document.getElementById("secondYearCollection").value || 0
 thirdYear:
 
 Number(
-document.getElementById("thirdYearCollection").value || 0
+
+document.getElementById(
+"thirdYearCollection"
+).value || 0
+
 ),
 
 
@@ -220,18 +271,28 @@ document.getElementById("thirdYearCollection").value || 0
 fourthYear:
 
 Number(
-document.getElementById("fourthYearCollection").value || 0
+
+document.getElementById(
+"fourthYearCollection"
+).value || 0
+
 ),
 
 
 
 collector:
 
-document.getElementById("collector").value.trim(),
+document.getElementById(
+"collector"
+).value.trim(),
 
 
 
-createdAt:new Date()
+updatedAt:
+
+new Date().toISOString()
+
+
 
 };
 
@@ -241,6 +302,11 @@ createdAt:new Date()
 
 
 
+
+
+// UPDATE EXISTING COLLECTION
+
+
 if(editingCollectionID){
 
 
@@ -248,9 +314,13 @@ if(editingCollectionID){
 await updateDoc(
 
 doc(
+
 db,
+
 "collections",
+
 editingCollectionID
+
 ),
 
 collectionData
@@ -259,7 +329,9 @@ collectionData
 
 
 
-alert("✅ Collection updated!");
+alert(
+"✅ Collection updated!"
+);
 
 
 
@@ -269,6 +341,14 @@ editingCollectionID=null;
 
 }
 
+
+
+
+
+
+// ADD NEW COLLECTION
+
+
 else{
 
 
@@ -276,21 +356,40 @@ else{
 await addDoc(
 
 collection(
+
 db,
+
 "collections"
+
 ),
 
-collectionData
+{
+
+
+...collectionData,
+
+
+createdAt:
+
+new Date().toISOString()
+
+
+}
+
 
 );
 
 
 
-alert("✅ Collection saved!");
+alert(
+"✅ Collection saved!"
+);
 
 
 
 }
+
+
 
 
 
@@ -311,10 +410,17 @@ loadAdminCollections();
 catch(error){
 
 
-console.error(error);
+
+console.error(
+"Collection Save Error:",
+error
+);
 
 
-alert("❌ Failed saving collection!");
+
+alert(
+"❌ Failed saving collection"
+);
 
 
 
@@ -331,17 +437,28 @@ alert("❌ Failed saving collection!");
 
 
 
+
+// =====================================================
+// LOAD COLLECTION RECORDS
+// =====================================================
+
+
 async function loadAdminCollections(){
 
 
 
 const container =
 
-document.getElementById("adminCollectionList");
+document.getElementById(
+"adminCollectionList"
+);
 
 
 
-if(!container) return;
+
+if(!container)
+return;
+
 
 
 
@@ -356,8 +473,11 @@ const snapshot =
 await getDocs(
 
 collection(
+
 db,
+
 "collections"
+
 )
 
 );
@@ -373,18 +493,29 @@ container.innerHTML="";
 
 
 
+
 if(snapshot.empty){
 
 
 
-container.innerHTML=
+container.innerHTML =
 
-"<p>No collection records yet.</p>";
+`
+
+<p>
+No collection records yet.
+</p>
+
+`;
+
+
 
 return;
 
 
+
 }
+
 
 
 
@@ -397,6 +528,7 @@ snapshot.forEach((item)=>{
 
 
 const data=item.data();
+
 
 
 
@@ -425,6 +557,7 @@ Number(data.fourthYear || 0);
 
 
 
+
 container.innerHTML += `
 
 
@@ -434,22 +567,31 @@ container.innerHTML += `
 
 
 <h3>
+
 💰 ${data.week || "No Week"}
+
 </h3>
 
 
 
+
 <p>
+
 📅 Date:
+
 ${data.date || "N/A"}
+
 </p>
 
 
 
 
 <p>
+
 👤 Collector:
+
 ${data.collector || "N/A"}
+
 </p>
 
 
@@ -458,6 +600,7 @@ ${data.collector || "N/A"}
 <h3>
 
 Total:
+
 ₱${total.toLocaleString()}
 
 </h3>
@@ -466,8 +609,10 @@ Total:
 
 
 
-<button 
+<button
+
 class="btn"
+
 onclick="editCollection('${item.id}')">
 
 ✏️ Edit
@@ -477,13 +622,19 @@ onclick="editCollection('${item.id}')">
 
 
 
-<button 
+
+
+<button
+
 class="logoutBtn"
+
 onclick="deleteCollection('${item.id}')">
 
 🗑️ Delete
 
 </button>
+
+
 
 
 
@@ -500,18 +651,34 @@ onclick="deleteCollection('${item.id}')">
 
 
 
+
+
 }
 
 catch(error){
 
 
 
-console.error(error);
+console.error(
+"Loading Collection Error:",
+error
+);
 
 
-container.innerHTML=
 
-"<p>❌ Failed loading collections.</p>";
+container.innerHTML =
+
+`
+
+<p>
+❌ Failed loading collections.
+</p>
+
+`;
+
+
+
+}
 
 
 
@@ -520,29 +687,27 @@ container.innerHTML=
 
 
 
-}
 
 
 
 
 
 
-
-
-loadAdminCollections();
-
-
-
-
-
-
+// =====================================================
+// DELETE COLLECTION
+// =====================================================
 
 
 window.deleteCollection = async function(id){
 
 
 
-if(!confirm("Delete this collection record?"))
+if(
+!confirm(
+"Delete this collection?"
+)
+
+)
 
 return;
 
@@ -550,11 +715,19 @@ return;
 
 
 
+
+try{
+
+
+
 await deleteDoc(
 
 doc(
+
 db,
+
 "collections",
+
 id
 
 )
@@ -564,11 +737,33 @@ id
 
 
 
-alert("🗑️ Collection deleted!");
+
+alert(
+"🗑️ Collection deleted!"
+);
 
 
 
 loadAdminCollections();
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Delete failed"
+);
+
+
+
+}
 
 
 
@@ -581,7 +776,17 @@ loadAdminCollections();
 
 
 
+
+// =====================================================
+// EDIT COLLECTION
+// =====================================================
+
+
 window.editCollection = async function(id){
+
+
+
+try{
 
 
 
@@ -590,13 +795,35 @@ const snap =
 await getDoc(
 
 doc(
+
 db,
+
 "collections",
+
 id
 
 )
 
 );
+
+
+
+
+
+
+if(!snap.exists()){
+
+
+alert(
+"Collection not found"
+);
+
+
+return;
+
+
+}
+
 
 
 
@@ -608,38 +835,57 @@ const data=snap.data();
 
 
 
-document.getElementById("week").value =
+
+
+document.getElementById(
+"week"
+).value =
 data.week || "";
 
 
 
-document.getElementById("collectionDate").value =
+document.getElementById(
+"collectionDate"
+).value =
 data.date || "";
 
 
 
-document.getElementById("firstYearCollection").value =
+document.getElementById(
+"firstYearCollection"
+).value =
 data.firstYear || 0;
 
 
 
-document.getElementById("secondYearCollection").value =
+document.getElementById(
+"secondYearCollection"
+).value =
 data.secondYear || 0;
 
 
 
-document.getElementById("thirdYearCollection").value =
+document.getElementById(
+"thirdYearCollection"
+).value =
 data.thirdYear || 0;
 
 
 
-document.getElementById("fourthYearCollection").value =
+document.getElementById(
+"fourthYearCollection"
+).value =
 data.fourthYear || 0;
 
 
 
-document.getElementById("collector").value =
+document.getElementById(
+"collector"
+).value =
 data.collector || "";
+
+
+
 
 
 
@@ -648,7 +894,28 @@ editingCollectionID=id;
 
 
 
-alert("✏️ Editing Collection Mode");
+alert(
+"✏️ Editing Collection Mode"
+);
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Cannot edit collection"
+);
+
+
+
+}
 
 
 
@@ -659,6 +926,12 @@ alert("✏️ Editing Collection Mode");
 
 
 
+
+
+
+// =====================================================
+// CLEAR COLLECTION FORM
+// =====================================================
 
 
 function clearCollectionForm(){
@@ -692,13 +965,18 @@ const fields=[
 fields.forEach(id=>{
 
 
-const element=document.getElementById(id);
+
+const field =
+
+document.getElementById(id);
 
 
 
-if(element){
+if(field){
 
-element.value="";
+
+field.value="";
+
 
 }
 
@@ -708,26 +986,61 @@ element.value="";
 
 
 
+editingCollectionID=null;
+
+
+
 }
 
 
 
 
 
+
+
+
+
+// LOAD COLLECTION WHEN PAGE READY
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+loadAdminCollections();
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+// =====================================================
 // END OF PART 1/4
+// NEXT: EXPENSE + PROJECT SYSTEM
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
-// ADMIN.JS PART 2/4
-// EXPENSES + PROJECTS
+// FINAL ADMIN.JS
+// PART 2/4
+// EXPENSE + PROJECT MANAGEMENT
 // =====================================================
 
 
 
 // =====================================================
-// ================= EXPENSES ==========================
+// ================= EXPENSE SYSTEM ====================
 // =====================================================
-
 
 
 let editingExpenseID = null;
@@ -736,8 +1049,9 @@ let editingExpenseID = null;
 
 
 
-window.saveExpense = async function(){
 
+
+window.saveExpense = async function(){
 
 
 try{
@@ -747,49 +1061,67 @@ try{
 const expenseData = {
 
 
+
 title:
 
-document.getElementById("expenseTitle").value.trim(),
+document.getElementById(
+"expenseTitle"
+).value.trim(),
 
 
 
 category:
 
-document.getElementById("expenseCategory").value.trim(),
+document.getElementById(
+"expenseCategory"
+).value.trim(),
 
 
 
 amount:
 
 Number(
-document.getElementById("expenseAmount").value || 0
+
+document.getElementById(
+"expenseAmount"
+).value || 0
+
 ),
 
 
 
 date:
 
-document.getElementById("expenseDate").value,
+document.getElementById(
+"expenseDate"
+).value,
 
 
 
 receipt:
 
-document.getElementById("expenseReceipt").value.trim(),
+document.getElementById(
+"expenseReceipt"
+).value.trim(),
 
 
 
 remarks:
 
-document.getElementById("expenseRemarks").value.trim(),
+document.getElementById(
+"expenseRemarks"
+).value.trim(),
 
 
 
-createdAt:new Date()
+updatedAt:
+
+new Date().toISOString()
 
 
 
 };
+
 
 
 
@@ -803,9 +1135,13 @@ if(editingExpenseID){
 await updateDoc(
 
 doc(
+
 db,
+
 "expenses",
+
 editingExpenseID
+
 ),
 
 expenseData
@@ -814,7 +1150,9 @@ expenseData
 
 
 
-alert("✅ Expense updated!");
+alert(
+"✅ Expense updated!"
+);
 
 
 
@@ -824,6 +1162,8 @@ editingExpenseID=null;
 
 }
 
+
+
 else{
 
 
@@ -831,17 +1171,34 @@ else{
 await addDoc(
 
 collection(
+
 db,
+
 "expenses"
+
 ),
 
-expenseData
+{
+
+
+...expenseData,
+
+
+createdAt:
+
+new Date().toISOString()
+
+
+}
+
 
 );
 
 
 
-alert("✅ Expense saved!");
+alert(
+"✅ Expense saved!"
+);
 
 
 
@@ -863,15 +1220,20 @@ loadAdminExpenses();
 
 
 
-
 catch(error){
 
 
 
-console.error(error);
+console.error(
+"Expense Error:",
+error
+);
 
 
-alert("❌ Expense saving failed!");
+
+alert(
+"❌ Expense saving failed"
+);
 
 
 
@@ -889,17 +1251,23 @@ alert("❌ Expense saving failed!");
 
 
 
+
 async function loadAdminExpenses(){
 
 
 
 const container =
 
-document.getElementById("adminExpenseList");
+document.getElementById(
+"adminExpenseList"
+);
 
 
 
-if(!container)return;
+
+if(!container)
+return;
+
 
 
 
@@ -914,11 +1282,15 @@ const snapshot =
 await getDocs(
 
 collection(
+
 db,
+
 "expenses"
+
 )
 
 );
+
 
 
 
@@ -930,14 +1302,26 @@ container.innerHTML="";
 
 
 
+
+
 if(snapshot.empty){
 
 
-container.innerHTML=
 
-"<p>No expense records yet.</p>";
+container.innerHTML =
+
+`
+
+<p>
+No expense records yet.
+</p>
+
+`;
+
+
 
 return;
+
 
 
 }
@@ -953,6 +1337,8 @@ snapshot.forEach((item)=>{
 
 
 const data=item.data();
+
+
 
 
 
@@ -975,13 +1361,17 @@ container.innerHTML += `
 
 
 
+
+
 <p>
 
 📂 Category:
 
-${data.category || "N/A"}
+${data.category || "Others"}
 
 </p>
+
+
 
 
 
@@ -997,6 +1387,9 @@ ${data.category || "N/A"}
 
 
 
+
+
+
 <p>
 
 📅 Date:
@@ -1004,6 +1397,9 @@ ${data.category || "N/A"}
 ${data.date || "N/A"}
 
 </p>
+
+
+
 
 
 
@@ -1019,8 +1415,10 @@ ${data.date || "N/A"}
 
 
 
-<button 
+<button
+
 class="btn"
+
 onclick="editExpense('${item.id}')">
 
 ✏️ Edit
@@ -1032,13 +1430,18 @@ onclick="editExpense('${item.id}')">
 
 
 
-<button 
+
+<button
+
 class="logoutBtn"
+
 onclick="deleteExpense('${item.id}')">
 
 🗑️ Delete
 
 </button>
+
+
 
 
 
@@ -1057,15 +1460,28 @@ onclick="deleteExpense('${item.id}')">
 
 }
 
+
+
 catch(error){
 
 
-console.error(error);
+
+console.error(
+"Expense Load Error:",
+error
+);
 
 
-container.innerHTML=
 
-"<p>❌ Failed loading expenses.</p>";
+container.innerHTML =
+
+`
+
+<p>
+❌ Failed loading expenses.
+</p>
+
+`;
 
 
 
@@ -1075,12 +1491,6 @@ container.innerHTML=
 
 }
 
-
-
-
-
-
-loadAdminExpenses();
 
 
 
@@ -1093,7 +1503,13 @@ window.deleteExpense = async function(id){
 
 
 
-if(!confirm("Delete this expense record?"))
+if(
+
+!confirm(
+"Delete this expense?"
+)
+
+)
 
 return;
 
@@ -1101,11 +1517,20 @@ return;
 
 
 
+
+
+try{
+
+
+
 await deleteDoc(
 
 doc(
+
 db,
+
 "expenses",
+
 id
 
 )
@@ -1116,7 +1541,9 @@ id
 
 
 
-alert("🗑️ Expense deleted!");
+alert(
+"🗑️ Expense deleted!"
+);
 
 
 
@@ -1124,7 +1551,27 @@ loadAdminExpenses();
 
 
 
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Delete failed"
+);
+
+
+
+}
+
+
+
 };
+
 
 
 
@@ -1137,18 +1584,44 @@ window.editExpense = async function(id){
 
 
 
+try{
+
+
+
 const snap =
 
 await getDoc(
 
 doc(
+
 db,
+
 "expenses",
+
 id
 
 )
 
 );
+
+
+
+
+
+
+if(!snap.exists()){
+
+
+alert(
+"Expense not found"
+);
+
+
+return;
+
+
+}
+
 
 
 
@@ -1160,39 +1633,70 @@ const data=snap.data();
 
 
 
-document.getElementById("expenseTitle").value =
+
+
+document.getElementById(
+"expenseTitle"
+).value =
 
 data.title || "";
 
 
 
-document.getElementById("expenseCategory").value =
+
+
+document.getElementById(
+"expenseCategory"
+).value =
 
 data.category || "";
 
 
 
-document.getElementById("expenseAmount").value =
+
+
+
+document.getElementById(
+"expenseAmount"
+).value =
 
 data.amount || 0;
 
 
 
-document.getElementById("expenseDate").value =
+
+
+
+document.getElementById(
+"expenseDate"
+).value =
 
 data.date || "";
 
 
 
-document.getElementById("expenseReceipt").value =
+
+
+
+document.getElementById(
+"expenseReceipt"
+).value =
 
 data.receipt || "";
 
 
 
-document.getElementById("expenseRemarks").value =
+
+
+
+document.getElementById(
+"expenseRemarks"
+).value =
 
 data.remarks || "";
+
+
+
 
 
 
@@ -1202,11 +1706,33 @@ editingExpenseID=id;
 
 
 
-alert("✏️ Editing Expense Mode");
+alert(
+"✏️ Editing Expense Mode"
+);
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Cannot edit expense"
+);
+
+
+
+}
 
 
 
 };
+
 
 
 
@@ -1244,13 +1770,18 @@ const fields=[
 fields.forEach(id=>{
 
 
-const element=document.getElementById(id);
+
+const field=
+
+document.getElementById(id);
 
 
 
-if(element){
+if(field){
 
-element.value="";
+
+field.value="";
+
 
 }
 
@@ -1260,7 +1791,13 @@ element.value="";
 
 
 
+editingExpenseID=null;
+
+
+
 }
+
+
 
 
 
@@ -1271,7 +1808,7 @@ element.value="";
 
 
 // =====================================================
-// ================= PROJECTS ===========================
+// ================= PROJECT SYSTEM =====================
 // =====================================================
 
 
@@ -1293,20 +1830,24 @@ try{
 
 
 
-const projectData={
+const projectData = {
 
 
 
 title:
 
-document.getElementById("projectTitle").value.trim(),
+document.getElementById(
+"projectTitle"
+).value.trim(),
 
 
 
 
 description:
 
-document.getElementById("projectDescription").value.trim(),
+document.getElementById(
+"projectDescription"
+).value.trim(),
 
 
 
@@ -1315,7 +1856,11 @@ document.getElementById("projectDescription").value.trim(),
 budget:
 
 Number(
-document.getElementById("projectBudget").value || 0
+
+document.getElementById(
+"projectBudget"
+).value || 0
+
 ),
 
 
@@ -1325,7 +1870,11 @@ document.getElementById("projectBudget").value || 0
 spent:
 
 Number(
-document.getElementById("projectSpent").value || 0
+
+document.getElementById(
+"projectSpent"
+).value || 0
+
 ),
 
 
@@ -1334,17 +1883,24 @@ document.getElementById("projectSpent").value || 0
 
 status:
 
-document.getElementById("projectStatus").value,
+document.getElementById(
+"projectStatus"
+).value,
 
 
 
 
 
-createdAt:new Date()
+updatedAt:
+
+new Date().toISOString()
 
 
 
 };
+
+
+
 
 
 
@@ -1358,9 +1914,13 @@ if(editingProjectID){
 await updateDoc(
 
 doc(
+
 db,
+
 "projects",
+
 editingProjectID
+
 ),
 
 projectData
@@ -1369,7 +1929,9 @@ projectData
 
 
 
-alert("✅ Project updated!");
+alert(
+"✅ Project updated!"
+);
 
 
 
@@ -1379,6 +1941,10 @@ editingProjectID=null;
 
 }
 
+
+
+
+
 else{
 
 
@@ -1386,21 +1952,39 @@ else{
 await addDoc(
 
 collection(
+
 db,
+
 "projects"
+
 ),
 
-projectData
+{
+
+
+...projectData,
+
+
+createdAt:
+
+new Date().toISOString()
+
+
+}
+
 
 );
 
 
 
-alert("✅ Project saved!");
+alert(
+"✅ Project saved!"
+);
 
 
 
 }
+
 
 
 
@@ -1418,16 +2002,20 @@ loadAdminProjects();
 
 
 
-
-
 catch(error){
 
 
 
-console.error(error);
+console.error(
+"Project Error:",
+error
+);
 
 
-alert("❌ Project saving failed!");
+
+alert(
+"❌ Project saving failed"
+);
 
 
 
@@ -1449,13 +2037,17 @@ async function loadAdminProjects(){
 
 
 
-const container=
+const container =
 
-document.getElementById("adminProjectList");
+document.getElementById(
+"adminProjectList"
+);
 
 
 
-if(!container)return;
+
+if(!container)
+return;
 
 
 
@@ -1466,16 +2058,21 @@ try{
 
 
 
-const snapshot=
+const snapshot =
 
 await getDocs(
 
 collection(
+
 db,
+
 "projects"
+
 )
 
 );
+
+
 
 
 
@@ -1493,11 +2090,20 @@ if(snapshot.empty){
 
 
 
-container.innerHTML=
+container.innerHTML =
 
-"<p>No projects available.</p>";
+`
+
+<p>
+No projects available.
+</p>
+
+`;
+
+
 
 return;
+
 
 
 }
@@ -1513,6 +2119,7 @@ snapshot.forEach((item)=>{
 
 
 const data=item.data();
+
 
 
 
@@ -1536,11 +2143,17 @@ container.innerHTML += `
 
 
 
+
+
+
 <p>
 
 ${data.description || "No description"}
 
 </p>
+
+
+
 
 
 
@@ -1556,6 +2169,9 @@ ${data.description || "No description"}
 
 
 
+
+
+
 <p>
 
 💸 Spent:
@@ -1563,6 +2179,9 @@ ${data.description || "No description"}
 ₱${Number(data.spent || 0).toLocaleString()}
 
 </p>
+
+
+
 
 
 
@@ -1581,8 +2200,10 @@ ${data.status || "Planning"}
 
 
 
-<button 
+<button
+
 class="btn"
+
 onclick="editProject('${item.id}')">
 
 ✏️ Edit
@@ -1593,13 +2214,18 @@ onclick="editProject('${item.id}')">
 
 
 
-<button 
+
+
+<button
+
 class="logoutBtn"
+
 onclick="deleteProject('${item.id}')">
 
 🗑️ Delete
 
 </button>
+
 
 
 
@@ -1617,18 +2243,30 @@ onclick="deleteProject('${item.id}')">
 
 
 
-
 }
+
+
 
 catch(error){
 
 
-console.error(error);
+
+console.error(
+"Project Load Error:",
+error
+);
 
 
-container.innerHTML=
 
-"<p>❌ Failed loading projects.</p>";
+container.innerHTML =
+
+`
+
+<p>
+❌ Failed loading projects.
+</p>
+
+`;
 
 
 
@@ -1639,11 +2277,6 @@ container.innerHTML=
 }
 
 
-
-
-
-
-loadAdminProjects();
 
 
 
@@ -1656,7 +2289,13 @@ window.deleteProject = async function(id){
 
 
 
-if(!confirm("Delete this project?"))
+if(
+
+!confirm(
+"Delete this project?"
+)
+
+)
 
 return;
 
@@ -1664,11 +2303,20 @@ return;
 
 
 
+
+
+try{
+
+
+
 await deleteDoc(
 
 doc(
+
 db,
+
 "projects",
+
 id
 
 )
@@ -1679,11 +2327,32 @@ id
 
 
 
-alert("🗑️ Project deleted!");
+alert(
+"🗑️ Project deleted!"
+);
 
 
 
 loadAdminProjects();
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Delete failed"
+);
+
+
+
+}
 
 
 
@@ -1701,18 +2370,26 @@ window.editProject = async function(id){
 
 
 
-const snap=
+try{
+
+
+
+const snap =
 
 await getDoc(
 
 doc(
+
 db,
+
 "projects",
+
 id
 
 )
 
 );
+
 
 
 
@@ -1725,33 +2402,57 @@ const data=snap.data();
 
 
 
-document.getElementById("projectTitle").value=
+
+document.getElementById(
+"projectTitle"
+).value =
 
 data.title || "";
 
 
 
-document.getElementById("projectDescription").value=
+
+
+
+document.getElementById(
+"projectDescription"
+).value =
 
 data.description || "";
 
 
 
-document.getElementById("projectBudget").value=
+
+
+
+document.getElementById(
+"projectBudget"
+).value =
 
 data.budget || 0;
 
 
 
-document.getElementById("projectSpent").value=
+
+
+
+document.getElementById(
+"projectSpent"
+).value =
 
 data.spent || 0;
 
 
 
-document.getElementById("projectStatus").value=
+
+
+
+document.getElementById(
+"projectStatus"
+).value =
 
 data.status || "Planning";
+
 
 
 
@@ -1761,11 +2462,33 @@ editingProjectID=id;
 
 
 
-alert("✏️ Editing Project Mode");
+alert(
+"✏️ Editing Project Mode"
+);
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(error);
+
+
+alert(
+"❌ Cannot edit project"
+);
+
+
+
+}
 
 
 
 };
+
 
 
 
@@ -1799,13 +2522,18 @@ const fields=[
 fields.forEach(id=>{
 
 
-const element=document.getElementById(id);
+
+const field=
+
+document.getElementById(id);
 
 
 
-if(element){
+if(field){
 
-element.value="";
+
+field.value="";
+
 
 }
 
@@ -1817,7 +2545,27 @@ element.value="";
 
 
 
-document.getElementById("projectStatus").value="Planning";
+
+
+const status =
+
+document.getElementById(
+"projectStatus"
+);
+
+
+
+if(status){
+
+
+status.value="Planning";
+
+
+}
+
+
+
+editingProjectID=null;
 
 
 
@@ -1828,15 +2576,46 @@ document.getElementById("projectStatus").value="Planning";
 
 
 
+
+// =====================================================
+// LOAD DATA AFTER PAGE READY
+// =====================================================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+loadAdminExpenses();
+
+
+loadAdminProjects();
+
+
+
+}
+
+);
+
+
+
+
+
+
+// =====================================================
 // END OF PART 2/4
+// NEXT: ANNOUNCEMENT SYSTEM + CLEAN REFRESH
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
-// ADMIN.JS PART 3/4
-// ANNOUNCEMENTS + LOGOUT
+// FINAL ADMIN.JS
+// PART 3/4
+// ANNOUNCEMENT MANAGEMENT
 // =====================================================
-
-
 
 
 
@@ -1858,7 +2637,6 @@ let editingAnnouncementID = null;
 window.saveAnnouncement = async function(){
 
 
-
 try{
 
 
@@ -1866,16 +2644,22 @@ try{
 const announcementData = {
 
 
+
 title:
 
-document.getElementById("announcementTitle").value.trim(),
+document.getElementById(
+"announcementTitle"
+).value.trim(),
+
 
 
 
 
 message:
 
-document.getElementById("announcementMessage").value.trim(),
+document.getElementById(
+"announcementMessage"
+).value.trim(),
 
 
 
@@ -1883,17 +2667,46 @@ document.getElementById("announcementMessage").value.trim(),
 
 priority:
 
-document.getElementById("announcementPriority").value,
+document.getElementById(
+"announcementPriority"
+).value,
 
 
 
 
 
-createdAt:new Date()
+updatedAt:
+
+new Date().toISOString()
 
 
 
 };
+
+
+
+
+
+
+
+if(
+!announcementData.title ||
+!announcementData.message
+){
+
+
+
+alert(
+"⚠️ Please complete announcement details."
+);
+
+
+
+return;
+
+
+
+}
 
 
 
@@ -1909,9 +2722,13 @@ if(editingAnnouncementID){
 await updateDoc(
 
 doc(
+
 db,
+
 "announcements",
+
 editingAnnouncementID
+
 ),
 
 announcementData
@@ -1920,7 +2737,9 @@ announcementData
 
 
 
-alert("✅ Announcement updated!");
+alert(
+"✅ Announcement updated!"
+);
 
 
 
@@ -1930,6 +2749,11 @@ editingAnnouncementID=null;
 
 }
 
+
+
+
+
+
 else{
 
 
@@ -1937,21 +2761,39 @@ else{
 await addDoc(
 
 collection(
+
 db,
+
 "announcements"
+
 ),
 
-announcementData
+{
+
+
+...announcementData,
+
+
+createdAt:
+
+new Date().toISOString()
+
+
+}
+
 
 );
 
 
 
-alert("📢 Announcement posted!");
+alert(
+"📢 Announcement posted!"
+);
 
 
 
 }
+
 
 
 
@@ -1969,16 +2811,20 @@ loadAdminAnnouncements();
 
 
 
-
-
 catch(error){
 
 
 
-console.error(error);
+console.error(
+"Announcement Save Error:",
+error
+);
 
 
-alert("❌ Failed saving announcement!");
+
+alert(
+"❌ Failed saving announcement."
+);
 
 
 
@@ -1996,17 +2842,31 @@ alert("❌ Failed saving announcement!");
 
 
 
+
+
+// =====================================================
+// LOAD ANNOUNCEMENTS
+// =====================================================
+
+
+
 async function loadAdminAnnouncements(){
 
 
 
 const container =
 
-document.getElementById("adminAnnouncementList");
+document.getElementById(
+"adminAnnouncementList"
+);
 
 
 
-if(!container)return;
+
+
+if(!container)
+return;
+
 
 
 
@@ -2022,8 +2882,11 @@ const snapshot =
 await getDocs(
 
 collection(
+
 db,
+
 "announcements"
+
 )
 
 );
@@ -2040,20 +2903,27 @@ container.innerHTML="";
 
 
 
-
 if(snapshot.empty){
 
 
 
-container.innerHTML=
+container.innerHTML =
 
-"<p>No announcements yet.</p>";
+`
+
+<p>
+No announcements posted yet.
+</p>
+
+`;
+
+
 
 return;
 
 
-}
 
+}
 
 
 
@@ -2072,19 +2942,56 @@ const data=item.data();
 
 
 
+
+let priorityClass = "low";
+
+
+
+if(
+data.priority === "High"
+){
+
+
+priorityClass="high";
+
+
+}
+
+
+
+else if(
+data.priority === "Medium"
+){
+
+
+priorityClass="medium";
+
+
+}
+
+
+
+
+
+
+
+
+
 container.innerHTML += `
 
 
 
-<div class="expense">
+<div class="expense ${priorityClass}">
 
 
 
 <h3>
 
-📢 ${data.title || "Untitled Announcement"}
+📢 ${data.title || "Announcement"}
 
 </h3>
+
+
 
 
 
@@ -2095,6 +3002,8 @@ container.innerHTML += `
 ${data.message || "No message"}
 
 </p>
+
+
 
 
 
@@ -2134,6 +3043,7 @@ onclick="editAnnouncement('${item.id}')">
 
 
 
+
 <button
 
 class="logoutBtn"
@@ -2143,6 +3053,7 @@ onclick="deleteAnnouncement('${item.id}')">
 🗑️ Delete
 
 </button>
+
 
 
 
@@ -2160,20 +3071,30 @@ onclick="deleteAnnouncement('${item.id}')">
 
 
 
-
 }
+
+
 
 catch(error){
 
 
 
-console.error(error);
+console.error(
+"Announcement Load Error:",
+error
+);
 
 
 
-container.innerHTML=
+container.innerHTML =
 
-"<p>❌ Failed loading announcements.</p>";
+`
+
+<p>
+❌ Failed loading announcements.
+</p>
+
+`;
 
 
 
@@ -2188,13 +3109,12 @@ container.innerHTML=
 
 
 
-loadAdminAnnouncements();
 
 
 
-
-
-
+// =====================================================
+// DELETE ANNOUNCEMENT
+// =====================================================
 
 
 
@@ -2202,7 +3122,13 @@ window.deleteAnnouncement = async function(id){
 
 
 
-if(!confirm("Delete this announcement?"))
+if(
+
+!confirm(
+"Delete this announcement?"
+)
+
+)
 
 return;
 
@@ -2211,11 +3137,19 @@ return;
 
 
 
+
+try{
+
+
+
 await deleteDoc(
 
 doc(
+
 db,
+
 "announcements",
+
 id
 
 )
@@ -2227,11 +3161,37 @@ id
 
 
 
-alert("🗑️ Announcement deleted!");
+alert(
+"🗑️ Announcement deleted!"
+);
 
 
 
 loadAdminAnnouncements();
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(
+error
+);
+
+
+
+alert(
+"❌ Delete failed."
+);
+
+
+
+}
 
 
 
@@ -2245,7 +3205,19 @@ loadAdminAnnouncements();
 
 
 
+
+
+// =====================================================
+// EDIT ANNOUNCEMENT
+// =====================================================
+
+
+
 window.editAnnouncement = async function(id){
+
+
+
+try{
 
 
 
@@ -2254,13 +3226,35 @@ const snap =
 await getDoc(
 
 doc(
+
 db,
+
 "announcements",
+
 id
 
 )
 
 );
+
+
+
+
+
+
+if(!snap.exists()){
+
+
+alert(
+"Announcement not found."
+);
+
+
+return;
+
+
+}
+
 
 
 
@@ -2276,7 +3270,10 @@ const data=snap.data();
 
 
 
-document.getElementById("announcementTitle").value =
+
+document.getElementById(
+"announcementTitle"
+).value =
 
 data.title || "";
 
@@ -2285,7 +3282,11 @@ data.title || "";
 
 
 
-document.getElementById("announcementMessage").value =
+
+
+document.getElementById(
+"announcementMessage"
+).value =
 
 data.message || "";
 
@@ -2295,9 +3296,13 @@ data.message || "";
 
 
 
-document.getElementById("announcementPriority").value =
+
+document.getElementById(
+"announcementPriority"
+).value =
 
 data.priority || "Low";
+
 
 
 
@@ -2313,7 +3318,33 @@ editingAnnouncementID=id;
 
 
 
-alert("✏️ Editing Announcement Mode");
+alert(
+"✏️ Editing Announcement Mode"
+);
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(
+error
+);
+
+
+
+alert(
+"❌ Cannot edit announcement."
+);
+
+
+
+}
 
 
 
@@ -2327,19 +3358,41 @@ alert("✏️ Editing Announcement Mode");
 
 
 
+
+
+// =====================================================
+// CLEAR ANNOUNCEMENT FORM
+// =====================================================
+
+
+
 function clearAnnouncementForm(){
 
 
 
 const title =
 
-document.getElementById("announcementTitle");
+document.getElementById(
+"announcementTitle"
+);
 
 
 
 const message =
 
-document.getElementById("announcementMessage");
+document.getElementById(
+"announcementMessage"
+);
+
+
+
+const priority =
+
+document.getElementById(
+"announcementPriority"
+);
+
+
 
 
 
@@ -2347,40 +3400,50 @@ document.getElementById("announcementMessage");
 
 if(title){
 
+
 title.value="";
 
+
 }
+
+
 
 
 
 
 if(message){
 
+
 message.value="";
+
 
 }
 
 
-
-
-
-
-const priority =
-
-document.getElementById("announcementPriority");
 
 
 
 
 if(priority){
 
+
 priority.value="Low";
 
-}
-
-
 
 }
+
+
+
+
+
+
+
+editingAnnouncementID=null;
+
+
+
+}
+
 
 
 
@@ -2392,104 +3455,42 @@ priority.value="Low";
 
 
 // =====================================================
-// ================= LOGOUT SYSTEM =====================
+// INITIAL LOAD
 // =====================================================
 
 
 
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
 
 
-
-const logoutButton =
-
-document.getElementById("logoutBtn");
-
-
-
-
-
-
-if(logoutButton){
-
-
-
-logoutButton.addEventListener(
-
-"click",
-
-async()=>{
-
-
-
-try{
-
-
-
-await signOut(auth);
-
-
-
-
-alert("✅ Successfully logged out!");
-
-
-
-
-
-window.location.href="login.html";
-
-
+loadAdminAnnouncements();
 
 
 
 }
-
-
-
-catch(error){
-
-
-
-console.error(error);
-
-
-
-alert("❌ Logout error!");
-
-
-
-}
-
-
-
-}
-
-
 
 );
 
 
 
-}
 
 
 
 
-
-
-
-
-console.log("📢 Announcement System Loaded!");
-
-
-
-
+// =====================================================
 // END OF PART 3/4
+// NEXT: GLOBAL SEARCH + FINAL SYSTEM CHECK
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
-// ADMIN.JS PART 4/4
-// GLOBAL SEARCH EVERYTHING
+// FINAL ADMIN.JS
+// PART 4/4
+// GLOBAL SEARCH + FINAL SYSTEM START
 // =====================================================
 
 
@@ -2505,13 +3506,25 @@ console.log("📢 Announcement System Loaded!");
 
 const globalSearch =
 
-document.getElementById("globalSearch");
+document.getElementById(
+"globalSearch"
+);
 
 
 
 const searchResults =
 
-document.getElementById("searchResults");
+document.getElementById(
+"searchResults"
+);
+
+
+
+
+
+
+
+let searchTimer = null;
 
 
 
@@ -2528,7 +3541,32 @@ globalSearch.addEventListener(
 
 "input",
 
-searchEverything
+()=>{
+
+
+
+clearTimeout(searchTimer);
+
+
+
+
+
+
+searchTimer = setTimeout(()=>{
+
+
+
+searchEverything();
+
+
+
+},400);
+
+
+
+
+
+}
 
 );
 
@@ -2544,7 +3582,25 @@ searchEverything
 
 
 
+
+
+
+// =====================================================
+// SEARCH FUNCTION
+// =====================================================
+
+
+
 async function searchEverything(){
+
+
+
+if(!searchResults)
+return;
+
+
+
+
 
 
 
@@ -2567,23 +3623,19 @@ if(keyword === ""){
 
 
 
-searchResults.innerHTML = `
+searchResults.innerHTML =
 
 
+
+`
 
 <div class="expense">
 
-
 <p>
-
 Type something to search...
-
 </p>
 
-
 </div>
-
-
 
 `;
 
@@ -2602,6 +3654,10 @@ return;
 
 
 
+try{
+
+
+
 let results = "";
 
 
@@ -2611,16 +3667,11 @@ let results = "";
 
 
 
-
-
-// =====================================================
 // ================= COLLECTION SEARCH =================
-// =====================================================
 
 
 
-
-const collectionSnap =
+const collectionSnapshot =
 
 await getDocs(
 
@@ -2636,7 +3687,7 @@ db,
 
 
 
-collectionSnap.forEach((item)=>{
+collectionSnapshot.forEach((item)=>{
 
 
 
@@ -2647,7 +3698,7 @@ const data=item.data();
 
 
 
-const text =
+const searchable =
 
 `
 
@@ -2666,7 +3717,28 @@ ${data.date}
 
 
 
-if(text.includes(keyword)){
+
+if(searchable.includes(keyword)){
+
+
+
+const total =
+
+
+Number(data.firstYear || 0)
+
++
+
+Number(data.secondYear || 0)
+
++
+
+Number(data.thirdYear || 0)
+
++
+
+Number(data.fourthYear || 0);
+
 
 
 
@@ -2681,42 +3753,32 @@ results += `
 
 
 <h3>
-
 💰 Collection
-
 </h3>
 
 
 
-
 <p>
-
 Week:
-
 ${data.week || "N/A"}
-
 </p>
 
 
 
 
 <p>
-
 Collector:
-
 ${data.collector || "N/A"}
-
 </p>
+
 
 
 
 <p>
-
-Date:
-
-${data.date || "N/A"}
-
+Total:
+₱${total.toLocaleString()}
 </p>
+
 
 
 
@@ -2742,14 +3804,11 @@ ${data.date || "N/A"}
 
 
 
-// =====================================================
-// ================= EXPENSE SEARCH ====================
-// =====================================================
+// ================= EXPENSE SEARCH =================
 
 
 
-
-const expenseSnap =
+const expenseSnapshot =
 
 await getDocs(
 
@@ -2765,7 +3824,8 @@ db,
 
 
 
-expenseSnap.forEach((item)=>{
+
+expenseSnapshot.forEach((item)=>{
 
 
 
@@ -2776,7 +3836,7 @@ const data=item.data();
 
 
 
-const text =
+const searchable =
 
 `
 
@@ -2796,9 +3856,7 @@ ${data.remarks}
 
 
 
-if(text.includes(keyword)){
-
-
+if(searchable.includes(keyword)){
 
 
 
@@ -2811,39 +3869,24 @@ results += `
 
 
 <h3>
-
-💸 Expense
-
+💸 ${data.title || "Expense"}
 </h3>
 
 
 
 
 <p>
-
-${data.title || "Untitled"}
-
-</p>
-
-
-
-
-<p>
-
 Category:
-
-${data.category || "N/A"}
-
+${data.category || "Others"}
 </p>
 
 
 
+
+
 <p>
-
 Amount:
-
 ₱${Number(data.amount || 0).toLocaleString()}
-
 </p>
 
 
@@ -2870,14 +3913,11 @@ Amount:
 
 
 
-// =====================================================
-// ================= PROJECT SEARCH ====================
-// =====================================================
+// ================= PROJECT SEARCH =================
 
 
 
-
-const projectSnap =
+const projectSnapshot =
 
 await getDocs(
 
@@ -2893,7 +3933,8 @@ db,
 
 
 
-projectSnap.forEach((item)=>{
+
+projectSnapshot.forEach((item)=>{
 
 
 
@@ -2904,8 +3945,7 @@ const data=item.data();
 
 
 
-
-const text =
+const searchable =
 
 `
 
@@ -2924,11 +3964,7 @@ ${data.status}
 
 
 
-
-
-if(text.includes(keyword)){
-
-
+if(searchable.includes(keyword)){
 
 
 
@@ -2941,39 +3977,22 @@ results += `
 
 
 <h3>
-
-📂 Project
-
+📂 ${data.title || "Project"}
 </h3>
 
 
 
 
-
 <p>
-
-${data.title || "Untitled"}
-
-</p>
-
-
-
-
-<p>
-
 Status:
-
 ${data.status || "Planning"}
-
 </p>
 
 
 
 
 <p>
-
 ${data.description || ""}
-
 </p>
 
 
@@ -3000,14 +4019,11 @@ ${data.description || ""}
 
 
 
-// =====================================================
-// =============== ANNOUNCEMENT SEARCH ================
-// =====================================================
+// ================= ANNOUNCEMENT SEARCH =================
 
 
 
-
-const announcementSnap =
+const announcementSnapshot =
 
 await getDocs(
 
@@ -3023,8 +4039,7 @@ db,
 
 
 
-
-announcementSnap.forEach((item)=>{
+announcementSnapshot.forEach((item)=>{
 
 
 
@@ -3035,7 +4050,7 @@ const data=item.data();
 
 
 
-const text =
+const searchable =
 
 `
 
@@ -3055,10 +4070,7 @@ ${data.priority}
 
 
 
-
-if(text.includes(keyword)){
-
-
+if(searchable.includes(keyword)){
 
 
 
@@ -3071,38 +4083,22 @@ results += `
 
 
 <h3>
-
-📢 Announcement
-
+📢 ${data.title || "Announcement"}
 </h3>
 
 
 
 
 <p>
-
-${data.title || "Untitled"}
-
-</p>
-
-
-
-
-<p>
-
 ${data.message || ""}
-
 </p>
 
 
 
 
 <p>
-
 Priority:
-
 ${data.priority || "Low"}
-
 </p>
 
 
@@ -3129,12 +4125,7 @@ ${data.priority || "Low"}
 
 
 
-// =====================================================
-// ================= DISPLAY RESULTS ===================
-// =====================================================
-
-
-
+// ================= DISPLAY =================
 
 
 
@@ -3142,32 +4133,26 @@ if(results === ""){
 
 
 
-searchResults.innerHTML = `
+searchResults.innerHTML =
 
 
+
+`
 
 <div class="expense">
 
 
-
 <h3>
-
-❌ No Results Found
-
+❌ No Result Found
 </h3>
 
 
-
 <p>
-
-No matching records available.
-
+No matching record.
 </p>
 
 
-
 </div>
-
 
 
 `;
@@ -3175,6 +4160,8 @@ No matching records available.
 
 
 }
+
+
 
 else{
 
@@ -3192,6 +4179,49 @@ searchResults.innerHTML = results;
 
 
 
+catch(error){
+
+
+
+console.error(
+
+"Search Error:",
+
+error
+
+);
+
+
+
+searchResults.innerHTML =
+
+
+
+`
+
+<div class="expense">
+
+
+<p>
+❌ Search failed.
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
 
 
 
@@ -3201,19 +4231,242 @@ searchResults.innerHTML = results;
 
 
 // =====================================================
-// ================= FINAL CHECK =======================
+// ================= THEME BUTTON ======================
 // =====================================================
+
+
+
+const themeToggle =
+
+document.getElementById(
+"themeToggle"
+);
+
+
+
+
+
+
+if(themeToggle){
+
+
+
+themeToggle.addEventListener(
+
+"click",
+
+()=>{
+
+
+
+document.body.classList.toggle(
+"dark-mode"
+);
+
+
+
+
+
+
+
+const dark =
+
+document.body.classList.contains(
+"dark-mode"
+);
+
+
+
+
+
+
+themeToggle.innerHTML = dark
+
+?
+
+"☀️ Light Mode"
+
+:
+
+"🌙 Dark Mode";
+
+
+
+
+
+
+
+localStorage.setItem(
+
+"theme",
+
+dark
+
+?
+
+"dark"
+
+:
+
+"light"
+
+);
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+// LOAD SAVED THEME
+
+
+
+const savedTheme =
+
+localStorage.getItem(
+"theme"
+);
+
+
+
+
+
+
+if(savedTheme==="dark"){
+
+
+
+document.body.classList.add(
+"dark-mode"
+);
+
+
+
+
+
+if(themeToggle){
+
+
+
+themeToggle.innerHTML =
+"☀️ Light Mode";
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// =====================================================
+// ================= FINAL START SYSTEM ================
+// =====================================================
+
+
+
+
+async function initializeAdmin(){
 
 
 
 console.log(
 
-"✅ Dalubwikaan Admin Dashboard Fully Loaded!"
+"⏳ Loading Dalubwikaan Admin System..."
 
 );
 
 
 
 
-// END OF PART 4/4 
 
+await loadAdminCollections();
+
+
+
+await loadAdminExpenses();
+
+
+
+await loadAdminProjects();
+
+
+
+await loadAdminAnnouncements();
+
+
+
+
+
+
+console.log(
+
+"✅ Dalubwikaan Admin Ready!"
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// START AFTER PAGE LOAD
+
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+initializeAdmin();
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================================
+// END OF FINAL ADMIN.JS
+// =====================================================
