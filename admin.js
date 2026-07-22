@@ -1,13 +1,12 @@
-// Firebase imports
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
 import { 
     getFirestore,
     collection,
     addDoc
-} from "firebase/firestore";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
@@ -18,88 +17,41 @@ const firebaseConfig = {
 };
 
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 
-// SAVE COLLECTION
-window.saveCollection = async function(){
 
-    await addDoc(collection(db, "collections"), {
-
-        week: document.getElementById("week").value,
-        date: document.getElementById("collectionDate").value,
-
-        firstYear: Number(document.getElementById("firstYearCollection").value),
-        secondYear: Number(document.getElementById("secondYearCollection").value),
-        thirdYear: Number(document.getElementById("thirdYearCollection").value),
-        fourthYear: Number(document.getElementById("fourthYearCollection").value),
-
-        collector: document.getElementById("collector").value,
-
-        createdAt: new Date()
-
-    });
-
-    alert("Collection saved!");
-};
-
-
-// SAVE EXPENSE
 window.saveExpense = async function(){
 
-    await addDoc(collection(db, "expenses"), {
+    try {
 
-        title: document.getElementById("expenseTitle").value,
-        category: document.getElementById("expenseCategory").value,
-        amount: Number(document.getElementById("expenseAmount").value),
-        date: document.getElementById("expenseDate").value,
-        receipt: document.getElementById("expenseReceipt").value,
-        remarks: document.getElementById("expenseRemarks").value,
+        await addDoc(collection(db, "expenses"), {
 
-        createdAt: new Date()
+            title: document.getElementById("expenseTitle").value,
 
-    });
+            category: document.getElementById("expenseCategory").value,
 
-    alert("Expense saved!");
+            amount: Number(document.getElementById("expenseAmount").value),
 
-};
+            date: document.getElementById("expenseDate").value,
 
+            receipt: document.getElementById("expenseReceipt").value,
 
-// SAVE PROJECT
-window.saveProject = async function(){
+            remarks: document.getElementById("expenseRemarks").value,
 
-    await addDoc(collection(db, "projects"), {
+            createdAt: new Date()
 
-        title: document.getElementById("projectTitle").value,
-        description: document.getElementById("projectDescription").value,
-        budget: Number(document.getElementById("projectBudget").value),
-        spent: Number(document.getElementById("projectSpent").value),
-        status: document.getElementById("projectStatus").value,
-
-        createdAt: new Date()
-
-    });
-
-    alert("Project saved!");
-
-};
+        });
 
 
-// SAVE ANNOUNCEMENT
-window.saveAnnouncement = async function(){
+        alert("Expense saved!");
 
-    await addDoc(collection(db, "announcements"), {
+    } catch(error) {
 
-        title: document.getElementById("announcementTitle").value,
-        message: document.getElementById("announcementMessage").value,
-        priority: document.getElementById("announcementPriority").value,
+        alert("Error: " + error.message);
 
-        createdAt: new Date()
-
-    });
-
-    alert("Announcement posted!");
+    }
 
 };
