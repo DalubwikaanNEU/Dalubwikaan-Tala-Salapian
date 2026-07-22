@@ -1,16 +1,19 @@
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// INDEX.JS / DASHBOARD.JS
+// FINAL INDEX.JS / DASHBOARD.JS
 // PART 1/4
-// FIREBASE CONNECTION + COLLECTIONS + EXPENSES
+// FIREBASE CONNECTION + BASIC SETUP
 // =====================================================
+
 
 
 // ================= FIREBASE IMPORT =================
 
 
 import { initializeApp }
+
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
 
 
 import {
@@ -20,28 +23,39 @@ collection,
 getDocs
 
 }
+
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 
 
 
-// ================= FIREBASE CONFIG =================
+
+// =====================================================
+// FIREBASE CONFIGURATION
+// =====================================================
 
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
-authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
-projectId: "dalubwikaan--26-8e646",
 
-storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+    authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
-messagingSenderId: "409516392020",
 
-appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+    projectId: "dalubwikaan--26-8e646",
+
+
+    storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+
+
+    messagingSenderId: "409516392020",
+
+
+    appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+
 
 };
 
@@ -49,25 +63,354 @@ appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 
 
+
+
+// ================= INITIALIZE FIREBASE =================
+
+
+
 const app = initializeApp(firebaseConfig);
+
 
 
 const db = getFirestore(app);
 
 
 
-console.log(
-"🔥 Dalubwikaan Dashboard Firebase Connected!"
+console.log("🔥 Dalubwikaan Firebase Connected");
+
+
+
+
+
+
+
+
+
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
+
+
+
+let totalExpenseAmount = 0;
+
+
+
+let chartInstance = null;
+
+
+
+let allRecords = [];
+
+
+
+
+
+
+
+
+
+// =====================================================
+// HELPER FUNCTION
+// FORMATS PESO VALUE
+// =====================================================
+
+
+
+function formatPeso(value){
+
+
+    return "₱" + Number(value || 0)
+    .toLocaleString("en-PH");
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================================
+// LOAD EXPENSES
+// =====================================================
+
+
+
+async function loadExpenses(){
+
+
+
+try{
+
+
+
+const container = 
+document.getElementById("expenseContainer");
+
+
+
+const totalDisplay =
+document.getElementById("totalExpenses");
+
+
+
+
+
+const snapshot = 
+await getDocs(
+collection(db,"expenses")
 );
 
 
 
 
 
-// ================= GLOBAL VARIABLES =================
+
+let total = 0;
 
 
-let financeChart = null;
+
+let expenseHTML = "";
+
+
+
+
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+
+const expense = doc.data();
+
+
+
+
+const amount = 
+Number(expense.amount || 0);
+
+
+
+
+
+total += amount;
+
+
+
+
+
+
+allRecords.push({
+
+
+type:"Expense",
+
+
+title:expense.title,
+
+
+category:expense.category,
+
+
+amount:amount,
+
+
+date:expense.date,
+
+
+remarks:expense.remarks || ""
+
+
+});
+
+
+
+
+
+
+
+expenseHTML += `
+
+
+
+<div class="expense compactExpense">
+
+
+<h3>
+
+${expense.title || "Untitled Expense"}
+
+</h3>
+
+
+
+<div class="expenseInfo">
+
+
+<p>
+
+<span>📌 Category</span>
+
+${expense.category || "N/A"}
+
+</p>
+
+
+
+<p>
+
+<span>💰 Amount</span>
+
+${formatPeso(amount)}
+
+</p>
+
+
+
+<p>
+
+<span>📅 Date</span>
+
+${expense.date || "No Date"}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+${
+expense.remarks
+
+?
+
+`
+
+<p class="remarks">
+
+📝 ${expense.remarks}
+
+</p>
+
+`
+
+:
+
+""
+
+}
+
+
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+
+totalExpenseAmount = total;
+
+
+
+
+
+
+
+if(container){
+
+
+container.innerHTML = expenseHTML || 
+`
+<div class="expense">
+
+No expense records found.
+
+</div>
+
+`;
+
+}
+
+
+
+
+
+if(totalDisplay){
+
+
+totalDisplay.innerHTML =
+formatPeso(total);
+
+
+}
+
+
+
+
+
+
+
+console.log(
+"Expenses Loaded:",
+total
+);
+
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(
+"Expense Loading Error:",
+error
+);
+
+
+
+}
+
+
+
+}
+
+// =====================================================
+// DALUBWIKAAN TRANSPARENCY PORTAL
+// FINAL INDEX.JS / DASHBOARD.JS
+// PART 2/4
+// COLLECTIONS + YEAR LEVEL COMPUTATION
+// =====================================================
+
 
 
 
@@ -78,16 +421,22 @@ let financeChart = null;
 // =====================================================
 
 
+
 async function loadCollections(){
+
 
 
 try{
 
 
-const snapshot =
+
+const snapshot = 
 await getDocs(
 collection(db,"collections")
 );
+
+
+
 
 
 
@@ -103,31 +452,69 @@ let fourthYear = 0;
 
 
 
+
+
 snapshot.forEach((doc)=>{
+
 
 
 const data = doc.data();
 
 
 
-firstYear += Number(
-data.firstYear || 0
-);
 
 
-secondYear += Number(
-data.secondYear || 0
-);
+
+firstYear += 
+Number(data.firstYear || 0);
 
 
-thirdYear += Number(
-data.thirdYear || 0
-);
 
 
-fourthYear += Number(
-data.fourthYear || 0
-);
+secondYear += 
+Number(data.secondYear || 0);
+
+
+
+
+thirdYear += 
+Number(data.thirdYear || 0);
+
+
+
+
+fourthYear += 
+Number(data.fourthYear || 0);
+
+
+
+
+
+
+allRecords.push({
+
+
+type:"Collection",
+
+
+title:"Year Collection Record",
+
+
+firstYear:data.firstYear || 0,
+
+
+secondYear:data.secondYear || 0,
+
+
+thirdYear:data.thirdYear || 0,
+
+
+fourthYear:data.fourthYear || 0
+
+
+
+});
+
 
 
 
@@ -137,51 +524,131 @@ data.fourthYear || 0
 
 
 
-const total =
+
+
+
+
+const totalCollection =
 
 firstYear +
+
 secondYear +
+
 thirdYear +
+
 fourthYear;
 
 
 
 
 
-updateText(
-"totalCollection",
-"₱" + total.toLocaleString()
+
+
+
+
+// ================= DISPLAY TOTAL =================
+
+
+
+const totalDisplay =
+
+document.getElementById(
+"totalCollection"
 );
 
 
 
-updateText(
-"firstYear",
-"₱" + firstYear.toLocaleString()
+
+
+if(totalDisplay){
+
+
+totalDisplay.innerHTML =
+
+formatPeso(totalCollection);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= YEAR DISPLAY =================
+
+
+
+const yearDisplays = {
+
+
+firstYear:firstYear,
+
+
+secondYear:secondYear,
+
+
+thirdYear:thirdYear,
+
+
+fourthYear:fourthYear
+
+
+};
+
+
+
+
+
+
+
+
+
+Object.keys(yearDisplays)
+
+.forEach((id)=>{
+
+
+
+const element =
+
+document.getElementById(id);
+
+
+
+
+
+if(element){
+
+
+
+element.innerHTML =
+
+formatPeso(
+yearDisplays[id]
 );
 
 
 
-updateText(
-"secondYear",
-"₱" + secondYear.toLocaleString()
-);
+}
 
 
 
-updateText(
-"thirdYear",
-"₱" + thirdYear.toLocaleString()
-);
+});
 
 
 
-updateText(
-"fourthYear",
-"₱" + fourthYear.toLocaleString()
-);
 
 
+
+
+
+
+// CREATE CHART
 
 
 
@@ -200,182 +667,41 @@ fourthYear
 
 
 
-return total;
+
+
+
+console.log(
+
+"Collections Loaded:",
+
+totalCollection
+
+);
+
+
+
+
+
+return totalCollection;
+
+
+
 
 
 
 }
+
+
+
+
 
 catch(error){
 
 
-console.error(
-"Collection Error:",
-error
-);
-
-
-
-return 0;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// LOAD EXPENSES
-// =====================================================
-
-
-async function loadExpenses(){
-
-
-try{
-
-
-const container =
-document.getElementById(
-"expenseContainer"
-);
-
-
-
-const snapshot =
-await getDocs(
-collection(db,"expenses")
-);
-
-
-
-
-let total = 0;
-
-
-
-if(container){
-
-container.innerHTML="";
-
-}
-
-
-
-
-
-snapshot.forEach((doc)=>{
-
-
-const data =
-doc.data();
-
-
-
-
-const amount =
-Number(data.amount || 0);
-
-
-
-total += amount;
-
-
-
-
-
-if(container){
-
-
-
-container.innerHTML += `
-
-
-<div class="expense">
-
-
-<h3>
-${data.title || "Expense"}
-</h3>
-
-
-<p>
-📌 Category:
-${data.category || "N/A"}
-</p>
-
-
-
-<p>
-💰 Amount:
-₱${amount.toLocaleString()}
-</p>
-
-
-
-<p>
-📅 Date:
-${data.date || "No date"}
-</p>
-
-
-
-<p>
-${data.remarks || ""}
-</p>
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-updateText(
-
-"totalExpenses",
-
-"₱" + total.toLocaleString()
-
-);
-
-
-
-
-
-return total;
-
-
-
-}
-
-catch(error){
-
 
 console.error(
 
-"Expense Error:",
+"Collection Loading Error:",
 
 error
 
@@ -401,105 +727,12 @@ return 0;
 
 
 
-// =====================================================
-// HELPER FUNCTION
-// =====================================================
-
-
-function updateText(id,value){
-
-
-const element =
-document.getElementById(id);
-
-
-
-if(element){
-
-element.innerHTML = value;
-
-}
-
-
-}
-
-// =====================================================
-// DALUBWIKAAN TRANSPARENCY PORTAL
-// INDEX.JS / DASHBOARD.JS
-// PART 2/4
-// PROJECTS + BALANCE + CHART
-// =====================================================
-
-
 
 
 // =====================================================
-// LOAD PROJECT COUNT
+// CALCULATE CURRENT BALANCE
 // =====================================================
 
-
-async function loadProjects(){
-
-
-try{
-
-
-const snapshot =
-await getDocs(
-collection(db,"projects")
-);
-
-
-
-const count =
-snapshot.size;
-
-
-
-updateText(
-"projectCount",
-count
-);
-
-
-
-return count;
-
-
-
-}
-
-catch(error){
-
-
-console.error(
-"Project Error:",
-error
-);
-
-
-
-return 0;
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// CALCULATE BALANCE
-// =====================================================
 
 
 async function calculateBalance(){
@@ -513,9 +746,12 @@ await loadCollections();
 
 
 
+
 const totalExpenses =
 
-await loadExpenses();
+totalExpenseAmount;
+
+
 
 
 
@@ -523,17 +759,22 @@ await loadExpenses();
 
 const balance =
 
-totalCollection - totalExpenses;
+totalCollection -
+
+totalExpenses;
 
 
 
 
 
-updateText(
 
-"currentBalance",
 
-"₱" + balance.toLocaleString()
+
+const balanceDisplay =
+
+document.getElementById(
+
+"currentBalance"
 
 );
 
@@ -541,7 +782,34 @@ updateText(
 
 
 
-return balance;
+
+if(balanceDisplay){
+
+
+
+balanceDisplay.innerHTML =
+
+formatPeso(balance);
+
+
+
+}
+
+
+
+
+
+
+
+console.log(
+
+"Current Balance:",
+
+balance
+
+);
+
+
 
 
 
@@ -556,8 +824,26 @@ return balance;
 
 
 // =====================================================
+// END OF PART 2
+// =====================================================
+
+// =====================================================
+// DALUBWIKAAN TRANSPARENCY PORTAL
+// FINAL INDEX.JS / DASHBOARD.JS
+// PART 3/4
+// CHART + PROJECTS + SEARCH SYSTEM
+// =====================================================
+
+
+
+
+
+
+
+// =====================================================
 // COLLECTION CHART
 // =====================================================
+
 
 
 function createCollectionChart(
@@ -574,11 +860,16 @@ fourth
 
 
 
+
+
 const canvas =
 
 document.getElementById(
+
 "collectionChart"
+
 );
+
 
 
 
@@ -598,11 +889,10 @@ return;
 
 // REMOVE OLD CHART
 
+if(chartInstance){
 
-if(financeChart){
 
-
-financeChart.destroy();
+chartInstance.destroy();
 
 
 }
@@ -613,7 +903,9 @@ financeChart.destroy();
 
 
 
-financeChart = new Chart(
+
+
+chartInstance = new Chart(
 
 canvas,
 
@@ -621,6 +913,8 @@ canvas,
 
 
 type:"bar",
+
+
 
 
 
@@ -643,14 +937,17 @@ labels:[
 
 
 
-datasets:[{
+datasets:[
 
 
-label:"Collection Amount",
+{
 
+
+label:"Collection",
 
 
 data:[
+
 
 first,
 
@@ -660,11 +957,20 @@ third,
 
 fourth
 
+
+],
+
+
+
+borderWidth:1
+
+
+
+}
+
+
 ]
 
-
-
-}]
 
 
 
@@ -675,11 +981,14 @@ fourth
 
 
 
+
+
 options:{
 
 
 
 responsive:true,
+
 
 
 maintainAspectRatio:false,
@@ -700,6 +1009,29 @@ display:true
 
 
 
+},
+
+
+
+
+
+
+scales:{
+
+
+
+y:{
+
+
+
+beginAtZero:true
+
+
+
+}
+
+
+
 }
 
 
@@ -709,14 +1041,17 @@ display:true
 
 
 
+
+
+
 }
-
-
 
 );
 
 
 
+
+
 }
 
 
@@ -727,35 +1062,139 @@ display:true
 
 
 
+
+
 // =====================================================
-// LOAD DASHBOARD START
+// LOAD PROJECT COUNT
 // =====================================================
 
 
-async function startDashboard(){
+
+async function loadProjects(){
+
+
+
+try{
+
+
+
+const snapshot =
+
+await getDocs(
+
+collection(db,"projects")
+
+);
+
+
+
+
+
+
+
+const projectDisplay =
+
+document.getElementById(
+
+"projectCount"
+
+);
+
+
+
+
+
+
+if(projectDisplay){
+
+
+
+projectDisplay.innerHTML =
+
+snapshot.size;
+
+
+
+}
+
+
+
+
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+
+const project = doc.data();
+
+
+
+
+
+allRecords.push({
+
+
+
+type:"Project",
+
+
+
+title:project.title || "Project",
+
+
+
+description:project.description || "",
+
+
+
+budget:project.budget || 0
+
+
+
+});
+
+
+
+});
+
+
+
+
+
 
 
 
 console.log(
-"📊 Loading Dashboard..."
+
+"Projects Loaded:",
+
+snapshot.size
+
 );
 
 
 
 
 
-await calculateBalance();
+
+
+}
 
 
 
-await loadProjects();
+catch(error){
 
 
 
+console.error(
 
+"Project Loading Error:",
 
-console.log(
-"✅ Dashboard Loaded!"
+error
+
 );
 
 
@@ -763,56 +1202,13 @@ console.log(
 }
 
 
-// =====================================================
-// DALUBWIKAAN TRANSPARENCY PORTAL
-// INDEX.JS / DASHBOARD.JS
-// PART 3/4
-// GLOBAL DASHBOARD SEARCH
-// =====================================================
-
-
-
-// ================= SEARCH ELEMENTS =================
-
-
-const dashboardSearch =
-
-document.getElementById(
-"dashboardSearch"
-);
-
-
-
-const dashboardSearchResults =
-
-document.getElementById(
-"dashboardSearchResults"
-);
-
-
-
-
-
-
-
-// ================= SEARCH LISTENER =================
-
-
-if(dashboardSearch){
-
-
-
-dashboardSearch.addEventListener(
-
-"input",
-
-searchDashboard
-
-);
-
 
 
 }
+
+
+
+
 
 
 
@@ -825,13 +1221,66 @@ searchDashboard
 // =====================================================
 
 
-async function searchDashboard(){
+
+function setupSearch(){
+
+
+
+const searchInput =
+
+document.getElementById(
+
+"dashboardSearch"
+
+);
+
+
+
+
+
+
+const results =
+
+document.getElementById(
+
+"dashboardSearchResults"
+
+);
+
+
+
+
+
+
+
+
+if(!searchInput || !results){
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+searchInput.addEventListener(
+
+"input",
+
+()=>{
+
+
 
 
 
 const keyword =
 
-dashboardSearch.value
+searchInput.value
 
 .toLowerCase()
 
@@ -842,28 +1291,19 @@ dashboardSearch.value
 
 
 
-if(!dashboardSearchResults){
 
-return;
-
-}
-
-
-
-
-
-
-// CLEAR RESULT
 
 
 if(keyword === ""){
 
 
-dashboardSearchResults.innerHTML = "";
+
+results.innerHTML = "";
 
 return;
 
 
+
 }
 
 
@@ -872,7 +1312,28 @@ return;
 
 
 
-let results = "";
+
+
+const filtered =
+
+allRecords.filter((item)=>{
+
+
+
+
+
+return JSON.stringify(item)
+
+.toLowerCase()
+
+.includes(keyword);
+
+
+
+
+
+
+});
 
 
 
@@ -880,97 +1341,22 @@ let results = "";
 
 
 
-// =====================================================
-// SEARCH EXPENSES
-// =====================================================
+
+
+if(filtered.length === 0){
 
 
 
-const expenseSnapshot =
+results.innerHTML = `
 
-await getDocs(
-
-collection(db,"expenses")
-
-);
-
-
-
-
-
-expenseSnapshot.forEach((doc)=>{
-
-
-
-const data =
-doc.data();
-
-
-
-
-
-const searchable = `
-
-${data.title}
-
-${data.category}
-
-${data.remarks}
-
-${data.date}
-
-`
-
-.toLowerCase();
-
-
-
-
-
-
-
-if(searchable.includes(keyword)){
-
-
-
-results += `
 
 
 <div class="expense">
 
 
-<h3>
-💸 ${data.title || "Expense"}
-</h3>
-
-
-
 <p>
 
-📌 Category:
-
-${data.category || "N/A"}
-
-</p>
-
-
-
-<p>
-
-💰 Amount:
-
-₱${Number(data.amount || 0)
-.toLocaleString()}
-
-</p>
-
-
-
-<p>
-
-📅 Date:
-
-${data.date || "N/A"}
+❌ No records found
 
 </p>
 
@@ -978,7 +1364,12 @@ ${data.date || "N/A"}
 </div>
 
 
+
 `;
+
+
+
+return;
 
 
 
@@ -986,97 +1377,31 @@ ${data.date || "N/A"}
 
 
 
-});
 
 
 
 
 
 
+results.innerHTML =
 
-
-
-// =====================================================
-// SEARCH COLLECTIONS
-// =====================================================
-
-
-
-const collectionSnapshot =
-
-await getDocs(
-
-collection(db,"collections")
-
-);
+filtered.map((item)=>{
 
 
 
 
 
-collectionSnapshot.forEach((doc)=>{
+return `
 
-
-
-const data =
-doc.data();
-
-
-
-
-
-const searchable = `
-
-${data.collector}
-
-${data.week}
-
-${data.date}
-
-`
-
-.toLowerCase();
-
-
-
-
-
-
-
-if(searchable.includes(keyword)){
-
-
-
-const total =
-
-
-Number(data.firstYear || 0)
-
-+
-
-Number(data.secondYear || 0)
-
-+
-
-Number(data.thirdYear || 0)
-
-+
-
-Number(data.fourthYear || 0);
-
-
-
-
-
-results += `
 
 
 <div class="expense">
 
 
+
 <h3>
 
-💰 Collection Record
+${item.title || item.type}
 
 </h3>
 
@@ -1084,201 +1409,39 @@ results += `
 
 <p>
 
-Collector:
+<strong>Type:</strong>
 
-${data.collector || "N/A"}
-
-</p>
-
-
-
-<p>
-
-Week:
-
-${data.week || "N/A"}
+${item.type}
 
 </p>
 
 
 
-<p>
-
-Amount:
-
-₱${total.toLocaleString()}
-
-</p>
 
 
+${
 
-</div>
+item.category
 
-
-`;
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// =====================================================
-// SEARCH PROJECTS
-// =====================================================
-
-
-
-const projectSnapshot =
-
-await getDocs(
-
-collection(db,"projects")
-
-);
-
-
-
-
-
-projectSnapshot.forEach((doc)=>{
-
-
-
-const data =
-doc.data();
-
-
-
-
-
-
-const searchable = `
-
-${data.title}
-
-${data.description}
-
-${data.status}
+?
 
 `
 
-.toLowerCase();
-
-
-
-
-
-
-
-
-if(searchable.includes(keyword)){
-
-
-
-results += `
-
-
-<div class="projectCard">
-
-
-<h3>
-
-📂 ${data.title || "Project"}
-
-</h3>
-
-
-
 <p>
 
-${data.description || ""}
+<strong>Category:</strong>
+
+${item.category}
 
 </p>
-
-
-
-<p>
-
-Status:
-
-${data.status || "Planning"}
-
-</p>
-
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// =====================================================
-// SEARCH ANNOUNCEMENTS
-// =====================================================
-
-
-
-const announcementSnapshot =
-
-await getDocs(
-
-collection(db,"announcements")
-
-);
-
-
-
-
-
-announcementSnapshot.forEach((doc)=>{
-
-
-
-const data =
-doc.data();
-
-
-
-
-
-const searchable = `
-
-${data.title}
-
-${data.message}
-
-${data.priority}
 
 `
 
-.toLowerCase();
+:
+
+""
+
+}
 
 
 
@@ -1286,51 +1449,79 @@ ${data.priority}
 
 
 
+${
 
-if(searchable.includes(keyword)){
+item.amount
 
+?
 
-
-results += `
-
-
-<div class="announcementCard">
-
-
-<h3>
-
-📢 ${data.title || "Announcement"}
-
-</h3>
-
-
+`
 
 <p>
 
-${data.message || ""}
+<strong>Amount:</strong>
+
+${formatPeso(item.amount)}
 
 </p>
 
+`
 
+:
+
+""
+
+}
+
+
+
+
+
+
+
+${
+
+item.description
+
+?
+
+`
 
 <p>
 
-Priority:
-
-${data.priority || "Low"}
+${item.description}
 
 </p>
+
+`
+
+:
+
+""
+
+}
+
+
+
 
 
 
 </div>
 
 
+
 `;
 
 
 
-}
+
+
+
+}).join("");
+
+
+
+
 
 
 
@@ -1341,119 +1532,26 @@ ${data.priority || "Low"}
 
 
 
+}
+
+
+
+
+
+
 
 
 
 // =====================================================
-// DISPLAY SEARCH RESULT
+// END OF PART 3
 // =====================================================
-
-
-
-if(results === ""){
-
-
-
-dashboardSearchResults.innerHTML = `
-
-
-<div class="expense">
-
-
-<h3>
-
-❌ No Result Found
-
-</h3>
-
-
-
-<p>
-
-No transparency records matched your search.
-
-</p>
-
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-else{
-
-
-
-dashboardSearchResults.innerHTML = results;
-
-
-
-}
-
-
-
-}
-
-
-
-console.log(
-"🔎 Search System Ready!"
-);
-
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// INDEX.JS / DASHBOARD.JS
+// FINAL INDEX.JS / DASHBOARD.JS
 // PART 4/4
-// FINAL STARTUP + AUTO REFRESH + ANIMATION
+// FINAL INITIALIZATION + START SYSTEM
 // =====================================================
-
-
-
-
-
-// =====================================================
-// CARD ANIMATION
-// =====================================================
-
-
-function activateAnimation(){
-
-
-
-const cards =
-
-document.querySelectorAll(
-
-".card, .expense, .projectCard, .announcementCard, .yearCard"
-
-);
-
-
-
-
-
-cards.forEach(card=>{
-
-
-card.classList.add(
-"fade"
-);
-
-
-
-});
-
-
-
-}
-
-
 
 
 
@@ -1462,11 +1560,12 @@ card.classList.add(
 
 
 // =====================================================
-// FULL DASHBOARD UPDATE
+// DASHBOARD STARTER
 // =====================================================
 
 
-async function updateDashboard(){
+
+async function startDashboard(){
 
 
 
@@ -1475,14 +1574,18 @@ try{
 
 
 console.log(
-"🔄 Updating Dashboard..."
+
+"🚀 Starting Dalubwikaan Dashboard..."
+
 );
 
 
 
 
 
-await loadCollections();
+
+
+// LOAD ALL DATA
 
 
 
@@ -1490,8 +1593,8 @@ await loadExpenses();
 
 
 
-await loadProjects();
 
+await loadCollections();
 
 
 
@@ -1501,8 +1604,21 @@ await calculateBalance();
 
 
 
+await loadProjects();
 
-activateAnimation();
+
+
+
+
+
+
+// ENABLE SEARCH
+
+
+
+setupSearch();
+
+
 
 
 
@@ -1510,19 +1626,30 @@ activateAnimation();
 
 
 console.log(
-"✅ Dashboard Updated Successfully!"
+
+"✅ Dashboard Fully Loaded"
+
 );
+
+
+
 
 
 
 }
 
+
+
+
+
+
 catch(error){
+
 
 
 console.error(
 
-"Dashboard Update Error:",
+"Dashboard Start Error:",
 
 error
 
@@ -1530,10 +1657,14 @@ error
 
 
 
+
+
 }
 
 
 
+
+
 }
 
 
@@ -1544,114 +1675,37 @@ error
 
 
 
-// =====================================================
-// FIRST LOAD
-// =====================================================
-
-
-
-updateDashboard();
-
-
-
-
-
-
-
 
 
 // =====================================================
-// AUTO REFRESH
+// AUTO START WHEN PAGE LOADS
 // =====================================================
 
 
 
-setInterval(()=>{
+document.addEventListener(
 
-
-updateDashboard();
-
-
-
-},30000);
-
-
-
-
-
-
-
-
-
-// =====================================================
-// DARK MODE CONNECTION CHECK
-// =====================================================
-
-
-
-const themeButton =
-
-document.getElementById(
-"themeToggle"
-);
-
-
-
-
-if(themeButton){
-
-
-
-themeButton.addEventListener(
-
-"click",
+"DOMContentLoaded",
 
 ()=>{
 
 
-document.body.classList.toggle(
-"dark"
-);
-
-
-
-const isDark =
-
-document.body.classList.contains(
-"dark"
-);
-
-
-
-
-themeButton.innerHTML =
-
-isDark
-
-?
-
-"☀️ Light Mode"
-
-:
-
-"🌙 Dark Mode";
+startDashboard();
 
 
 
 }
 
-
 );
 
 
 
-}
 
 
 
 
 
 
-console.log(
-"🚀 Dalubwikaan Transparency Portal Ready!"
-);
+// =====================================================
+// END OF FINAL INDEX.JS
+// =====================================================
