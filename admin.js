@@ -530,22 +530,19 @@ document.getElementById(id).value="";
 
 
 
-
-
-
-
-
 // =================================================
 // ================= PROJECTS ======================
 // =================================================
 
 
+let editingProjectID = null;
+
+
+
 window.saveProject = async function(){
 
 
-await addDoc(
-collection(db,"projects"),
-{
+const projectData = {
 
 
 title:
@@ -557,11 +554,11 @@ document.getElementById("projectDescription").value,
 
 
 budget:
-Number(document.getElementById("projectBudget").value||0),
+Number(document.getElementById("projectBudget").value || 0),
 
 
 spent:
-Number(document.getElementById("projectSpent").value||0),
+Number(document.getElementById("projectSpent").value || 0),
 
 
 status:
@@ -571,15 +568,277 @@ document.getElementById("projectStatus").value,
 createdAt:new Date()
 
 
-});
+};
+
+
+
+
+if(editingProjectID){
+
+
+await updateDoc(
+doc(db,"projects",editingProjectID),
+projectData
+);
+
+
+alert("✅ Project updated!");
+
+
+editingProjectID=null;
+
+
+}
+
+else{
+
+
+await addDoc(
+collection(db,"projects"),
+projectData
+);
 
 
 alert("✅ Project saved!");
 
 
+}
+
+
+
+clearProjectForm();
+
+loadAdminProjects();
+
+
 };
 
 
+
+
+
+
+
+
+async function loadAdminProjects(){
+
+
+const container =
+document.getElementById("adminProjectList");
+
+
+if(!container)return;
+
+
+
+const snapshot =
+await getDocs(collection(db,"projects"));
+
+
+
+container.innerHTML="";
+
+
+
+if(snapshot.empty){
+
+
+container.innerHTML =
+"<p>No projects available.</p>";
+
+return;
+
+
+}
+
+
+
+
+snapshot.forEach(item=>{
+
+
+const data=item.data();
+
+
+
+container.innerHTML += `
+
+
+<div class="expense">
+
+
+<h3>
+📂 ${data.title}
+</h3>
+
+
+
+<p>
+${data.description}
+</p>
+
+
+
+<p>
+💰 Budget:
+₱${Number(data.budget).toLocaleString()}
+</p>
+
+
+
+<p>
+💸 Spent:
+₱${Number(data.spent).toLocaleString()}
+</p>
+
+
+
+<p>
+📌 Status:
+${data.status}
+</p>
+
+
+
+
+<button onclick="editProject('${item.id}')">
+
+✏️ Edit
+
+</button>
+
+
+
+<button onclick="deleteProject('${item.id}')">
+
+🗑️ Delete
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+loadAdminProjects();
+
+
+
+
+
+
+
+
+window.deleteProject = async function(id){
+
+
+if(!confirm("Delete this project?")) return;
+
+
+
+await deleteDoc(
+doc(db,"projects",id)
+);
+
+
+
+alert("🗑️ Project deleted!");
+
+
+
+loadAdminProjects();
+
+
+};
+
+
+
+
+
+
+
+
+window.editProject = async function(id){
+
+
+const snap =
+await getDoc(
+doc(db,"projects",id)
+);
+
+
+
+const data=snap.data();
+
+
+
+document.getElementById("projectTitle").value =
+data.title;
+
+
+document.getElementById("projectDescription").value =
+data.description;
+
+
+document.getElementById("projectBudget").value =
+data.budget;
+
+
+document.getElementById("projectSpent").value =
+data.spent;
+
+
+document.getElementById("projectStatus").value =
+data.status;
+
+
+
+editingProjectID=id;
+
+
+
+alert("✏️ Edit Project Mode ON");
+
+
+};
+
+
+
+
+
+
+
+
+function clearProjectForm(){
+
+
+document.getElementById("projectTitle").value="";
+
+
+document.getElementById("projectDescription").value="";
+
+
+document.getElementById("projectBudget").value="";
+
+
+document.getElementById("projectSpent").value="";
+
+
+document.getElementById("projectStatus").value="Planning";
+
+
+}
 
 
 
