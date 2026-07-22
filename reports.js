@@ -13,7 +13,7 @@ import {
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+  apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
 
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
@@ -41,7 +41,6 @@ console.log("📊 Reports Firebase Connected!");
 
 
 
-
 // ================= LOAD REPORT =================
 
 
@@ -51,9 +50,16 @@ async function loadReport(){
 try{
 
 
-const selectedMonth = Number(
-document.getElementById("monthFilter").value
-);
+const monthFilter =
+document.getElementById("monthFilter");
+
+
+if(!monthFilter) return;
+
+
+
+const selectedMonth =
+Number(monthFilter.value);
 
 
 
@@ -68,9 +74,8 @@ let totalExpense = 0;
 // ================= COLLECTIONS =================
 
 
-const collectionSnap = await getDocs(
-collection(db,"collections")
-);
+const collectionSnap =
+await getDocs(collection(db,"collections"));
 
 
 
@@ -116,14 +121,11 @@ Number(data.fourthYear || 0);
 
 
 
-
-
 // ================= EXPENSES =================
 
 
-const expenseSnap = await getDocs(
-collection(db,"expenses")
-);
+const expenseSnap =
+await getDocs(collection(db,"expenses"));
 
 
 
@@ -195,6 +197,7 @@ displayReportInfo();
 
 }
 
+
 catch(error){
 
 
@@ -207,7 +210,6 @@ error
 }
 
 
-
 }
 
 
@@ -218,25 +220,24 @@ error
 
 
 
-// ================= REPORT INFORMATION =================
+// ================= REPORT INFO =================
 
 
 function displayReportInfo(){
 
 
-const monthSelect =
+const monthFilter =
 document.getElementById("monthFilter");
 
 
-
-if(!monthSelect) return;
+if(!monthFilter) return;
 
 
 
 const monthName =
 
-monthSelect.options[
-monthSelect.selectedIndex
+monthFilter.options[
+monthFilter.selectedIndex
 ].text;
 
 
@@ -245,8 +246,6 @@ monthSelect.selectedIndex
 
 const reportMonth =
 document.getElementById("reportMonth");
-
-
 
 const generatedDate =
 document.getElementById("generatedDate");
@@ -261,6 +260,7 @@ reportMonth.innerHTML =
 "📅 Month: " + monthName;
 
 }
+
 
 
 
@@ -284,7 +284,7 @@ new Date().toLocaleDateString();
 
 
 
-// ================= PRINT =================
+// ================= PRINT BUTTON =================
 
 
 function setupPrintButton(){
@@ -295,7 +295,8 @@ document.getElementById("printButton");
 
 
 
-if(printButton){
+if(!printButton) return;
+
 
 
 
@@ -304,10 +305,22 @@ printButton.addEventListener(
 function(){
 
 
-console.log("Printing report...");
+
+alert(
+"Preparing monthly report..."
+);
+
+
+
+// try browser print
+
+setTimeout(()=>{
 
 
 window.print();
+
+
+},500);
 
 
 
@@ -320,7 +333,6 @@ window.print();
 }
 
 
-}
 
 
 
@@ -328,23 +340,31 @@ window.print();
 
 
 
-// ================= CHANGE MONTH =================
+// ================= MONTH CHANGE =================
 
 
-document
-.getElementById("monthFilter")
-.addEventListener(
+const monthFilter =
+document.getElementById("monthFilter");
+
+
+
+if(monthFilter){
+
+
+monthFilter.addEventListener(
 "change",
 function(){
 
 
 loadReport();
 
-
 displayReportInfo();
 
 
 });
+
+
+}
 
 
 
