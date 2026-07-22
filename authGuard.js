@@ -34,7 +34,7 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
-    if (user.email !== "admin@dalubwikaan.com") {
+    if (user.email !== "admin@dalubwikaan.neu.com") {
 
         alert("🚫 Access Denied");
 
