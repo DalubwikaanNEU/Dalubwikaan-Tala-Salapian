@@ -1770,7 +1770,377 @@ alert("❌ Logout failed.");
 
 
 
+// =================================================
+// =============== GLOBAL SEARCH ==================
+// =================================================
 
+
+const globalSearch =
+document.getElementById("globalSearch");
+
+
+if(globalSearch){
+
+
+globalSearch.addEventListener(
+"input",
+searchEverything
+);
+
+
+}
+
+
+
+
+
+async function searchEverything(){
+
+
+const keyword =
+document
+.getElementById("globalSearch")
+.value
+.toLowerCase()
+.trim();
+
+
+
+const resultBox =
+document.getElementById("searchResults");
+
+
+
+if(keyword===""){
+
+
+resultBox.innerHTML =
+"<p>Type something to search...</p>";
+
+return;
+
+
+}
+
+
+
+
+
+let results = "";
+
+
+
+
+// ================= EXPENSES =================
+
+
+const expenseSnap =
+await getDocs(
+collection(db,"expenses")
+);
+
+
+
+expenseSnap.forEach(doc=>{
+
+
+const data=doc.data();
+
+
+
+if(
+
+(data.title || "")
+.toLowerCase()
+.includes(keyword)
+
+||
+
+(data.category || "")
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+results += `
+
+
+<div class="expense">
+
+<h3>
+💸 Expense
+</h3>
+
+
+<p>
+${data.title}
+</p>
+
+
+<p>
+₱${Number(data.amount||0)
+.toLocaleString()}
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+
+
+
+// ================= PROJECTS =================
+
+
+const projectSnap =
+await getDocs(
+collection(db,"projects")
+);
+
+
+
+projectSnap.forEach(doc=>{
+
+
+const data=doc.data();
+
+
+
+if(
+
+(data.title || "")
+.toLowerCase()
+.includes(keyword)
+
+||
+
+(data.description || "")
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+results += `
+
+
+<div class="expense">
+
+
+<h3>
+📂 Project
+</h3>
+
+
+<p>
+${data.title}
+</p>
+
+
+<p>
+${data.description}
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+
+
+
+// ================= ANNOUNCEMENTS =================
+
+
+const announcementSnap =
+await getDocs(
+collection(db,"announcements")
+);
+
+
+
+announcementSnap.forEach(doc=>{
+
+
+const data=doc.data();
+
+
+
+if(
+
+(data.title || "")
+.toLowerCase()
+.includes(keyword)
+
+||
+
+(data.message || "")
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+results += `
+
+
+<div class="expense">
+
+
+<h3>
+📢 Announcement
+</h3>
+
+
+<p>
+${data.title}
+</p>
+
+
+<p>
+${data.message}
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+
+
+
+// ================= COLLECTIONS =================
+
+
+const collectionSnap =
+await getDocs(
+collection(db,"collections")
+);
+
+
+
+collectionSnap.forEach(doc=>{
+
+
+const data=doc.data();
+
+
+
+if(
+
+(data.week || "")
+.toLowerCase()
+.includes(keyword)
+
+||
+
+(data.collector || "")
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+results += `
+
+
+<div class="expense">
+
+
+<h3>
+💰 Collection
+</h3>
+
+
+<p>
+${data.week}
+</p>
+
+
+<p>
+Collector:
+${data.collector}
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+});
+
+
+
+
+
+
+if(results===""){
+
+
+resultBox.innerHTML = `
+
+<div class="expense">
+
+<h3>
+❌ No Results
+</h3>
+
+<p>
+No matching records found.
+</p>
+
+</div>
+
+`;
+
+
+}
+
+else{
+
+
+resultBox.innerHTML = results;
+
+
+}
+
+
+
+}
 
 
 console.log("✅ Admin Dashboard Fully Loaded!");
