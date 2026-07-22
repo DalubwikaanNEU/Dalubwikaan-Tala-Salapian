@@ -34,7 +34,7 @@ console.log("🔥 Admin Firebase Connected!");
 
 
 // =================================================
-// ================= EXPENSE =======================
+// ================= EXPENSES ======================
 // =================================================
 
 
@@ -45,22 +45,25 @@ let editingExpenseID = null;
 window.saveExpense = async function(){
 
 
-try{
+const data = {
 
+title:
+document.getElementById("expenseTitle").value,
 
-const expenseData = {
+category:
+document.getElementById("expenseCategory").value,
 
-title: document.getElementById("expenseTitle").value,
+amount:
+Number(document.getElementById("expenseAmount").value || 0),
 
-category: document.getElementById("expenseCategory").value,
+date:
+document.getElementById("expenseDate").value,
 
-amount: Number(document.getElementById("expenseAmount").value),
+receipt:
+document.getElementById("expenseReceipt").value,
 
-date: document.getElementById("expenseDate").value,
-
-receipt: document.getElementById("expenseReceipt").value,
-
-remarks: document.getElementById("expenseRemarks").value,
+remarks:
+document.getElementById("expenseRemarks").value,
 
 createdAt:new Date()
 
@@ -73,11 +76,12 @@ if(editingExpenseID){
 
 await updateDoc(
 doc(db,"expenses",editingExpenseID),
-expenseData
+data
 );
 
 
 alert("✅ Expense updated!");
+
 
 editingExpenseID=null;
 
@@ -89,30 +93,18 @@ else{
 
 await addDoc(
 collection(db,"expenses"),
-expenseData
+data
 );
 
 
 alert("✅ Expense saved!");
 
-
 }
-
 
 
 clearExpenseForm();
 
 loadAdminExpenses();
-
-
-}
-
-
-catch(error){
-
-alert(error.message);
-
-}
 
 
 };
@@ -133,39 +125,33 @@ document.getElementById("adminExpenseList");
 if(!container)return;
 
 
-
 const snapshot =
 await getDocs(collection(db,"expenses"));
-
 
 
 container.innerHTML="";
 
 
 
-snapshot.forEach((item)=>{
+snapshot.forEach(item=>{
 
 
-const expense=item.data();
+const data=item.data();
 
 
 
 container.innerHTML += `
 
-
 <div class="expense">
 
-
-<h3>${expense.title}</h3>
-
+<h3>${data.title}</h3>
 
 <p>
-📌 ${expense.category}
+${data.category}
 </p>
 
-
 <p>
-💰 ₱${Number(expense.amount).toLocaleString()}
+₱${Number(data.amount).toLocaleString()}
 </p>
 
 
@@ -181,7 +167,6 @@ container.innerHTML += `
 
 </div>
 
-
 `;
 
 });
@@ -190,8 +175,9 @@ container.innerHTML += `
 }
 
 
-
 loadAdminExpenses();
+
+
 
 
 
@@ -200,15 +186,12 @@ loadAdminExpenses();
 window.deleteExpense = async function(id){
 
 
-if(!confirm("Delete this expense?"))return;
-
-
 await deleteDoc(
 doc(db,"expenses",id)
 );
 
 
-alert("🗑️ Deleted!");
+alert("🗑️ Expense deleted!");
 
 
 loadAdminExpenses();
@@ -224,31 +207,32 @@ window.editExpense = async function(id){
 
 
 const snap =
-await getDoc(doc(db,"expenses",id));
+await getDoc(
+doc(db,"expenses",id)
+);
 
 
-const expense=snap.data();
+const data=snap.data();
 
 
 
-document.getElementById("expenseTitle").value=expense.title;
+document.getElementById("expenseTitle").value=data.title;
 
-document.getElementById("expenseCategory").value=expense.category;
+document.getElementById("expenseCategory").value=data.category;
 
-document.getElementById("expenseAmount").value=expense.amount;
+document.getElementById("expenseAmount").value=data.amount;
 
-document.getElementById("expenseDate").value=expense.date;
+document.getElementById("expenseDate").value=data.date;
 
-document.getElementById("expenseReceipt").value=expense.receipt || "";
+document.getElementById("expenseReceipt").value=data.receipt || "";
 
-document.getElementById("expenseRemarks").value=expense.remarks || "";
-
+document.getElementById("expenseRemarks").value=data.remarks || "";
 
 
 editingExpenseID=id;
 
 
-alert("✏️ Edit mode ON");
+alert("✏️ Edit Expense Mode");
 
 
 };
@@ -259,17 +243,19 @@ alert("✏️ Edit mode ON");
 function clearExpenseForm(){
 
 
-document.getElementById("expenseTitle").value="";
+[
+"expenseTitle",
+"expenseCategory",
+"expenseAmount",
+"expenseDate",
+"expenseReceipt",
+"expenseRemarks"
 
-document.getElementById("expenseCategory").value="";
+].forEach(id=>{
 
-document.getElementById("expenseAmount").value="";
+document.getElementById(id).value="";
 
-document.getElementById("expenseDate").value="";
-
-document.getElementById("expenseReceipt").value="";
-
-document.getElementById("expenseRemarks").value="";
+});
 
 
 }
@@ -279,21 +265,22 @@ document.getElementById("expenseRemarks").value="";
 
 
 
+
+
+
 // =================================================
-// ================= COLLECTION =====================
+// ================= COLLECTIONS ===================
 // =================================================
 
 
-
-let editingCollectionID = null;
-
+let editingCollectionID=null;
 
 
 
 window.saveCollection = async function(){
 
 
-const collectionData={
+const data={
 
 
 week:
@@ -305,19 +292,19 @@ document.getElementById("collectionDate").value,
 
 
 firstYear:
-Number(document.getElementById("firstYearCollection").value || 0),
+Number(document.getElementById("firstYearCollection").value||0),
 
 
 secondYear:
-Number(document.getElementById("secondYearCollection").value || 0),
+Number(document.getElementById("secondYearCollection").value||0),
 
 
 thirdYear:
-Number(document.getElementById("thirdYearCollection").value || 0),
+Number(document.getElementById("thirdYearCollection").value||0),
 
 
 fourthYear:
-Number(document.getElementById("fourthYearCollection").value || 0),
+Number(document.getElementById("fourthYearCollection").value||0),
 
 
 collector:
@@ -331,13 +318,12 @@ createdAt:new Date()
 
 
 
-
 if(editingCollectionID){
 
 
 await updateDoc(
 doc(db,"collections",editingCollectionID),
-collectionData
+data
 );
 
 
@@ -354,7 +340,7 @@ else{
 
 await addDoc(
 collection(db,"collections"),
-collectionData
+data
 );
 
 
@@ -371,8 +357,6 @@ loadAdminCollections();
 
 
 };
-
-
 
 
 
@@ -400,15 +384,13 @@ container.innerHTML="";
 
 
 
-snapshot.forEach((item)=>{
+snapshot.forEach(item=>{
 
 
 const data=item.data();
 
 
-
-const total =
-
+let total =
 Number(data.firstYear||0)+
 Number(data.secondYear||0)+
 Number(data.thirdYear||0)+
@@ -418,35 +400,22 @@ Number(data.fourthYear||0);
 
 container.innerHTML += `
 
-
 <div class="expense">
 
-
-<h3>
-${data.week}
-</h3>
-
+<h3>${data.week}</h3>
 
 <p>
-📅 ${data.date}
+Collector: ${data.collector}
 </p>
-
 
 <p>
-👤 ${data.collector}
+Total: ₱${total.toLocaleString()}
 </p>
-
-
-<p>
-💰 ₱${total.toLocaleString()}
-</p>
-
 
 
 <button onclick="editCollection('${item.id}')">
 ✏️ Edit
 </button>
-
 
 
 <button onclick="deleteCollection('${item.id}')">
@@ -456,16 +425,12 @@ ${data.week}
 
 </div>
 
-
 `;
-
-
 
 });
 
 
 }
-
 
 
 loadAdminCollections();
@@ -477,10 +442,6 @@ loadAdminCollections();
 
 
 window.deleteCollection = async function(id){
-
-
-if(!confirm("Delete this collection?"))return;
-
 
 
 await deleteDoc(
@@ -501,16 +462,13 @@ loadAdminCollections();
 
 
 
-
 window.editCollection = async function(id){
-
 
 
 const snap =
 await getDoc(
 doc(db,"collections",id)
 );
-
 
 
 const data=snap.data();
@@ -536,8 +494,7 @@ document.getElementById("collector").value=data.collector;
 editingCollectionID=id;
 
 
-
-alert("✏️ Edit collection then click Save Collection");
+alert("✏️ Edit Collection Mode");
 
 
 };
@@ -546,25 +503,31 @@ alert("✏️ Edit collection then click Save Collection");
 
 
 
+
 function clearCollectionForm(){
 
 
-document.getElementById("week").value="";
+[
+"week",
+"collectionDate",
+"firstYearCollection",
+"secondYearCollection",
+"thirdYearCollection",
+"fourthYearCollection",
+"collector"
 
-document.getElementById("collectionDate").value="";
+].forEach(id=>{
 
-document.getElementById("firstYearCollection").value="";
 
-document.getElementById("secondYearCollection").value="";
+document.getElementById(id).value="";
 
-document.getElementById("thirdYearCollection").value="";
 
-document.getElementById("fourthYearCollection").value="";
-
-document.getElementById("collector").value="";
+});
 
 
 }
+
+
 
 
 
@@ -585,15 +548,25 @@ collection(db,"projects"),
 {
 
 
-title:document.getElementById("projectTitle").value,
+title:
+document.getElementById("projectTitle").value,
 
-description:document.getElementById("projectDescription").value,
 
-budget:Number(document.getElementById("projectBudget").value||0),
+description:
+document.getElementById("projectDescription").value,
 
-spent:Number(document.getElementById("projectSpent").value||0),
 
-status:document.getElementById("projectStatus").value,
+budget:
+Number(document.getElementById("projectBudget").value||0),
+
+
+spent:
+Number(document.getElementById("projectSpent").value||0),
+
+
+status:
+document.getElementById("projectStatus").value,
+
 
 createdAt:new Date()
 
@@ -603,6 +576,7 @@ createdAt:new Date()
 
 alert("✅ Project saved!");
 
+
 };
 
 
@@ -612,32 +586,239 @@ alert("✅ Project saved!");
 
 
 
+
 // =================================================
-// ================= ANNOUNCEMENT ==================
+// ================= ANNOUNCEMENTS ================
 // =================================================
+
+
+let editingAnnouncementID=null;
+
 
 
 window.saveAnnouncement = async function(){
 
 
-await addDoc(
-collection(db,"announcements"),
-{
+
+const data={
 
 
-title:document.getElementById("announcementTitle").value,
+title:
+document.getElementById("announcementTitle").value,
 
-message:document.getElementById("announcementMessage").value,
 
-priority:document.getElementById("announcementPriority").value,
+message:
+document.getElementById("announcementMessage").value,
+
+
+priority:
+document.getElementById("announcementPriority").value,
+
 
 createdAt:new Date()
 
 
-});
+};
+
+
+
+
+
+if(editingAnnouncementID){
+
+
+await updateDoc(
+doc(db,"announcements",editingAnnouncementID),
+data
+);
+
+
+alert("✅ Announcement updated!");
+
+
+editingAnnouncementID=null;
+
+
+}
+
+else{
+
+
+await addDoc(
+collection(db,"announcements"),
+data
+);
 
 
 alert("✅ Announcement posted!");
 
 
+}
+
+
+
+clearAnnouncementForm();
+
+loadAdminAnnouncements();
+
+
 };
+
+
+
+
+
+
+
+async function loadAdminAnnouncements(){
+
+
+const container =
+document.getElementById("adminAnnouncementList");
+
+
+
+if(!container)return;
+
+
+
+const snapshot =
+await getDocs(collection(db,"announcements"));
+
+
+
+container.innerHTML="";
+
+
+
+snapshot.forEach(item=>{
+
+
+const data=item.data();
+
+
+
+container.innerHTML += `
+
+
+<div class="expense">
+
+
+<h3>
+📢 ${data.title}
+</h3>
+
+
+<p>
+${data.message}
+</p>
+
+
+<p>
+Priority: ${data.priority}
+</p>
+
+
+<button onclick="editAnnouncement('${item.id}')">
+✏️ Edit
+</button>
+
+
+<button onclick="deleteAnnouncement('${item.id}')">
+🗑️ Delete
+</button>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+loadAdminAnnouncements();
+
+
+
+
+
+
+
+window.deleteAnnouncement = async function(id){
+
+
+await deleteDoc(
+doc(db,"announcements",id)
+);
+
+
+alert("🗑️ Announcement deleted!");
+
+
+loadAdminAnnouncements();
+
+
+};
+
+
+
+
+
+
+
+window.editAnnouncement = async function(id){
+
+
+const snap =
+await getDoc(
+doc(db,"announcements",id)
+);
+
+
+
+const data=snap.data();
+
+
+
+document.getElementById("announcementTitle").value=data.title;
+
+
+document.getElementById("announcementMessage").value=data.message;
+
+
+document.getElementById("announcementPriority").value=data.priority;
+
+
+
+editingAnnouncementID=id;
+
+
+alert("✏️ Edit Announcement Mode");
+
+
+};
+
+
+
+
+
+
+
+function clearAnnouncementForm(){
+
+
+document.getElementById("announcementTitle").value="";
+
+
+document.getElementById("announcementMessage").value="";
+
+
+document.getElementById("announcementPriority").value="Low";
+
+
+}
