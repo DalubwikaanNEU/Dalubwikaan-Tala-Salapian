@@ -4,184 +4,140 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Dalubwikaan Collections</title>
 
-
 <link rel="stylesheet" href="style.css">
-
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-
 </head>
-
-
 
 <body>
 
-
-
+<!-- ================= HEADER ================= -->
 
 <header class="adminHeader">
 
+<h1>💰 Dalubwikaan Collections</h1>
 
-<h1>
-💰 Dalubwikaan Collections
-</h1>
-
-
-<p>
-Collection Records and Financial Transparency
-</p>
-
+<p>Collection Records and Financial Transparency</p>
 
 </header>
 
-
-
-
-
-
-
+<!-- ================= MAIN ================= -->
 
 <main class="adminContainer">
 
+<!-- ================= SUMMARY ================= -->
 
+<section class="adminCard">
 
+<h2>📊 Collection Summary</h2>
 
-
-
-
-<!-- TOTAL COLLECTION -->
-
-
-<section class="dashboard">
-
+<div class="dashboard">
 
 <div class="card">
 
-
-<h3>
-Total Collection
-</h3>
-
+<h3>Total Collection</h3>
 
 <h2 id="totalCollection">
-
 ₱0
-
 </h2>
-
 
 </div>
 
-
-
-
-
 <div class="card">
 
+<h3>Total Records</h3>
 
-<h3>
-Filter Year Level
-</h3>
+<h2 id="collectionCount">
+0
+</h2>
 
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= SEARCH ================= -->
+
+<section class="adminCard">
+
+<h2>🔍 Search & Filter</h2>
+
+<input
+type="text"
+id="searchCollection"
+placeholder="Search Week or Collector...">
+
+<br><br>
 
 <select id="yearFilter">
 
-
 <option value="all">
-All Years
+All Year Levels
 </option>
-
-
 
 <option value="1">
 1st Year
 </option>
 
-
-
 <option value="2">
 2nd Year
 </option>
-
-
 
 <option value="3">
 3rd Year
 </option>
 
-
-
 <option value="4">
 4th Year
 </option>
 
-
-
 </select>
-
-
-
-</div>
-
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- COLLECTION LIST -->
-
+<!-- ================= COLLECTION RECORDS ================= -->
 
 <section class="adminCard">
 
-
-<h2>
-📋 Collection Records
-</h2>
-
-
+<h2>📋 Collection Records</h2>
 
 <div id="collectionList">
 
+<div class="expense">
 
 Loading collections...
 
+</div>
 
 </div>
 
-
-
 </section>
-
-
-
-
-
-
-
 
 </main>
 
+<!-- ================= FOOTER ================= -->
 
+<footer>
 
+<p>
 
+© 2026 Dalubwikaan Transparency Portal
 
+<br>
 
+Magsikhay at Manaliksik.
+
+</p>
+
+</footer>
 
 <script type="module" src="collections.js"></script>
-
-
 
 </body>
 
