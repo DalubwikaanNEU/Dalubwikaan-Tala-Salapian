@@ -1,20 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
-
 import {
-
-getFirestore,
-
-collection,
-
-getDocs,
-
-query,
-
-orderBy
-
+    getFirestore,
+    collection,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
 
 
 
@@ -41,12 +31,11 @@ appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 const app = initializeApp(firebaseConfig);
 
-
 const db = getFirestore(app);
 
 
 
-console.log("📢 Announcement Connected!");
+console.log("📢 Announcement Firebase Connected!");
 
 
 
@@ -60,9 +49,18 @@ console.log("📢 Announcement Connected!");
 async function loadAnnouncements(){
 
 
-
 const container =
 document.getElementById("announcementList");
+
+
+
+if(!container){
+
+console.error("Announcement container not found");
+
+return;
+
+}
 
 
 
@@ -70,17 +68,11 @@ try{
 
 
 
-const q = query(
-
-collection(db,"announcements"),
-
-orderBy("createdAt","desc")
-
+const snapshot =
+await getDocs(
+collection(db,"announcements")
 );
 
-
-
-const snapshot = await getDocs(q);
 
 
 
@@ -95,12 +87,15 @@ if(snapshot.empty){
 
 container.innerHTML = `
 
+<div class="expense">
+
 <p>
 No announcements yet.
 </p>
 
-`;
+</div>
 
+`;
 
 return;
 
@@ -111,13 +106,47 @@ return;
 
 
 
+let announcements = [];
+
 
 
 snapshot.forEach((doc)=>{
 
 
+announcements.push(doc.data());
 
-const data = doc.data();
+
+});
+
+
+
+
+
+// SORT NEWEST FIRST
+
+announcements.sort((a,b)=>{
+
+
+let dateA =
+a.createdAt?.seconds || 0;
+
+
+let dateB =
+b.createdAt?.seconds || 0;
+
+
+return dateB - dateA;
+
+
+});
+
+
+
+
+
+
+
+announcements.forEach((data)=>{
 
 
 
@@ -133,7 +162,6 @@ badge = "🔴 HIGH";
 
 }
 
-
 else if(data.priority === "Medium"){
 
 
@@ -141,7 +169,6 @@ badge = "🟡 MEDIUM";
 
 
 }
-
 
 else{
 
@@ -157,24 +184,25 @@ badge = "🟢 LOW";
 
 
 
-let date = "";
+let postedDate = "No date";
 
 
 
 if(data.createdAt){
 
 
-date = new Date(
+if(data.createdAt.seconds){
 
+
+postedDate =
+new Date(
 data.createdAt.seconds * 1000
-
 ).toLocaleDateString();
-
 
 
 }
 
-
+}
 
 
 
@@ -183,48 +211,34 @@ data.createdAt.seconds * 1000
 container.innerHTML += `
 
 
-
 <div class="expense announcementCard">
 
 
-
 <h2>
-
-${data.title}
-
+📢 ${data.title || "Untitled"}
 </h2>
 
 
 
-
 <h4>
-
 ${badge}
-
 </h4>
 
 
 
-
 <p>
-
-${data.message}
-
+${data.message || ""}
 </p>
 
 
 
-
 <small>
-
-📅 Posted: ${date}
-
+📅 Posted: ${postedDate}
 </small>
 
 
 
 </div>
-
 
 
 `;
@@ -235,14 +249,15 @@ ${data.message}
 
 
 
+
 }
+
 
 catch(error){
 
 
-
 console.error(
-"Announcement Error:",
+"Announcement loading error:",
 error
 );
 
@@ -250,9 +265,17 @@ error
 
 container.innerHTML = `
 
+<div class="expense">
+
 <p>
-Failed to load announcements.
+❌ Error loading announcements
 </p>
+
+<p>
+${error.message}
+</p>
+
+</div>
 
 `;
 
@@ -263,6 +286,7 @@ Failed to load announcements.
 
 
 }
+
 
 
 
