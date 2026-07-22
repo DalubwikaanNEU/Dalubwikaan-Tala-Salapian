@@ -1,12 +1,13 @@
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// FINAL DASHBOARD.JS
+// DASHBOARD.JS
 // PART 1/4
 // FIREBASE CONNECTION + DATA FETCH SYSTEM
 // =====================================================
 
 
 // ================= FIREBASE IMPORT =================
+
 
 import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -26,10 +27,11 @@ from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 // ================= CHART IMPORT =================
+// gagamitin sa PART 4
+
 
 import Chart from 
 "https://cdn.jsdelivr.net/npm/chart.js/auto";
-
 
 
 
@@ -60,8 +62,6 @@ const firebaseConfig = {
 
 
 
-
-
 // =====================================================
 // INITIALIZE FIREBASE
 // =====================================================
@@ -75,18 +75,15 @@ const db = getFirestore(app);
 
 
 console.log(
-"🔥 Firebase Connected Successfully"
+    "🔥 Firebase Connected"
 );
 
 
 
 
 
-
-
-
 // =====================================================
-// GLOBAL DASHBOARD STORAGE
+// GLOBAL DATA STORAGE
 // =====================================================
 
 
@@ -110,216 +107,233 @@ const dashboardData = {
 
 
 
+// export para magamit ng ibang parts
 
-
-
-// =====================================================
-// CHART VARIABLE
-// =====================================================
-
-
-let collectionChart = null;
-
-
-
-
+window.dashboardData = dashboardData;
 
 
 
 
 
 // =====================================================
-// FETCH ALL FIREBASE DATA
+// FETCH FIREBASE DATA
 // =====================================================
 
 
 async function fetchDashboardData(){
 
 
-try{
+    try{
 
 
-
-    // IMPORTANT:
-    // CLEAR OLD DATA PARA WALANG DUPLICATE
-
-
-    dashboardData.collections = [];
-
-    dashboardData.expenses = [];
-
-    dashboardData.projects = [];
-
-    dashboardData.announcements = [];
+        // CLEAR OLD DATA
+        // para walang duplicate kapag nag refresh
 
 
+        dashboardData.collections = [];
+
+        dashboardData.expenses = [];
+
+        dashboardData.projects = [];
+
+        dashboardData.announcements = [];
 
 
 
 
 
-    // ================= COLLECTIONS =================
+
+        // ================= COLLECTIONS =================
 
 
-    const collectionSnapshot = await getDocs(
+        const collectionsSnapshot = await getDocs(
 
-        collection(db,"collections")
+            collection(
+                db,
+                "collections"
+            )
 
-    );
+        );
 
 
 
-    collectionSnapshot.forEach(doc=>{
+        collectionsSnapshot.forEach((doc)=>{
 
 
-        dashboardData.collections.push({
+            dashboardData.collections.push({
 
-            id:doc.id,
 
-            ...doc.data()
+                id: doc.id,
+
+
+                ...doc.data()
+
+
+            });
+
 
         });
 
 
-    });
 
 
 
 
 
+        // ================= EXPENSES =================
+
+
+        const expensesSnapshot = await getDocs(
+
+            collection(
+                db,
+                "expenses"
+            )
+
+        );
 
 
 
-
-    // ================= EXPENSES =================
-
-
-    const expenseSnapshot = await getDocs(
-
-        collection(db,"expenses")
-
-    );
+        expensesSnapshot.forEach((doc)=>{
 
 
+            dashboardData.expenses.push({
 
-    expenseSnapshot.forEach(doc=>{
+
+                id: doc.id,
 
 
-        dashboardData.expenses.push({
+                ...doc.data()
 
-            id:doc.id,
 
-            ...doc.data()
+            });
+
 
         });
 
 
-    });
 
 
 
 
 
 
+        // ================= PROJECTS =================
+
+
+        const projectsSnapshot = await getDocs(
+
+            collection(
+                db,
+                "projects"
+            )
+
+        );
 
 
 
-    // ================= PROJECTS =================
+        projectsSnapshot.forEach((doc)=>{
 
 
-    const projectSnapshot = await getDocs(
-
-        collection(db,"projects")
-
-    );
+            dashboardData.projects.push({
 
 
+                id: doc.id,
 
-    projectSnapshot.forEach(doc=>{
+
+                ...doc.data()
 
 
-        dashboardData.projects.push({
+            });
 
-            id:doc.id,
-
-            ...doc.data()
 
         });
 
 
-    });
 
 
 
 
 
 
+        // ================= ANNOUNCEMENTS =================
+
+
+        const announcementsSnapshot = await getDocs(
+
+            collection(
+                db,
+                "announcements"
+            )
+
+        );
 
 
 
-    // ================= ANNOUNCEMENTS =================
+        announcementsSnapshot.forEach((doc)=>{
 
 
-    const announcementSnapshot = await getDocs(
-
-        collection(db,"announcements")
-
-    );
+            dashboardData.announcements.push({
 
 
+                id: doc.id,
 
-    announcementSnapshot.forEach(doc=>{
+
+                ...doc.data()
 
 
-        dashboardData.announcements.push({
+            });
 
-            id:doc.id,
-
-            ...doc.data()
 
         });
 
 
-    });
 
 
 
 
 
 
+        console.log(
+
+            "📊 Dashboard Data Loaded",
+
+            dashboardData
+
+        );
 
 
 
-    console.log(
-        "📊 Dashboard Data Loaded",
-        dashboardData
-    );
+    }
+
+
+
+    catch(error){
+
+
+        console.error(
+
+            "❌ Firebase Fetch Error:",
+
+            error
+
+        );
+
+
+    }
 
 
 
 }
 
-catch(error){
 
 
 
-    console.error(
-
-        "❌ Firebase Fetch Error:",
-
-        error
-
-    );
 
 
+// export function para magamit sa ibang parts
 
-}
-
-
-
-}
-
-
+window.fetchDashboardData = fetchDashboardData;
 
 
 
@@ -328,11 +342,12 @@ catch(error){
 
 
 // =====================================================
-// MONEY FORMAT FUNCTION
+// MONEY FORMAT
 // =====================================================
 
 
 function formatMoney(value){
+
 
 
     return "₱" +
@@ -347,6 +362,7 @@ function formatMoney(value){
 
 
 
+window.formatMoney = formatMoney;
 
 
 
@@ -354,7 +370,7 @@ function formatMoney(value){
 
 
 // =====================================================
-// TOTAL COLLECTION CALCULATION
+// TOTAL COLLECTION
 // =====================================================
 
 
@@ -362,42 +378,45 @@ function calculateCollectionTotal(){
 
 
 
-let total = 0;
+    let total = 0;
 
 
 
-dashboardData.collections.forEach(data=>{
-
-
-    total +=
-
-    Number(data.firstYear || 0)
-
-    +
-
-    Number(data.secondYear || 0)
-
-    +
-
-    Number(data.thirdYear || 0)
-
-    +
-
-    Number(data.fourthYear || 0);
+    dashboardData.collections.forEach((data)=>{
 
 
 
-});
+        total +=
+
+        Number(data.firstYear || 0)
+
+        +
+
+        Number(data.secondYear || 0)
+
+        +
+
+        Number(data.thirdYear || 0)
+
+        +
+
+        Number(data.fourthYear || 0);
 
 
 
-return total;
+    });
+
+
+
+    return total;
 
 
 
 }
 
 
+
+window.calculateCollectionTotal = calculateCollectionTotal;
 
 
 
@@ -406,7 +425,7 @@ return total;
 
 
 // =====================================================
-// TOTAL EXPENSE CALCULATION
+// TOTAL EXPENSE
 // =====================================================
 
 
@@ -414,26 +433,27 @@ function calculateExpenseTotal(){
 
 
 
-let total = 0;
+    let total = 0;
 
 
 
-dashboardData.expenses.forEach(data=>{
-
-
-    total += Number(
-
-        data.amount || 0
-
-    );
+    dashboardData.expenses.forEach((data)=>{
 
 
 
-});
+        total += Number(
+
+            data.amount || 0
+
+        );
 
 
 
-return total;
+    });
+
+
+
+    return total;
 
 
 
@@ -441,6 +461,20 @@ return total;
 
 
 
+window.calculateExpenseTotal = calculateExpenseTotal;
+
+
+
+
+
+
+
+// =====================================================
+// CHART STORAGE
+// =====================================================
+
+
+window.collectionChart = null;
 
 
 
@@ -449,23 +483,24 @@ return total;
 
 console.log(
 
-"✅ Dashboard PART 1 Ready"
+"✅ Dashboard PART 1 READY"
 
 );
 
 
 
 // =====================================================
-// END OF PART 1
-// NEXT: DISPLAY SYSTEM + DASHBOARD CARDS
+// END OF PART 1/4
 // =====================================================
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// FINAL DASHBOARD.JS
+// DASHBOARD.JS
 // PART 2/4
-// DISPLAY SYSTEM + DASHBOARD SUMMARY
+// DISPLAY SYSTEM + SUMMARY CARDS
 // =====================================================
+
+
 
 
 
@@ -482,14 +517,18 @@ function displayCollections(){
     );
 
 
+
     if(!container) return;
+
 
 
     container.innerHTML = "";
 
 
 
-    if(dashboardData.collections.length === 0){
+
+
+    if(window.dashboardData.collections.length === 0){
 
 
         container.innerHTML = `
@@ -504,7 +543,9 @@ function displayCollections(){
 
         `;
 
+
         return;
+
 
     }
 
@@ -513,7 +554,9 @@ function displayCollections(){
 
 
 
-    dashboardData.collections.forEach(data=>{
+
+    window.dashboardData.collections.forEach((data)=>{
+
 
 
         const total =
@@ -531,6 +574,9 @@ function displayCollections(){
         +
 
         Number(data.fourthYear || 0);
+
+
+
 
 
 
@@ -562,9 +608,7 @@ function displayCollections(){
 
 
             <h3>
-
-            ${formatMoney(total)}
-
+            ${window.formatMoney(total)}
             </h3>
 
 
@@ -573,6 +617,7 @@ function displayCollections(){
 
 
         `;
+
 
 
     });
@@ -586,6 +631,11 @@ function displayCollections(){
 
 
 
+window.displayCollections = displayCollections;
+
+
+
+
 
 
 
@@ -595,6 +645,7 @@ function displayCollections(){
 
 
 function displayExpenses(){
+
 
 
     const container = document.getElementById(
@@ -614,18 +665,23 @@ function displayExpenses(){
 
 
 
-    if(dashboardData.expenses.length === 0){
+
+    if(window.dashboardData.expenses.length === 0){
 
 
         container.innerHTML = `
 
+
         <div class="expense">
+
 
             <h3>
             No Expense Records
             </h3>
 
+
         </div>
+
 
         `;
 
@@ -640,7 +696,9 @@ function displayExpenses(){
 
 
 
-    dashboardData.expenses.forEach(data=>{
+
+
+    window.dashboardData.expenses.forEach((data)=>{
 
 
 
@@ -651,37 +709,29 @@ function displayExpenses(){
 
 
             <h3>
-
             💸 ${data.title || "Expense"}
-
             </h3>
 
 
 
+
             <p>
-
             📂 Category:
-
             ${data.category || "Others"}
-
             </p>
 
 
 
 
             <h3>
-
-            ${formatMoney(data.amount)}
-
+            ${window.formatMoney(data.amount)}
             </h3>
 
 
 
 
             <p>
-
             📅 ${data.date || "No Date"}
-
             </p>
 
 
@@ -689,8 +739,8 @@ function displayExpenses(){
         </div>
 
 
-
         `;
+
 
 
     });
@@ -700,6 +750,8 @@ function displayExpenses(){
 }
 
 
+
+window.displayExpenses = displayExpenses;
 
 
 
@@ -733,7 +785,9 @@ function displayProjects(){
 
 
 
-    if(dashboardData.projects.length === 0){
+
+    if(window.dashboardData.projects.length === 0){
+
 
 
         container.innerHTML = `
@@ -764,37 +818,31 @@ function displayProjects(){
 
 
 
-    dashboardData.projects.forEach(data=>{
+    window.dashboardData.projects.forEach((data)=>{
 
 
 
         container.innerHTML += `
 
 
-
         <div class="projectCard fade">
 
 
             <h3>
-
             📂 ${data.title || "Untitled Project"}
-
             </h3>
 
 
 
             <p>
-
-            ${data.description || "No description"}
-
+            ${data.description || "No Description"}
             </p>
 
 
 
+
             <h3>
-
-            ${formatMoney(data.budget)}
-
+            ${window.formatMoney(data.budget)}
             </h3>
 
 
@@ -822,6 +870,8 @@ function displayProjects(){
 }
 
 
+
+window.displayProjects = displayProjects;
 
 
 
@@ -855,47 +905,73 @@ function displayAnnouncements(){
 
 
 
-    dashboardData.announcements.forEach(data=>{
+
+
+    if(window.dashboardData.announcements.length === 0){
+
+
+
+        container.innerHTML = `
+
+
+        <div class="announcementCard">
+
+
+            <h3>
+            No Announcements
+            </h3>
+
+
+        </div>
+
+
+        `;
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+
+    window.dashboardData.announcements.forEach((data)=>{
 
 
 
         container.innerHTML += `
 
 
-
         <div class="announcementCard fade">
 
 
             <h3>
-
             📢 ${data.title || "Announcement"}
-
             </h3>
 
 
 
 
             <p>
-
-            ${data.message || "No message"}
-
+            ${data.message || "No Message"}
             </p>
 
 
 
 
             <p>
-
             Priority:
-
             ${data.priority || "Low"}
-
             </p>
 
 
 
         </div>
-
 
 
         `;
@@ -907,6 +983,10 @@ function displayAnnouncements(){
 
 
 }
+
+
+
+window.displayAnnouncements = displayAnnouncements;
 
 
 
@@ -927,7 +1007,7 @@ function updateDashboardCards(){
 
     const collectionTotal =
 
-    calculateCollectionTotal();
+    window.calculateCollectionTotal();
 
 
 
@@ -935,7 +1015,7 @@ function updateDashboardCards(){
 
     const expenseTotal =
 
-    calculateExpenseTotal();
+    window.calculateExpenseTotal();
 
 
 
@@ -951,11 +1031,10 @@ function updateDashboardCards(){
 
 
 
-
-
     const collectionBox = document.getElementById(
         "totalCollection"
     );
+
 
 
     const expenseBox = document.getElementById(
@@ -963,9 +1042,11 @@ function updateDashboardCards(){
     );
 
 
+
     const balanceBox = document.getElementById(
         "currentBalance"
     );
+
 
 
     const projectBox = document.getElementById(
@@ -978,46 +1059,76 @@ function updateDashboardCards(){
 
 
 
+
+
     if(collectionBox){
 
+
         collectionBox.innerHTML =
-        formatMoney(collectionTotal);
+
+        window.formatMoney(collectionTotal);
+
 
     }
+
+
+
 
 
 
 
     if(expenseBox){
 
+
         expenseBox.innerHTML =
-        formatMoney(expenseTotal);
+
+        window.formatMoney(expenseTotal);
+
 
     }
+
+
+
+
 
 
 
 
     if(balanceBox){
 
+
         balanceBox.innerHTML =
-        formatMoney(balance);
+
+        window.formatMoney(balance);
+
 
     }
+
+
+
+
 
 
 
 
     if(projectBox){
 
+
         projectBox.innerHTML =
-        dashboardData.projects.length;
+
+        window.dashboardData.projects.length;
+
 
     }
 
 
 
+
 }
+
+
+
+window.updateDashboardCards = updateDashboardCards;
 
 
 
@@ -1026,12 +1137,20 @@ function updateDashboardCards(){
 
 
 console.log(
-"✅ Dashboard Part 2 Loaded"
+
+"✅ Dashboard PART 2 READY"
+
 );
+
+
+
+// =====================================================
+// END OF PART 2/4
+// =====================================================
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// FINAL DASHBOARD.JS
+// DASHBOARD.JS
 // PART 3/4
 // GLOBAL SEARCH SYSTEM
 // =====================================================
@@ -1040,17 +1159,12 @@ console.log(
 
 
 
-
-
 // =====================================================
-// SEARCH SYSTEM VARIABLES
+// SEARCH INITIALIZATION CONTROL
 // =====================================================
 
 
-let searchInitialized = false;
-
-
-
+let searchStarted = false;
 
 
 
@@ -1066,43 +1180,41 @@ function setupSearch(){
 
 
 
-    if(searchInitialized)
+    if(searchStarted){
 
-    return;
+        return;
+
+    }
+
+
+
 
 
 
     const searchInput = document.getElementById(
-
         "dashboardSearch"
-
     );
 
 
 
-    const searchResults = document.getElementById(
-
+    const resultBox = document.getElementById(
         "dashboardSearchResults"
-
     );
 
 
 
 
 
-    if(!searchInput || !searchResults){
 
+    if(!searchInput || !resultBox){
 
 
         console.log(
-
-            "🔎 Search elements not found"
-
+            "🔎 Search elements missing"
         );
 
 
         return;
-
 
 
     }
@@ -1112,7 +1224,8 @@ function setupSearch(){
 
 
 
-    searchInitialized = true;
+
+    searchStarted = true;
 
 
 
@@ -1124,7 +1237,7 @@ function setupSearch(){
 
         "input",
 
-        ()=>{
+        function(){
 
 
 
@@ -1140,11 +1253,12 @@ function setupSearch(){
 
 
 
-            performSearch(
+
+            searchDashboard(
 
                 keyword,
 
-                searchResults
+                resultBox
 
             );
 
@@ -1153,19 +1267,14 @@ function setupSearch(){
         }
 
 
-
     );
 
 
 
 
 
-
-
     console.log(
-
         "🔎 Search Activated"
-
     );
 
 
@@ -1187,13 +1296,12 @@ function setupSearch(){
 // =====================================================
 
 
-function performSearch(keyword, resultBox){
-
-
+function searchDashboard(keyword,resultBox){
 
 
 
     resultBox.innerHTML = "";
+
 
 
 
@@ -1225,24 +1333,21 @@ function performSearch(keyword, resultBox){
 
 
     // =================================================
-    // SEARCH COLLECTIONS
+    // COLLECTION SEARCH
     // =================================================
 
 
-
-    dashboardData.collections.forEach(data=>{
-
+    window.dashboardData.collections.forEach((data)=>{
 
 
-        const content = `
 
+        const text = `
 
         ${data.week || ""}
 
         ${data.collector || ""}
 
         ${data.date || ""}
-
 
         `
 
@@ -1255,7 +1360,7 @@ function performSearch(keyword, resultBox){
 
 
 
-        if(content.includes(keyword)){
+        if(text.includes(keyword)){
 
 
 
@@ -1281,9 +1386,7 @@ function performSearch(keyword, resultBox){
 
 
 
-
             results += `
-
 
 
             <div class="expense fade">
@@ -1301,15 +1404,13 @@ function performSearch(keyword, resultBox){
 
 
 
-
                 <p>
-                ${formatMoney(total)}
+                ${window.formatMoney(total)}
                 </p>
 
 
 
             </div>
-
 
 
             `;
@@ -1331,16 +1432,15 @@ function performSearch(keyword, resultBox){
 
 
     // =================================================
-    // SEARCH EXPENSES
+    // EXPENSE SEARCH
     // =================================================
 
 
-
-    dashboardData.expenses.forEach(data=>{
-
+    window.dashboardData.expenses.forEach((data)=>{
 
 
-        const content = `
+
+        const text = `
 
 
         ${data.title || ""}
@@ -1350,7 +1450,6 @@ function performSearch(keyword, resultBox){
         ${data.date || ""}
 
         ${data.remarks || ""}
-
 
 
         `
@@ -1363,12 +1462,12 @@ function performSearch(keyword, resultBox){
 
 
 
-        if(content.includes(keyword)){
+
+        if(text.includes(keyword)){
 
 
 
             results += `
-
 
 
             <div class="expense fade">
@@ -1380,7 +1479,6 @@ function performSearch(keyword, resultBox){
 
 
 
-
                 <p>
                 Category:
                 ${data.category || "Others"}
@@ -1388,17 +1486,13 @@ function performSearch(keyword, resultBox){
 
 
 
-
                 <p>
-
-                ${formatMoney(data.amount)}
-
+                ${window.formatMoney(data.amount)}
                 </p>
 
 
 
             </div>
-
 
 
             `;
@@ -1420,16 +1514,15 @@ function performSearch(keyword, resultBox){
 
 
     // =================================================
-    // SEARCH PROJECTS
+    // PROJECT SEARCH
     // =================================================
 
 
-
-    dashboardData.projects.forEach(data=>{
-
+    window.dashboardData.projects.forEach((data)=>{
 
 
-        const content = `
+
+        const text = `
 
 
         ${data.title || ""}
@@ -1450,12 +1543,11 @@ function performSearch(keyword, resultBox){
 
 
 
-        if(content.includes(keyword)){
+        if(text.includes(keyword)){
 
 
 
             results += `
-
 
 
             <div class="projectCard fade">
@@ -1469,25 +1561,20 @@ function performSearch(keyword, resultBox){
 
 
                 <p>
-
                 ${data.description || ""}
-
                 </p>
 
 
 
 
                 <p>
-
                 Status:
                 ${data.status || "Planning"}
-
                 </p>
 
 
 
             </div>
-
 
 
             `;
@@ -1509,16 +1596,15 @@ function performSearch(keyword, resultBox){
 
 
     // =================================================
-    // SEARCH ANNOUNCEMENTS
+    // ANNOUNCEMENT SEARCH
     // =================================================
 
 
-
-    dashboardData.announcements.forEach(data=>{
-
+    window.dashboardData.announcements.forEach((data)=>{
 
 
-        const content = `
+
+        const text = `
 
 
         ${data.title || ""}
@@ -1539,47 +1625,38 @@ function performSearch(keyword, resultBox){
 
 
 
-        if(content.includes(keyword)){
+
+        if(text.includes(keyword)){
 
 
 
             results += `
 
 
-
             <div class="announcementCard fade">
 
 
                 <h3>
-
                 📢 ${data.title || "Announcement"}
-
                 </h3>
 
 
 
-
                 <p>
-
                 ${data.message || ""}
-
                 </p>
 
 
 
 
                 <p>
-
                 Priority:
-
                 ${data.priority || "Low"}
-
                 </p>
 
 
 
             </div>
-
 
 
             `;
@@ -1601,13 +1678,12 @@ function performSearch(keyword, resultBox){
 
 
     // =================================================
-    // SHOW RESULTS
+    // DISPLAY SEARCH RESULT
     // =================================================
 
 
 
     if(results === ""){
-
 
 
         resultBox.innerHTML = `
@@ -1617,17 +1693,19 @@ function performSearch(keyword, resultBox){
 
 
             <h3>
-
             ❌ No Record Found
-
             </h3>
+
+
+            <p>
+            No matching transparency data.
+            </p>
 
 
         </div>
 
 
         `;
-
 
 
     }
@@ -1642,11 +1720,15 @@ function performSearch(keyword, resultBox){
 
 
 
-
-
-
 }
 
+
+
+
+
+
+
+window.setupSearch = setupSearch;
 
 
 
@@ -1656,21 +1738,19 @@ function performSearch(keyword, resultBox){
 
 console.log(
 
-"✅ Dashboard Part 3 Loaded"
+"✅ Dashboard PART 3 READY"
 
 );
 
 
 
 // =====================================================
-// END PART 3
-// NEXT:
-// CHART + FINAL STARTUP SYSTEM
+// END OF PART 3/4
 // =====================================================
 
 // =====================================================
 // DALUBWIKAAN TRANSPARENCY PORTAL
-// FINAL DASHBOARD.JS
+// DASHBOARD.JS
 // PART 4/4
 // CHART + FINAL STARTUP SYSTEM
 // =====================================================
@@ -1680,9 +1760,8 @@ console.log(
 
 
 
-
 // =====================================================
-// CREATE COLLECTION CHART
+// COLLECTION CHART
 // =====================================================
 
 
@@ -1691,30 +1770,20 @@ function createCollectionChart(){
 
 
     const canvas = document.getElementById(
-
         "collectionChart"
-
     );
-
-
 
 
 
     if(!canvas){
 
-
         console.log(
-
             "📊 Chart canvas not found"
-
         );
-
 
         return;
 
-
     }
-
 
 
 
@@ -1735,50 +1804,35 @@ function createCollectionChart(){
 
 
 
-    dashboardData.collections.forEach(data=>{
+    dashboardData.collections.forEach((data)=>{
 
 
 
         firstYear += Number(
-
             data.firstYear || 0
-
         );
-
-
 
 
 
         secondYear += Number(
-
             data.secondYear || 0
-
         );
-
-
 
 
 
         thirdYear += Number(
-
             data.thirdYear || 0
-
         );
 
 
 
-
-
         fourthYear += Number(
-
             data.fourthYear || 0
-
         );
 
 
 
     });
-
 
 
 
@@ -1792,12 +1846,11 @@ function createCollectionChart(){
     if(collectionChart){
 
 
-
         collectionChart.destroy();
 
 
-
     }
+
 
 
 
@@ -1812,10 +1865,7 @@ function createCollectionChart(){
         {
 
 
-
             type:"bar",
-
-
 
 
 
@@ -1835,9 +1885,7 @@ function createCollectionChart(){
                     "4th Year"
 
 
-
                 ],
-
 
 
 
@@ -1845,17 +1893,11 @@ function createCollectionChart(){
                 datasets:[{
 
 
-
-                    label:
-
-                    "Collection Amount (₱)",
-
-
+                    label:"Collection Amount (₱)",
 
 
 
                     data:[
-
 
 
                         firstYear,
@@ -1867,18 +1909,14 @@ function createCollectionChart(){
                         fourthYear
 
 
-
                     ],
-
 
 
 
                     borderWidth:2
 
 
-
                 }]
-
 
 
             },
@@ -1892,12 +1930,10 @@ function createCollectionChart(){
             options:{
 
 
-
                 responsive:true,
 
 
                 maintainAspectRatio:false,
-
 
 
 
@@ -1911,9 +1947,7 @@ function createCollectionChart(){
 
                         display:true,
 
-
                         position:"bottom"
-
 
 
                     }
@@ -1921,7 +1955,6 @@ function createCollectionChart(){
 
 
                 },
-
 
 
 
@@ -1941,7 +1974,6 @@ function createCollectionChart(){
 
 
 
-
                         ticks:{
 
 
@@ -1949,15 +1981,12 @@ function createCollectionChart(){
                             callback:function(value){
 
 
-
                                 return "₱" +
 
                                 value.toLocaleString();
 
 
-
                             }
-
 
 
                         }
@@ -1976,6 +2005,7 @@ function createCollectionChart(){
 
 
 
+
         }
 
 
@@ -1987,11 +2017,8 @@ function createCollectionChart(){
 
 
 
-
     console.log(
-
-        "📊 Collection Chart Loaded"
-
+        "📊 Collection Chart Updated"
     );
 
 
@@ -2009,7 +2036,7 @@ function createCollectionChart(){
 
 
 // =====================================================
-// ACTIVATE SIMPLE ANIMATION
+// ANIMATION
 // =====================================================
 
 
@@ -2019,9 +2046,7 @@ function activateAnimations(){
 
     const elements = document.querySelectorAll(
 
-
         ".expense, .projectCard, .announcementCard"
-
 
     );
 
@@ -2029,14 +2054,11 @@ function activateAnimations(){
 
 
 
-
-    elements.forEach(item=>{
+    elements.forEach((item)=>{
 
 
         item.classList.add(
-
             "fade"
-
         );
 
 
@@ -2057,11 +2079,41 @@ function activateAnimations(){
 
 
 // =====================================================
-// FINAL DASHBOARD START
+// MAIN DASHBOARD LOADER
 // =====================================================
 
 
+let dashboardStarted = false;
+
+
+
+
+
+
+
 async function startDashboard(){
+
+
+
+    if(dashboardStarted){
+
+        console.log(
+            "Dashboard already running"
+        );
+
+        return;
+
+    }
+
+
+
+
+
+
+
+    dashboardStarted = true;
+
+
 
 
 
@@ -2070,19 +2122,13 @@ async function startDashboard(){
 
 
         console.log(
-
-            "⏳ Starting Dashboard..."
-
+            "⏳ Loading Dalubwikaan Dashboard..."
         );
 
 
 
 
 
-
-
-
-        // FETCH FIREBASE DATA
 
 
         await fetchDashboardData();
@@ -2093,17 +2139,16 @@ async function startDashboard(){
 
 
 
-
-        // DISPLAY DATA
-
-
         displayCollections();
+
 
 
         displayExpenses();
 
 
+
         displayProjects();
+
 
 
         displayAnnouncements();
@@ -2114,20 +2159,12 @@ async function startDashboard(){
 
 
 
-
-        // UPDATE SUMMARY
-
-
         updateDashboardCards();
 
 
 
 
 
-
-
-
-        // CREATE CHART
 
 
         createCollectionChart();
@@ -2138,20 +2175,18 @@ async function startDashboard(){
 
 
 
-
-        // ENABLE SEARCH
-
-
-        setupSearch();
+        if(window.setupSearch){
 
 
+            window.setupSearch();
 
 
+        }
 
 
 
 
-        // ANIMATION
+
 
 
         activateAnimations();
@@ -2162,20 +2197,17 @@ async function startDashboard(){
 
 
 
-
         console.log(
 
-            "✅ Dalubwikaan Dashboard Ready"
+            "✅ Dashboard Successfully Loaded"
 
         );
 
 
 
+
+
     }
-
-
-
-
 
     catch(error){
 
@@ -2183,7 +2215,7 @@ async function startDashboard(){
 
         console.error(
 
-            "❌ Dashboard Start Error:",
+            "❌ Dashboard Loading Error:",
 
             error
 
@@ -2208,35 +2240,23 @@ async function startDashboard(){
 
 
 // =====================================================
-// WINDOW RESIZE CHART FIX
+// REFRESH DASHBOARD DATA
 // =====================================================
 
 
-window.addEventListener(
-
-    "resize",
-
-    ()=>{
+async function refreshDashboard(){
 
 
 
-        if(collectionChart){
+    dashboardStarted = false;
 
 
 
-            collectionChart.resize();
+    await startDashboard();
 
 
 
-        }
-
-
-
-    }
-
-
-
-);
+}
 
 
 
@@ -2249,7 +2269,32 @@ window.addEventListener(
 
 
 // =====================================================
-// INITIAL LOAD
+// AUTO REFRESH EVERY 60 SECONDS
+// =====================================================
+
+
+setInterval(()=>{
+
+
+
+    refreshDashboard();
+
+
+
+},60000);
+
+
+
+
+
+
+
+
+
+
+
+// =====================================================
+// INITIAL START
 // =====================================================
 
 
@@ -2276,22 +2321,20 @@ document.addEventListener(
 
 
 
+
+
 // =====================================================
-// AUTO REFRESH EVERY 60 SECONDS
+// EXPORT GLOBAL FUNCTIONS
 // =====================================================
 
 
-setInterval(()=>{
+window.dashboardData = dashboardData;
 
 
-
-    startDashboard();
-
+window.formatMoney = formatMoney;
 
 
-},60000);
-
-
+window.refreshDashboard = refreshDashboard;
 
 
 
@@ -2301,7 +2344,7 @@ setInterval(()=>{
 
 console.log(
 
-"🚀 FINAL DASHBOARD SYSTEM LOADED"
+"🚀 DALUBWIKAAN DASHBOARD SYSTEM READY"
 
 );
 
