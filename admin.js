@@ -7,15 +7,15 @@ import {
     getDocs,
     deleteDoc,
     doc,
-    updateDoc,
-    getDoc
+    getDoc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-// FIREBASE CONFIG
+// ================= FIREBASE =================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
+  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
   projectId: "dalubwikaan--26-8e646",
   storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
@@ -29,14 +29,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-
 console.log("Admin Firebase Connected!");
 
 
 
-// ===============================
-// EXPENSES
-// ===============================
+// ================= EXPENSE =================
 
 
 let editingExpenseID = null;
@@ -80,12 +77,14 @@ createdAt:
 new Date()
 
 
+
 };
 
 
 
 
-// UPDATE MODE
+
+// UPDATE EXISTING EXPENSE
 
 if(editingExpenseID){
 
@@ -106,7 +105,9 @@ editingExpenseID = null;
 }
 
 
-// ADD MODE
+
+
+// ADD NEW EXPENSE
 
 else{
 
@@ -132,12 +133,17 @@ loadAdminExpenses();
 
 }
 
+
 catch(error){
 
-alert("Error: " + error.message);
+
+alert(
+"Error saving expense: " 
++ error.message
+);
+
 
 }
-
 
 
 };
@@ -147,7 +153,8 @@ alert("Error: " + error.message);
 
 
 
-// LOAD EXPENSES
+
+// DISPLAY EXPENSES IN ADMIN
 
 
 async function loadAdminExpenses(){
@@ -174,7 +181,7 @@ container.innerHTML="";
 snapshot.forEach((item)=>{
 
 
-const expense=item.data();
+const expense = item.data();
 
 
 
@@ -184,7 +191,9 @@ container.innerHTML += `
 <div class="expense">
 
 
-<h3>${expense.title}</h3>
+<h3>
+${expense.title}
+</h3>
 
 
 <p>
@@ -213,6 +222,7 @@ Delete
 </button>
 
 
+
 </div>
 
 
@@ -228,6 +238,8 @@ Delete
 
 
 loadAdminExpenses();
+
+
 
 
 
@@ -260,11 +272,11 @@ loadAdminExpenses();
 
 
 
+
 // EDIT EXPENSE
 
 
 window.editExpense = async function(id){
-
 
 
 const expenseRef =
@@ -307,15 +319,18 @@ expense.remarks;
 
 
 
-editingExpenseID=id;
+editingExpenseID = id;
 
 
 
-alert("Edit mode activated. Update the form then press Save Expense.");
+alert(
+"Edit mode activated. Press Save Expense to update."
+);
 
 
 
 };
+
 
 
 
@@ -345,12 +360,16 @@ document.getElementById("expenseRemarks").value="";
 
 
 
-// ===============================
-// COLLECTIONS
-// ===============================
+
+
+
+// ================= COLLECTION =================
 
 
 window.saveCollection = async function(){
+
+
+try{
 
 
 await addDoc(
@@ -386,13 +405,27 @@ collector:
 document.getElementById("collector").value,
 
 
-createdAt:new Date()
+createdAt:
+new Date()
 
 
 });
 
 
-alert("Collection saved!");
+alert("Collection saved successfully!");
+
+
+}
+
+catch(error){
+
+alert(
+"Error saving collection: "
++ error.message
+);
+
+}
+
 
 };
 
@@ -402,13 +435,15 @@ alert("Collection saved!");
 
 
 
-// ===============================
-// PROJECTS
-// ===============================
+
+
+// ================= PROJECTS =================
 
 
 window.saveProject = async function(){
 
+
+try{
 
 
 await addDoc(
@@ -436,15 +471,27 @@ status:
 document.getElementById("projectStatus").value,
 
 
-createdAt:new Date()
+createdAt:
+new Date()
 
 
 });
 
 
+alert("Project saved successfully!");
 
-alert("Project saved!");
 
+}
+
+
+catch(error){
+
+alert(
+"Error saving project: "
++error.message
+);
+
+}
 
 
 };
@@ -455,13 +502,15 @@ alert("Project saved!");
 
 
 
-// ===============================
-// ANNOUNCEMENTS
-// ===============================
+
+
+// ================= ANNOUNCEMENT =================
 
 
 window.saveAnnouncement = async function(){
 
+
+try{
 
 
 await addDoc(
@@ -481,15 +530,27 @@ priority:
 document.getElementById("announcementPriority").value,
 
 
-createdAt:new Date()
+createdAt:
+new Date()
 
 
 });
 
 
+alert("Announcement posted successfully!");
 
-alert("Announcement posted!");
 
+}
+
+
+catch(error){
+
+alert(
+"Error posting announcement: "
++error.message
+);
+
+}
 
 
 };
