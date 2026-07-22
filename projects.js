@@ -3,9 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import {
     getFirestore,
     collection,
-    getDocs,
-    query,
-    orderBy
+    getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
@@ -15,7 +13,7 @@ import {
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDx5TR1i1YZZsK4JqlvCmuR_0U6H1d3Mr80",
+apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
 authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
@@ -43,7 +41,6 @@ console.log("📂 Projects Firebase Connected!");
 
 
 
-
 // ================= LOAD PROJECTS =================
 
 
@@ -55,29 +52,29 @@ document.getElementById("projectList");
 
 
 
-if(!container) return;
+if(!container){
+
+console.error("Project container not found");
+
+return;
+
+}
 
 
 
 try{
 
 
-const projectQuery = query(
-
-collection(db,"projects"),
-
-orderBy("createdAt","desc")
-
+const snapshot =
+await getDocs(
+collection(db,"projects")
 );
 
 
 
-const snapshot =
-await getDocs(projectQuery);
-
-
-
 container.innerHTML = "";
+
+
 
 
 
@@ -87,16 +84,11 @@ if(snapshot.empty){
 container.innerHTML = `
 
 
-<div class="projectCard">
-
-
-<h3>
-📭 No Projects Yet
-</h3>
+<div class="expense">
 
 
 <p>
-No projects have been posted.
+No projects available yet.
 </p>
 
 
@@ -104,7 +96,6 @@ No projects have been posted.
 
 
 `;
-
 
 return;
 
@@ -116,74 +107,30 @@ return;
 
 
 
-snapshot.forEach((doc)=>{
+snapshot.forEach((item)=>{
 
 
-const data = doc.data();
-
-
-
-
-
-const budget =
-Number(data.budget || 0);
-
-
-
-const spent =
-Number(data.spent || 0);
-
-
-
-const remaining =
-budget - spent;
+const project = item.data();
 
 
 
 
-let percentage = 0;
+let statusClass = "";
 
 
 
-if(budget > 0){
-
-percentage =
-(spent / budget) * 100;
-
-}
+if(project.status === "Completed"){
 
 
-
-
-if(percentage > 100){
-
-percentage = 100;
-
-}
-
-
-
-
-
-
-let statusBadge = "";
-
-
-
-if(data.status === "Completed"){
-
-
-statusBadge =
-"🟢 Completed";
+statusClass = "completed";
 
 
 }
 
-else if(data.status === "Ongoing"){
+else if(project.status === "Ongoing"){
 
 
-statusBadge =
-"🟡 Ongoing";
+statusClass = "ongoing";
 
 
 }
@@ -191,12 +138,51 @@ statusBadge =
 else{
 
 
-statusBadge =
-"🔵 Planning";
+statusClass = "planning";
 
 
 }
 
+
+
+
+
+
+let budget =
+Number(project.budget || 0);
+
+
+
+let spent =
+Number(project.spent || 0);
+
+
+
+let remaining =
+budget - spent;
+
+
+
+let progress = 0;
+
+
+
+if(budget > 0){
+
+progress =
+(spent / budget) * 100;
+
+}
+
+
+
+
+
+if(progress > 100){
+
+progress = 100;
+
+}
 
 
 
@@ -207,25 +193,24 @@ statusBadge =
 container.innerHTML += `
 
 
-
 <div class="projectCard">
 
 
 
+<div class="projectHeader">
+
+
 <h2>
-
-📂 ${data.title || "Untitled Project"}
-
+📂 ${project.title || "Untitled Project"}
 </h2>
 
 
+<span class="status ${statusClass}">
+${project.status || "Planning"}
+</span>
 
 
-<h4>
-
-${statusBadge}
-
-</h4>
+</div>
 
 
 
@@ -233,7 +218,7 @@ ${statusBadge}
 
 <p>
 
-${data.description || "No description available."}
+${project.description || "No description available."}
 
 </p>
 
@@ -241,49 +226,38 @@ ${data.description || "No description available."}
 
 
 
-<hr>
 
-
-
+<div class="projectFinance">
 
 
 <p>
-
 💰 Budget:
-
 <strong>
 ₱${budget.toLocaleString()}
 </strong>
-
 </p>
 
 
 
-
-
 <p>
-
-💸 Spent:
-
+💸 Used:
 <strong>
 ₱${spent.toLocaleString()}
 </strong>
-
 </p>
-
-
 
 
 
 <p>
-
 💵 Remaining:
-
 <strong>
 ₱${remaining.toLocaleString()}
 </strong>
-
 </p>
+
+
+
+</div>
 
 
 
@@ -295,31 +269,24 @@ ${data.description || "No description available."}
 
 
 <div class="progressBar"
-
-style="width:${percentage}%">
-
-</div>
-
+style="width:${progress}%">
 
 </div>
 
 
+</div>
 
 
 
-<p>
+<small>
 
-Progress:
-${percentage.toFixed(0)}%
+${progress.toFixed(0)}% of budget utilized
 
-</p>
-
-
+</small>
 
 
 
 </div>
-
 
 
 `;
@@ -330,15 +297,15 @@ ${percentage.toFixed(0)}%
 
 
 
-
-
 }
+
+
 
 catch(error){
 
 
 console.error(
-"Project Loading Error:",
+"Project loading error:",
 error
 );
 
@@ -347,12 +314,11 @@ error
 container.innerHTML = `
 
 
-<div class="projectCard">
+<div class="expense">
 
-
-<h3>
-❌ Failed to Load Projects
-</h3>
+<p>
+❌ Failed loading projects
+</p>
 
 
 <p>
