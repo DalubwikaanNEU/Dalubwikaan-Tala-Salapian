@@ -51,9 +51,7 @@ async function loadReport(){
 try{
 
 
-const selectedMonth =
-
-Number(
+const selectedMonth = Number(
 document.getElementById("monthFilter").value
 );
 
@@ -67,12 +65,10 @@ let totalExpense = 0;
 
 
 
-// ===== COLLECTIONS =====
+// ================= COLLECTIONS =================
 
 
-const collectionSnap =
-
-await getDocs(
+const collectionSnap = await getDocs(
 collection(db,"collections")
 );
 
@@ -109,9 +105,7 @@ Number(data.fourthYear || 0);
 }
 
 
-
 }
-
 
 
 });
@@ -123,12 +117,11 @@ Number(data.fourthYear || 0);
 
 
 
-// ===== EXPENSES =====
+
+// ================= EXPENSES =================
 
 
-const expenseSnap =
-
-await getDocs(
+const expenseSnap = await getDocs(
 collection(db,"expenses")
 );
 
@@ -151,17 +144,13 @@ const date = new Date(data.date);
 if(date.getMonth() === selectedMonth){
 
 
-totalExpense +=
-
-Number(data.amount || 0);
+totalExpense += Number(data.amount || 0);
 
 
 }
 
 
-
 }
-
 
 
 });
@@ -172,8 +161,9 @@ Number(data.amount || 0);
 
 
 
-// ===== DISPLAY =====
 
+
+// ================= DISPLAY =================
 
 
 document.getElementById("reportCollection").innerHTML =
@@ -194,11 +184,8 @@ document.getElementById("reportBalance").innerHTML =
 
 "₱" +
 
-(
-totalCollection - totalExpense
-).toLocaleString();
-
-
+(totalCollection - totalExpense)
+.toLocaleString();
 
 
 
@@ -207,8 +194,6 @@ displayReportInfo();
 
 
 }
-
-
 
 catch(error){
 
@@ -219,7 +204,6 @@ error
 );
 
 
-
 }
 
 
@@ -234,16 +218,18 @@ error
 
 
 
-// ================= REPORT INFO =================
-
+// ================= REPORT INFORMATION =================
 
 
 function displayReportInfo(){
 
 
 const monthSelect =
-
 document.getElementById("monthFilter");
+
+
+
+if(!monthSelect) return;
 
 
 
@@ -257,19 +243,34 @@ monthSelect.selectedIndex
 
 
 
-document.getElementById("reportMonth").innerHTML =
+const reportMonth =
+document.getElementById("reportMonth");
 
+
+
+const generatedDate =
+document.getElementById("generatedDate");
+
+
+
+
+
+if(reportMonth){
+
+reportMonth.innerHTML =
 "📅 Month: " + monthName;
 
+}
 
 
 
+if(generatedDate){
 
-document.getElementById("generatedDate").innerHTML =
-
+generatedDate.innerHTML =
 "Generated: " +
-
 new Date().toLocaleDateString();
+
+}
 
 
 
@@ -283,19 +284,43 @@ new Date().toLocaleDateString();
 
 
 
-// ================= PRINT REPORT =================
+// ================= PRINT =================
+
+
+function setupPrintButton(){
+
+
+const printButton =
+document.getElementById("printButton");
 
 
 
-window.printReport = function(){
+if(printButton){
+
+
+
+printButton.addEventListener(
+"click",
+function(){
+
+
+console.log("Printing report...");
 
 
 window.print();
 
 
-};
+
+}
+
+);
 
 
+
+}
+
+
+}
 
 
 
@@ -306,12 +331,11 @@ window.print();
 // ================= CHANGE MONTH =================
 
 
-
 document
 .getElementById("monthFilter")
 .addEventListener(
 "change",
-()=>{
+function(){
 
 
 loadReport();
@@ -336,3 +360,5 @@ displayReportInfo();
 loadReport();
 
 displayReportInfo();
+
+setupPrintButton();
