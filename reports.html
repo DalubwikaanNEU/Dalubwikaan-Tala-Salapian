@@ -20,12 +20,12 @@
 </head>
 
 
-
 <body>
 
 
-
-<!-- ================= NAVBAR ================= -->
+<!-- ==================================================
+     NAVBAR
+================================================== -->
 
 
 <header>
@@ -39,7 +39,6 @@
 
 
 
-
 <nav>
 
 
@@ -50,13 +49,11 @@ Dashboard
 </a>
 
 
-
 <a href="collections.html">
 
 Collections
 
 </a>
-
 
 
 <a href="expenses.html">
@@ -66,13 +63,11 @@ Expenses
 </a>
 
 
-
 <a href="projects.html">
 
 Projects
 
 </a>
-
 
 
 <a href="reports.html" class="active">
@@ -82,13 +77,11 @@ Reports
 </a>
 
 
-
 <a href="announcements.html">
 
 Announcements
 
 </a>
-
 
 
 <a href="login.html">
@@ -99,18 +92,14 @@ Announcements
 
 
 
-
-
 <button id="themeToggle" class="themeBtn">
 
-🌙 Dark Mode
+🌙
 
 </button>
 
 
-
 </nav>
-
 
 
 </header>
@@ -120,12 +109,12 @@ Announcements
 
 
 
+<!-- ==================================================
+     MAIN REPORT CONTAINER
+================================================== -->
 
-<!-- ================= MAIN ================= -->
 
-
-
-<main class="adminContainer">
+<main class="reportPage">
 
 
 
@@ -159,20 +148,15 @@ Generated:
 
 
 </section>
+<!-- ==================================================
+     FINANCIAL SUMMARY CARDS
+================================================== -->
 
 
+<section class="reportSummary">
 
 
-
-
-
-
-
-<section class="dashboard">
-
-
-
-<div class="card">
+<div class="reportCard">
 
 
 <h3>
@@ -182,13 +166,11 @@ Total Collection
 </h3>
 
 
-
 <h2 id="reportCollection">
 
 ₱0
 
 </h2>
-
 
 
 </div>
@@ -197,9 +179,7 @@ Total Collection
 
 
 
-
-
-<div class="card">
+<div class="reportCard">
 
 
 <h3>
@@ -209,13 +189,11 @@ Total Expenses
 </h3>
 
 
-
 <h2 id="reportExpense">
 
 ₱0
 
 </h2>
-
 
 
 </div>
@@ -224,9 +202,7 @@ Total Expenses
 
 
 
-
-
-<div class="card">
+<div class="reportCard">
 
 
 <h3>
@@ -236,7 +212,6 @@ Remaining Balance
 </h3>
 
 
-
 <h2 id="reportBalance">
 
 ₱0
@@ -244,9 +219,7 @@ Remaining Balance
 </h2>
 
 
-
 </div>
-
 
 
 
@@ -258,13 +231,15 @@ Remaining Balance
 
 
 
+<!-- ==================================================
+     EXPENSE DETAILS TABLE
+================================================== -->
 
 
-<!-- ================= EXPENSE TABLE ================= -->
+<section class="reportSection expenseReportCard">
 
 
-
-<section class="adminCard">
+<div class="sectionHeader">
 
 
 <h2>
@@ -275,9 +250,24 @@ Remaining Balance
 
 
 
+<p>
+
+Complete monthly expense record
+
+</p>
 
 
-<table id="expenseTable">
+</div>
+
+
+
+
+
+
+<div class="expenseTableWrapper">
+
+
+<table id="expenseTable" class="expenseReportTable">
 
 
 
@@ -339,7 +329,6 @@ Remarks
 <tbody id="expenseReportList">
 
 
-
 <tr>
 
 
@@ -350,36 +339,31 @@ Loading expenses...
 </td>
 
 
-
 </tr>
-
 
 
 </tbody>
 
 
 
-
-
 </table>
+
+
+</div>
 
 
 
 </section>
 
+<!-- ==================================================
+     MONTH FILTER SECTION
+================================================== -->
 
 
+<section class="reportSection noPrint">
 
 
-
-
-
-
-<!-- ================= FILTER ================= -->
-
-
-
-<section class="adminCard noPrint">
+<div class="sectionHeader">
 
 
 <h2>
@@ -389,6 +373,20 @@ Loading expenses...
 </h2>
 
 
+<p>
+
+Choose month to generate financial report
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="filterBox">
 
 
 <select id="monthFilter">
@@ -495,9 +493,6 @@ December
 
 
 
-<br><br>
-
-
 
 
 <button id="printButton" class="btn">
@@ -510,6 +505,10 @@ December
 
 
 
+</div>
+
+
+
 </section>
 
 
@@ -519,9 +518,9 @@ December
 
 
 
-
-<!-- ================= SIGNATURE ================= -->
-
+<!-- ==================================================
+     SIGNATURE SECTION
+================================================== -->
 
 
 <section class="signatureSection">
@@ -530,7 +529,8 @@ December
 
 
 
-<div>
+
+<div class="signatureBox">
 
 
 <p>
@@ -540,7 +540,9 @@ Prepared by:
 </p>
 
 
-<br><br>
+
+<br>
+
 
 
 <strong>
@@ -548,6 +550,7 @@ Prepared by:
 ____________________
 
 </strong>
+
 
 
 <p>
@@ -565,7 +568,8 @@ Ingat-Yaman
 
 
 
-<div>
+
+<div class="signatureBox">
 
 
 <p>
@@ -575,7 +579,9 @@ Checked by:
 </p>
 
 
-<br><br>
+
+<br>
+
 
 
 <strong>
@@ -583,6 +589,7 @@ Checked by:
 Ychero P. Amancio
 
 </strong>
+
 
 
 <p>
@@ -600,7 +607,8 @@ Bise Presidente Panloob
 
 
 
-<div>
+
+<div class="signatureBox">
 
 
 <p>
@@ -610,7 +618,9 @@ Approved by:
 </p>
 
 
-<br><br>
+
+<br>
+
 
 
 <strong>
@@ -618,6 +628,7 @@ Approved by:
 Angel Martina
 
 </strong>
+
 
 
 <p>
@@ -632,23 +643,17 @@ Pangulo
 
 
 
+
 </section>
 
-
-
-
-
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
 
 </main>
 
 
-
-
-
-
-
-<!-- ================= FOOTER ================= -->
 
 
 
@@ -670,6 +675,7 @@ Monthly Financial Transparency Report
 </p>
 
 
+
 </footer>
 
 
@@ -679,8 +685,9 @@ Monthly Financial Transparency Report
 
 
 
-
-<!-- ================= SCRIPTS ================= -->
+<!-- ==================================================
+     SCRIPTS
+================================================== -->
 
 
 <script src="theme.js"></script>
@@ -692,5 +699,6 @@ Monthly Financial Transparency Report
 
 
 </body>
+
 
 </html>
