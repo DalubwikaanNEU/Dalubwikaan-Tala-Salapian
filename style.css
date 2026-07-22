@@ -1,27 +1,35 @@
-/* =====================================================
+/* ======================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   PROFESSIONAL UI v2
-=====================================================*/
+   PROFESSIONAL UI v3
+   Part 1
+====================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 
 :root{
 
---primary:#6b3f17;
---secondary:#8d5b2d;
---gold:#d4af37;
+--primary:#6d4322;
+--secondary:#8f5b30;
+--accent:#d8ae42;
+--accent2:#f0c75e;
 
---bg:#f8f5ef;
+--white:#ffffff;
+--bg:#f7f4ef;
 --card:#ffffff;
 
 --text:#2b2b2b;
 --light:#777;
 
---shadow:0 10px 35px rgba(0,0,0,.12);
+--shadow:0 12px 35px rgba(0,0,0,.10);
+--shadowHover:0 20px 45px rgba(0,0,0,.18);
 
---radius:20px;
+--radius:22px;
+
+--transition:.35s;
 
 }
+
+/* ================= RESET ================= */
 
 *{
 
@@ -39,17 +47,54 @@ scroll-behavior:smooth;
 
 body{
 
-font-family:'Poppins',sans-serif;
+font-family:"Poppins",sans-serif;
 
 background:
-
-linear-gradient(135deg,#faf7f1,#f2ebe0);
+linear-gradient(135deg,#faf8f3,#f4ede3);
 
 color:var(--text);
 
-min-height:100vh;
+overflow-x:hidden;
 
 }
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar{
+
+width:12px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#efe8dc;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(var(--secondary),var(--accent));
+
+border-radius:20px;
+
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+
+width:92%;
+max-width:1450px;
+
+margin:auto;
+
+padding:35px 0 60px;
+
+}
+
+/* ================= HEADER ================= */
+
 header{
 
 position:sticky;
@@ -64,35 +109,41 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:20px 8%;
+padding:18px 8%;
 
-background:rgba(255,255,255,.75);
+background:rgba(255,255,255,.82);
 
-backdrop-filter:blur(15px);
+backdrop-filter:blur(20px);
 
 box-shadow:0 4px 20px rgba(0,0,0,.08);
 
 }
 
+/* ================= LOGO ================= */
+
 .logo{
-
-font-size:28px;
-
-font-weight:700;
 
 font-family:"Playfair Display",serif;
 
+font-size:30px;
+
+font-weight:700;
+
 color:var(--primary);
 
+letter-spacing:1px;
+
 }
+
+/* ================= NAVIGATION ================= */
 
 nav{
 
 display:flex;
 
-align-items:center;
+gap:12px;
 
-gap:14px;
+align-items:center;
 
 flex-wrap:wrap;
 
@@ -102,21 +153,21 @@ nav a{
 
 text-decoration:none;
 
-color:#444;
+color:#555;
 
 padding:12px 18px;
 
 border-radius:50px;
 
-font-weight:500;
+transition:var(--transition);
 
-transition:.3s;
+font-weight:500;
 
 }
 
 nav a:hover{
 
-background:var(--gold);
+background:var(--accent);
 
 color:white;
 
@@ -126,406 +177,81 @@ transform:translateY(-3px);
 
 nav a.active{
 
-background:var(--primary);
+background:linear-gradient(135deg,var(--primary),var(--secondary));
 
 color:white;
 
+box-shadow:0 8px 18px rgba(0,0,0,.12);
+
 }
+
+/* ================= BUTTON ================= */
+
 .themeBtn{
 
 border:none;
-
-background:var(--primary);
-
-color:white;
 
 padding:12px 22px;
 
 border-radius:50px;
 
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+
+color:white;
+
 cursor:pointer;
 
-font-size:15px;
+font-weight:600;
 
-transition:.3s;
+transition:var(--transition);
 
 }
 
 .themeBtn:hover{
 
-background:var(--secondary);
+transform:translateY(-4px);
 
-transform:scale(1.05);
-
-}
-.container{
-
-width:92%;
-
-max-width:1400px;
-
-margin:auto;
-
-padding:40px 0;
+box-shadow:var(--shadowHover);
 
 }
 
-.pageTitle{
-
-font-size:40px;
-
-font-family:"Playfair Display",serif;
-
-margin-bottom:35px;
-
-color:var(--primary);
-
-}
-/* ==========================================
-   MAIN CARDS
-========================================== */
-
-.adminCard{
-
-background:rgba(255,255,255,.75);
-
-backdrop-filter:blur(16px);
-
-border-radius:22px;
-
-padding:30px;
-
-margin-bottom:35px;
-
-box-shadow:0 10px 35px rgba(0,0,0,.08);
-
-transition:.35s;
-
-}
-
-.adminCard:hover{
-
-transform:translateY(-6px);
-
-box-shadow:0 18px 45px rgba(0,0,0,.12);
-
-}
-
-.adminCard h2{
-
-font-size:28px;
-
-margin-bottom:25px;
-
-color:var(--primary);
-
-font-family:"Playfair Display",serif;
-
-}
-
-/* ==========================================
-   DASHBOARD SUMMARY
-========================================== */
-
-.dashboard{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-
-gap:25px;
-
-}
-
-/* ==========================================
-   SUMMARY CARDS
-========================================== */
-
-.card{
-
-background:white;
-
-border-radius:22px;
-
-padding:30px;
-
-text-align:center;
-
-box-shadow:var(--shadow);
-
-transition:.35s;
-
-position:relative;
-
-overflow:hidden;
-
-}
-
-.card::before{
-
-content:"";
-
-position:absolute;
-
-left:0;
-
-top:0;
-
-width:100%;
-
-height:6px;
-
-background:linear-gradient(90deg,var(--gold),var(--secondary));
-
-}
-
-.card:hover{
-
-transform:translateY(-8px);
-
-}
-
-.card h3{
-
-font-size:17px;
-
-color:#666;
-
-margin-bottom:15px;
-
-}
-
-.card h2{
-
-font-size:34px;
-
-color:var(--primary);
-
-margin:0;
-
-}
-
-/* ==========================================
-   COLLECTION / EXPENSE CARD
-========================================== */
-
-.expense{
-
-background:white;
-
-border-radius:22px;
-
-padding:25px;
-
-margin-bottom:22px;
-
-box-shadow:var(--shadow);
-
-transition:.35s;
-
-border-left:8px solid var(--gold);
-
-}
-
-.expense:hover{
-
-transform:translateY(-6px);
-
-box-shadow:0 20px 45px rgba(0,0,0,.15);
-
-}
-
-.expense h2{
-
-color:var(--primary);
-
-margin-bottom:12px;
-
-font-size:24px;
-
-}
-
-.expense h3{
-
-color:var(--secondary);
-
-margin-top:18px;
-
-}
-
-.expense p{
-
-margin:10px 0;
-
-line-height:1.7;
-
-color:#555;
-
-}
-
-.expense hr{
-
-margin:18px 0;
-
-border:none;
-
-height:1px;
-
-background:#ececec;
-
-}
-/* ==========================================
-   SEARCH
-========================================== */
-
-input,
-
-select{
-
-width:100%;
-
-padding:16px 22px;
-
-border-radius:50px;
-
-border:2px solid #ddd;
-
-font-size:16px;
-
-outline:none;
-
-margin-top:12px;
-
-transition:.3s;
-
-background:white;
-
-}
-
-input:focus,
-
-select:focus{
-
-border-color:var(--gold);
-
-box-shadow:0 0 15px rgba(212,175,55,.25);
-
-}
-#collectionList{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-
-gap:25px;
-
-margin-top:25px;
-
-}
-button{
-
-background:var(--primary);
-
-color:white;
-
-border:none;
-
-padding:14px 28px;
-
-border-radius:50px;
-
-cursor:pointer;
-
-font-size:15px;
-
-transition:.3s;
-
-}
-
-button:hover{
-
-background:var(--secondary);
-
-transform:translateY(-3px);
-
-}
-footer{
-
-margin-top:70px;
-
-padding:30px;
-
-text-align:center;
-
-background:white;
-
-box-shadow:0 -4px 20px rgba(0,0,0,.05);
-
-color:#666;
-
-}
-.fade{
-
-animation:fadeUp .6s ease;
-
-}
-
-@keyframes fadeUp{
-
-from{
-
-opacity:0;
-
-transform:translateY(25px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-/* ==========================================
-   HERO SECTION
-========================================== */
+/* ================= HERO ================= */
 
 .hero{
 
 display:grid;
 
-grid-template-columns:1.3fr .7fr;
+grid-template-columns:1.2fr .8fr;
 
 align-items:center;
 
 gap:60px;
 
-margin:40px 0 60px;
+padding:55px 0;
 
 }
 
-.hero h1{
-
-font-size:52px;
+.heroText h1{
 
 font-family:"Playfair Display",serif;
 
+font-size:60px;
+
+line-height:1.1;
+
 color:var(--primary);
 
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
-.hero p{
+.heroText p{
 
 font-size:18px;
 
-color:#666;
+line-height:1.9;
 
-line-height:1.8;
+color:#666;
 
 margin-bottom:35px;
 
@@ -535,29 +261,31 @@ margin-bottom:35px;
 
 display:inline-block;
 
-padding:16px 30px;
+padding:17px 32px;
 
 background:linear-gradient(135deg,var(--primary),var(--secondary));
 
 color:white;
 
-border-radius:50px;
-
 text-decoration:none;
+
+border-radius:60px;
 
 font-weight:600;
 
-transition:.35s;
+transition:.4s;
 
 }
 
 .heroBtn:hover{
 
-transform:translateY(-4px);
+transform:translateY(-5px);
 
-box-shadow:0 15px 35px rgba(0,0,0,.2);
+box-shadow:var(--shadowHover);
 
 }
+
+/* ================= HERO IMAGE ================= */
 
 .heroImage{
 
@@ -565,15 +293,21 @@ display:flex;
 
 justify-content:center;
 
+align-items:center;
+
 }
 
 .heroCircle{
 
-width:240px;
+width:280px;
 
-height:240px;
+height:280px;
 
 border-radius:50%;
+
+background:
+
+linear-gradient(135deg,var(--accent),var(--secondary));
 
 display:flex;
 
@@ -581,17 +315,15 @@ justify-content:center;
 
 align-items:center;
 
-font-size:90px;
-
-background:
-
-linear-gradient(135deg,#d4af37,#8b5e34);
+font-size:120px;
 
 color:white;
 
-box-shadow:0 20px 50px rgba(0,0,0,.18);
+box-shadow:
 
-animation:float 4s ease-in-out infinite;
+0 25px 60px rgba(0,0,0,.18);
+
+animation:float 5s ease-in-out infinite;
 
 }
 
@@ -616,33 +348,420 @@ transform:translateY(0);
 }
 
 }
+/* ======================================================
+   PART 2
+   DASHBOARD • CARDS • PANELS • GRID
+======================================================*/
+
+/* ================= DASHBOARD GRID ================= */
+
+.dashboard{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:28px;
+
+margin-bottom:40px;
+
+}
+
+/* ================= SUMMARY CARDS ================= */
+
 .card{
-
-background:
-
-linear-gradient(135deg,#ffffff,#faf6ef);
-
-border-radius:25px;
-
-padding:35px;
 
 position:relative;
 
 overflow:hidden;
 
-box-shadow:0 12px 35px rgba(0,0,0,.08);
+background:rgba(255,255,255,.88);
+
+backdrop-filter:blur(15px);
+
+border-radius:25px;
+
+padding:35px 30px;
+
+box-shadow:var(--shadow);
 
 transition:.35s;
 
 }
 
-.card:hover{
+.card::before{
 
-transform:translateY(-8px);
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:6px;
+
+background:
+linear-gradient(90deg,
+var(--accent),
+var(--secondary));
 
 }
 
 .card::after{
+
+content:"";
+
+position:absolute;
+
+right:-35px;
+top:-35px;
+
+width:130px;
+height:130px;
+
+border-radius:50%;
+
+background:
+
+rgba(216,174,66,.08);
+
+transition:.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:var(--shadowHover);
+
+}
+
+.card:hover::after{
+
+transform:scale(1.2);
+
+}
+
+.card h3{
+
+font-size:16px;
+
+font-weight:500;
+
+color:#777;
+
+margin-bottom:18px;
+
+}
+
+.card h2{
+
+font-size:38px;
+
+font-weight:700;
+
+color:var(--primary);
+
+}
+
+/* ================= YEAR LEVEL CARDS ================= */
+
+.yearCards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+margin-bottom:45px;
+
+}
+
+.yearCard{
+
+background:white;
+
+border-radius:22px;
+
+padding:30px;
+
+text-align:center;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.yearCard::before{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:5px;
+
+background:
+linear-gradient(90deg,
+var(--secondary),
+var(--accent));
+
+}
+
+.yearCard:hover{
+
+transform:translateY(-8px);
+
+box-shadow:var(--shadowHover);
+
+}
+
+.yearCard h3{
+
+font-size:18px;
+
+font-weight:600;
+
+color:#666;
+
+margin-bottom:15px;
+
+}
+
+.yearCard h2{
+
+font-size:34px;
+
+color:var(--primary);
+
+}
+
+/* ================= ADMIN CARD ================= */
+
+.adminCard{
+
+background:rgba(255,255,255,.88);
+
+backdrop-filter:blur(18px);
+
+border-radius:25px;
+
+padding:35px;
+
+margin-bottom:40px;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+}
+
+.adminCard:hover{
+
+transform:translateY(-6px);
+
+box-shadow:var(--shadowHover);
+
+}
+
+.adminCard h2{
+
+font-family:"Playfair Display",serif;
+
+font-size:32px;
+
+color:var(--primary);
+
+margin-bottom:25px;
+
+}
+
+/* ================= GRID ================= */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(480px,1fr));
+
+gap:35px;
+
+margin-top:40px;
+
+}
+
+/* ================= CHART ================= */
+
+.chartBox{
+
+background:white;
+
+border-radius:25px;
+
+padding:25px;
+
+height:460px;
+
+box-shadow:var(--shadow);
+
+transition:.35s;
+
+}
+
+.chartBox:hover{
+
+box-shadow:var(--shadowHover);
+
+}
+
+/* ================= SEARCH ================= */
+
+.searchSection{
+
+margin:40px 0;
+
+}
+
+.searchSection input,
+
+.adminCard input,
+
+.adminCard select{
+
+width:100%;
+
+padding:18px 25px;
+
+border-radius:60px;
+
+border:2px solid #ddd;
+
+font-size:16px;
+
+background:white;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.adminCard input:focus,
+
+.adminCard select:focus,
+
+.searchSection input:focus{
+
+border-color:var(--accent);
+
+box-shadow:
+
+0 0 18px rgba(216,174,66,.22);
+
+}
+
+/* ================= SEARCH RESULTS ================= */
+
+#dashboardSearchResults{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:40px;
+
+font-size:18px;
+
+color:#777;
+
+}
+
+/* ================= FADE ================= */
+
+.fade{
+
+animation:fadeUp .7s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+/* ======================================================
+   PART 3
+   COLLECTIONS • EXPENSES • PROJECTS • ANNOUNCEMENTS
+======================================================*/
+
+/* ================= COLLECTION / EXPENSE CARD ================= */
+
+.expense{
+
+background:white;
+
+border-radius:25px;
+
+padding:28px;
+
+margin-bottom:22px;
+
+box-shadow:var(--shadow);
+
+border-left:8px solid var(--accent);
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.expense::after{
 
 content:"";
 
@@ -656,44 +775,107 @@ width:110px;
 
 height:110px;
 
-background:rgba(212,175,55,.12);
-
 border-radius:50%;
+
+background:rgba(216,174,66,.08);
+
+transition:.4s;
 
 }
 
-.card h2{
+.expense:hover{
 
-font-size:38px;
+transform:translateY(-8px);
 
-margin-top:15px;
+box-shadow:var(--shadowHover);
+
+}
+
+.expense:hover::after{
+
+transform:scale(1.3);
+
+}
+
+.expense h2{
 
 color:var(--primary);
 
-}
+font-size:24px;
 
-.card h3{
-
-color:#777;
-
-font-weight:500;
+margin-bottom:15px;
 
 }
+
+.expense h3{
+
+color:var(--secondary);
+
+margin-top:18px;
+
+font-size:22px;
+
+}
+
+.expense p{
+
+margin:10px 0;
+
+line-height:1.8;
+
+color:#555;
+
+}
+
+.expense hr{
+
+margin:18px 0;
+
+border:none;
+
+height:1px;
+
+background:#ececec;
+
+}
+
+/* ================= PROJECT CARD ================= */
+
 .projectCard{
 
 background:white;
 
-border-radius:22px;
+padding:30px;
 
-padding:28px;
+border-radius:25px;
 
 box-shadow:var(--shadow);
 
+border-top:8px solid var(--accent);
+
 transition:.35s;
+
+position:relative;
+
+overflow:hidden;
 
 margin-bottom:25px;
 
-border-top:7px solid var(--gold);
+}
+
+.projectCard::before{
+
+content:"📂";
+
+position:absolute;
+
+right:22px;
+
+top:18px;
+
+font-size:42px;
+
+opacity:.08;
 
 }
 
@@ -701,13 +883,17 @@ border-top:7px solid var(--gold);
 
 transform:translateY(-8px);
 
+box-shadow:var(--shadowHover);
+
 }
 
 .projectCard h3{
 
-margin-bottom:12px;
+font-size:24px;
 
 color:var(--primary);
+
+margin-bottom:15px;
 
 }
 
@@ -723,18 +909,23 @@ margin:20px 0;
 
 .projectBudget{
 
-font-size:24px;
+font-size:28px;
 
-font-weight:bold;
+font-weight:700;
 
 color:var(--secondary);
 
+margin-bottom:15px;
+
 }
+
+/* ================= STATUS BADGES ================= */
+
 .badge{
 
 display:inline-block;
 
-padding:10px 20px;
+padding:10px 22px;
 
 border-radius:50px;
 
@@ -744,81 +935,565 @@ font-weight:600;
 
 margin-top:15px;
 
+letter-spacing:.5px;
+
 }
 
 .planning{
 
-background:#ffe7a7;
+background:#fff0b8;
 
-color:#7c5200;
+color:#8d6500;
 
 }
 
 .ongoing{
 
-background:#b9e5ff;
+background:#cceeff;
 
-color:#005f9c;
+color:#0a6ba8;
 
 }
 
 .completed{
 
-background:#bdf4cb;
+background:#cff5d9;
 
-color:#007c36;
+color:#0c7d37;
 
 }
+
+/* ================= ANNOUNCEMENT ================= */
+
 .announcementCard{
 
 background:white;
 
-padding:25px;
+padding:28px;
 
-border-radius:22px;
+border-radius:25px;
 
 box-shadow:var(--shadow);
 
 margin-bottom:25px;
 
-border-left:8px solid var(--gold);
+border-left:8px solid var(--accent);
 
 transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.announcementCard::after{
+
+content:"📢";
+
+position:absolute;
+
+right:20px;
+
+top:15px;
+
+font-size:40px;
+
+opacity:.08;
 
 }
 
 .announcementCard:hover{
 
-transform:translateY(-6px);
+transform:translateY(-8px);
+
+box-shadow:var(--shadowHover);
 
 }
 
 .announcementCard h3{
 
-margin-bottom:15px;
-
 color:var(--primary);
+
+font-size:24px;
+
+margin-bottom:15px;
 
 }
 
+.announcementMessage{
+
+line-height:1.8;
+
+color:#555;
+
+margin-bottom:18px;
+
+}
+
+.announcementDate{
+
+font-size:14px;
+
+color:#888;
+
+}
+
+/* ================= PRIORITY COLORS ================= */
+
 .high{
 
-border-left:8px solid crimson;
+border-left-color:#ff4d4f;
 
 }
 
 .medium{
 
-border-left:8px solid orange;
+border-left-color:#ff9800;
 
 }
 
 .low{
 
-border-left:8px solid seagreen;
+border-left-color:#43a047;
 
 }
-@media(max-width:900px){
+
+/* ================= COLLECTION GRID ================= */
+
+#collectionList{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+
+gap:25px;
+
+margin-top:25px;
+
+}
+
+/* ================= PROJECT GRID ================= */
+
+#projectContainer{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:25px;
+
+}
+
+/* ================= ANNOUNCEMENT GRID ================= */
+
+#dashboardAnnouncementContainer{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:25px;
+
+}
+
+/* ================= EXPENSE GRID ================= */
+
+#expenseContainer{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:25px;
+
+}
+
+/* ================= COLLECTION GRID ================= */
+
+#dashboardCollectionContainer{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+
+gap:25px;
+
+}
+/* ======================================================
+   PART 4
+   DARK MODE • FOOTER • ANIMATIONS • RESPONSIVE
+======================================================*/
+
+/* ================= FOOTER ================= */
+
+footer{
+
+margin-top:80px;
+
+padding:40px;
+
+text-align:center;
+
+background:white;
+
+color:#666;
+
+font-size:15px;
+
+box-shadow:0 -4px 20px rgba(0,0,0,.06);
+
+}
+
+footer b{
+
+color:var(--primary);
+
+}
+
+/* ================= BUTTONS ================= */
+
+button{
+
+border:none;
+
+outline:none;
+
+cursor:pointer;
+
+font-family:"Poppins",sans-serif;
+
+transition:.35s;
+
+}
+
+button:hover{
+
+transform:translateY(-3px);
+
+}
+
+/* ================= LINKS ================= */
+
+a{
+
+transition:.35s;
+
+}
+
+a:hover{
+
+text-decoration:none;
+
+}
+
+/* ================= TABLE ================= */
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+background:white;
+
+border-radius:20px;
+
+overflow:hidden;
+
+box-shadow:var(--shadow);
+
+}
+
+th{
+
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+
+color:white;
+
+padding:18px;
+
+text-align:left;
+
+}
+
+td{
+
+padding:16px;
+
+border-bottom:1px solid #eee;
+
+}
+
+tr:hover{
+
+background:#faf6ef;
+
+}
+
+/* ================= BADGES ================= */
+
+.success{
+
+background:#d9f8df;
+
+color:#157347;
+
+padding:8px 15px;
+
+border-radius:30px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.warning{
+
+background:#fff3cd;
+
+color:#9a6700;
+
+padding:8px 15px;
+
+border-radius:30px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.danger{
+
+background:#ffd8d8;
+
+color:#c1121f;
+
+padding:8px 15px;
+
+border-radius:30px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+/* ================= IMAGE ================= */
+
+img{
+
+max-width:100%;
+
+display:block;
+
+}
+
+/* ================= CARD ANIMATION ================= */
+
+.card,
+.adminCard,
+.projectCard,
+.expense,
+.announcementCard,
+.yearCard{
+
+animation:fadeUp .6s ease;
+
+}
+
+/* ================= HOVER GLOW ================= */
+
+.card:hover,
+.yearCard:hover,
+.projectCard:hover,
+.expense:hover,
+.adminCard:hover,
+.announcementCard:hover{
+
+box-shadow:
+
+0 20px 50px rgba(0,0,0,.16);
+
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark{
+
+background:#161616;
+
+color:#ececec;
+
+}
+
+body.dark header{
+
+background:rgba(20,20,20,.85);
+
+}
+
+body.dark footer{
+
+background:#1f1f1f;
+
+color:#bbb;
+
+}
+
+body.dark .logo{
+
+color:#f5d77d;
+
+}
+
+body.dark nav a{
+
+color:#ddd;
+
+}
+
+body.dark nav a.active{
+
+background:#d4af37;
+
+color:#111;
+
+}
+
+body.dark .hero h1{
+
+color:#f5d77d;
+
+}
+
+body.dark .hero p{
+
+color:#cfcfcf;
+
+}
+
+body.dark .card,
+
+body.dark .yearCard,
+
+body.dark .adminCard,
+
+body.dark .expense,
+
+body.dark .projectCard,
+
+body.dark .announcementCard,
+
+body.dark table,
+
+body.dark .chartBox{
+
+background:#232323;
+
+color:#ececec;
+
+}
+
+body.dark .card h2,
+
+body.dark .yearCard h2,
+
+body.dark h2,
+
+body.dark h3{
+
+color:#f5d77d;
+
+}
+
+body.dark p,
+
+body.dark td,
+
+body.dark label{
+
+color:#d4d4d4;
+
+}
+
+body.dark input,
+
+body.dark select{
+
+background:#2d2d2d;
+
+color:white;
+
+border:2px solid #444;
+
+}
+
+body.dark input::placeholder{
+
+color:#999;
+
+}
+
+body.dark td{
+
+border-bottom:1px solid #444;
+
+}
+
+body.dark tr:hover{
+
+background:#2d2d2d;
+
+}
+
+/* ================= SMOOTH TRANSITIONS ================= */
+
+body,
+
+header,
+
+.card,
+
+.yearCard,
+
+.adminCard,
+
+.projectCard,
+
+.expense,
+
+.announcementCard,
+
+.chartBox,
+
+footer,
+
+nav a,
+
+button,
+
+input,
+
+select{
+
+transition:.35s;
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
 
 .hero{
 
@@ -828,27 +1503,25 @@ text-align:center;
 
 }
 
-.heroCircle{
+.heroImage{
 
-width:180px;
-
-height:180px;
-
-font-size:65px;
+margin-top:30px;
 
 }
 
-.hero h1{
-
-font-size:36px;
-
 }
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
 
 header{
 
 flex-direction:column;
 
 gap:20px;
+
+padding:20px;
 
 }
 
@@ -858,274 +1531,110 @@ justify-content:center;
 
 }
 
-.dashboard{
+.logo{
 
-grid-template-columns:1fr;
-
-}
-
-#collectionList{
-
-grid-template-columns:1fr;
-
-}
-
-}
-/* ============================
-   GRID LAYOUT
-============================ */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(450px,1fr));
-    gap:30px;
-    margin:40px 0;
-}
-
-/* ============================
-   CHART
-============================ */
-
-.chartBox{
-    background:white;
-    border-radius:25px;
-    padding:25px;
-    height:450px;
-    box-shadow:0 12px 35px rgba(0,0,0,.08);
-}
-
-/* ============================
-   SEARCH
-============================ */
-
-.searchSection{
-    margin:40px 0;
-}
-
-.searchSection input{
-
-    width:100%;
-    padding:18px 25px;
-
-    border-radius:60px;
-
-    border:2px solid #ddd;
-
-    outline:none;
-
-    font-size:16px;
-
-    transition:.3s;
-
-}
-
-.searchSection input:focus{
-
-    border-color:#c79d2d;
-
-    box-shadow:0 0 18px rgba(199,157,45,.25);
-
-}
-
-/* ============================
-   SEARCH RESULTS
-============================ */
-
-#dashboardSearchResults{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-
-    gap:20px;
-
-    margin-top:30px;
-
-}
-.expense{
-
-    background:white;
-
-    border-radius:22px;
-
-    padding:25px;
-
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
-
-    transition:.35s;
-
-    border-top:6px solid #d4af37;
-
-}
-
-.expense:hover{
-
-    transform:translateY(-8px);
-
-}
-
-.expense h2{
-
-    color:#6b3f17;
-
-    margin-bottom:15px;
-
-}
-
-.expense h3{
-
-    color:#8d5b2d;
-
-    margin-top:15px;
-
-}
-
-.expense p{
-
-    margin:10px 0;
-
-    color:#555;
-
-    line-height:1.7;
-
-}
-.projectCard{
-
-    background:white;
-
-    border-radius:22px;
-
-    padding:25px;
-
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
-
-    transition:.3s;
-
-}
-
-.projectCard:hover{
-
-    transform:translateY(-8px);
-
-}
-
-.projectCard h3{
-
-    color:#6b3f17;
-
-    margin-bottom:12px;
-
-}
-
-.projectBudget{
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    color:#8d5b2d;
-
-}
-.announcementCard{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:22px;
-
-    box-shadow:0 12px 30px rgba(0,0,0,.08);
-
-    border-left:7px solid #d4af37;
-
-    transition:.35s;
-
-}
-
-.announcementCard:hover{
-
-    transform:translateY(-8px);
-
-}
-
-.high{
-
-    border-left-color:#ff4444;
-
-}
-
-.medium{
-
-    border-left-color:#ff9800;
-
-}
-
-.low{
-
-    border-left-color:#43a047;
-
-}
-footer{
-
-    text-align:center;
-
-    padding:35px;
-
-    margin-top:60px;
-
-    color:#666;
-
-    background:white;
-
-    box-shadow:0 -3px 15px rgba(0,0,0,.05);
-
-}
-@media(max-width:900px){
-
-header{
-
-    flex-direction:column;
-
-    gap:20px;
-
-}
-
-nav{
-
-    justify-content:center;
-
-    flex-wrap:wrap;
+font-size:26px;
 
 }
 
 .hero{
 
-    grid-template-columns:1fr;
+padding:20px 0;
 
-    text-align:center;
+}
+
+.heroText h1{
+
+font-size:38px;
+
+}
+
+.hero p{
+
+font-size:16px;
 
 }
 
 .heroCircle{
 
-    width:180px;
+width:180px;
 
-    height:180px;
+height:180px;
 
-    font-size:70px;
-
-}
-
-.grid{
-
-    grid-template-columns:1fr;
+font-size:70px;
 
 }
 
 .dashboard{
 
-    grid-template-columns:1fr;
+grid-template-columns:1fr;
+
+}
+
+.yearCards{
+
+grid-template-columns:1fr;
+
+}
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+.chartBox{
+
+height:320px;
+
+}
+
+#collectionList,
+
+#expenseContainer,
+
+#projectContainer,
+
+#dashboardCollectionContainer,
+
+#dashboardAnnouncementContainer,
+
+#dashboardSearchResults{
+
+grid-template-columns:1fr;
 
 }
 
 }
+
+/* ================= EXTRA SMALL ================= */
+
+@media(max-width:500px){
+
+.heroText h1{
+
+font-size:30px;
+
+}
+
+.card h2{
+
+font-size:28px;
+
+}
+
+.yearCard h2{
+
+font-size:28px;
+
+}
+
+.adminCard{
+
+padding:22px;
+
+}
+
+}
+
+/* ================= END ================= */
