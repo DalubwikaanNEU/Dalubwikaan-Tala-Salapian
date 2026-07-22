@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "title": "Sample Expense",
+        "category": "Office Supplies",
+        "amount": 0,
+        "date": "2026-08-10",
+        "receipt": "",
+        "remarks": "Initial expense."
+    }
+]
