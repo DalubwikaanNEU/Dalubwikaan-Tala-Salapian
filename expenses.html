@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dalubwikaan Budget Allocation</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="adminHeader">
+
+<h1>💸 Dalubwikaan Budget Allocation</h1>
+
+<p>Financial Transparency and Expense Monitoring</p>
+
+</header>
+
+<!-- ================= MAIN ================= -->
+
+<main class="adminContainer">
+
+<!-- ================= SUMMARY ================= -->
+
+<section class="adminCard">
+
+<h2>📊 Expense Summary</h2>
+
+<div class="dashboard">
+
+<div class="card">
+
+<h3>Total Expenses</h3>
+
+<h2 id="totalExpense">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Total Records</h3>
+
+<h2 id="expenseCount">0</h2>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= SEARCH ================= -->
+
+<section class="adminCard">
+
+<h2>🔍 Search & Filter</h2>
+
+<input
+type="text"
+id="searchExpense"
+placeholder="Search expense title...">
+
+<br><br>
+
+<select id="categoryFilter">
+
+<option value="All">All Categories</option>
+
+<option value="Office Supplies">Office Supplies</option>
+
+<option value="Events">Events</option>
+
+<option value="Transportation">Transportation</option>
+
+<option value="Food">Food</option>
+
+<option value="Utilities">Utilities</option>
+
+<option value="Others">Others</option>
+
+</select>
+
+</section>
+
+<!-- ================= EXPENSE LIST ================= -->
+
+<section class="adminCard">
+
+<h2>📋 Expense Records</h2>
+
+<div id="expenseContainer">
+
+<div class="expense">
+
+Loading expenses...
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<p>
+
+© 2026 Dalubwikaan Transparency Portal
+
+<br>
+
+Financial Management & Transparency System
+
+</p>
+
+</footer>
+
+<script type="module" src="expenses.js"></script>
+
+</body>
+
+</html>
