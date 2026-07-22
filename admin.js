@@ -2150,312 +2150,238 @@ console.log("✅ Admin Dashboard Fully Loaded!");
 // =================================================
 
 
-let globalData = [];
-
-
-async function loadGlobalSearch(){
-
-
-    const results = document.getElementById("searchResults");
-
-
-    if(!results) return;
-
-
-
-    try{
-
-
-        const collectionsSnap = await getDocs(
-            collection(db,"collections")
-        );
-
-
-        const expensesSnap = await getDocs(
-            collection(db,"expenses")
-        );
-
-
-        const projectsSnap = await getDocs(
-            collection(db,"projects")
-        );
-
-
-        const announcementsSnap = await getDocs(
-            collection(db,"announcements")
-        );
-
-
-
-        globalData = [];
-
-
-
-        collectionsSnap.forEach(doc=>{
-
-            globalData.push({
-
-                type:"💰 Collection",
-
-                title:doc.data().week,
-
-                info:doc.data().collector,
-
-                id:doc.id
-
-            });
-
-
-        });
-
-
-
-
-        expensesSnap.forEach(doc=>{
-
-            globalData.push({
-
-                type:"💸 Expense",
-
-                title:doc.data().title,
-
-                info:doc.data().category,
-
-                id:doc.id
-
-            });
-
-
-        });
-
-
-
-
-
-        projectsSnap.forEach(doc=>{
-
-
-            globalData.push({
-
-                type:"📂 Project",
-
-                title:doc.data().title,
-
-                info:doc.data().status,
-
-                id:doc.id
-
-            });
-
-
-        });
-
-
-
-
-
-
-        announcementsSnap.forEach(doc=>{
-
-
-            globalData.push({
-
-                type:"📢 Announcement",
-
-                title:doc.data().title,
-
-                info:doc.data().priority,
-
-                id:doc.id
-
-            });
-
-
-        });
-
-
-
-    }
-
-
-
-    catch(error){
-
-        console.error(
-            "Search loading error:",
-            error
-        );
-
-    }
-
-
-
-}
-
-
-
-
-
-function searchEverything(){
-
-
-    const keyword =
-    document
-    .getElementById("globalSearch")
-    .value
-    .toLowerCase();
-
-
-
-    const results =
-    document.getElementById("searchResults");
-
-
-
-    if(keyword===""){
-
-
-        results.innerHTML = `
-
-        <div class="expense">
-
-        <p>
-        Type something to search...
-        </p>
-
-        </div>
-
-        `;
-
-
-        return;
-
-    }
-
-
-
-
-
-    const filtered =
-    globalData.filter(item=>{
-
-
-        return (
-
-            (item.title || "")
-            .toLowerCase()
-            .includes(keyword)
-
-            ||
-
-            (item.info || "")
-            .toLowerCase()
-            .includes(keyword)
-
-            ||
-
-            (item.type || "")
-            .toLowerCase()
-            .includes(keyword)
-
-        );
-
-
-    });
-
-
-
-
-
-
-    results.innerHTML="";
-
-
-
-
-
-    if(filtered.length===0){
-
-
-        results.innerHTML = `
-
-        <div class="expense">
-
-        <p>
-        ❌ No results found.
-        </p>
-
-        </div>
-
-        `;
-
-
-        return;
-
-    }
-
-
-
-
-
-
-
-    filtered.forEach(item=>{
-
-
-        results.innerHTML += `
-
-
-        <div class="expense">
-
-
-        <h3>
-        ${item.type}
-        </h3>
-
-
-        <p>
-        <strong>${item.title}</strong>
-        </p>
-
-
-        <p>
-        ${item.info || ""}
-        </p>
-
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-const globalSearch =
-document.getElementById("globalSearch");
-
+const globalSearch = document.getElementById("globalSearch");
+const searchResults = document.getElementById("searchResults");
 
 
 if(globalSearch){
 
 
-    globalSearch.addEventListener(
-        "input",
-        searchEverything
-    );
+globalSearch.addEventListener("input", async function(){
+
+
+const keyword = this.value.toLowerCase().trim();
+
+
+
+if(keyword === ""){
+
+searchResults.innerHTML = `
+
+<div class="expense">
+
+<p>
+Type something to search...
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+
+let results = [];
+
+
+// COLLECTIONS
+
+const collectionsSnap = await getDocs(
+collection(db,"collections")
+);
+
+
+collectionsSnap.forEach(doc=>{
+
+const data = doc.data();
+
+
+if(
+JSON.stringify(data)
+.toLowerCase()
+.includes(keyword)
+){
+
+
+results.push({
+
+type:"💰 Collection",
+
+name:data.week || "Collection",
+
+info:data.collector || ""
+
+});
+
+
+}
+
+
+});
+
+
+
+
+
+// EXPENSES
+
+const expensesSnap = await getDocs(
+collection(db,"expenses")
+);
+
+
+expensesSnap.forEach(doc=>{
+
+
+const data = doc.data();
+
+
+if(
+JSON.stringify(data)
+.toLowerCase()
+.includes(keyword)
+){
+
+
+results.push({
+
+type:"💸 Expense",
+
+name:data.title || "Expense",
+
+info:data.category || ""
+
+});
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+// PROJECTS
+
+const projectsSnap = await getDocs(
+collection(db,"projects")
+);
+
+
+projectsSnap.forEach(doc=>{
+
+
+const data = doc.data();
+
+
+if(
+JSON.stringify(data)
+.toLowerCase()
+.includes(keyword)
+){
+
+
+results.push({
+
+type:"📂 Project",
+
+name:data.title || "Project",
+
+info:data.status || ""
+
+});
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+// ANNOUNCEMENTS
+
+
+const announcementsSnap = await getDocs(
+collection(db,"announcements")
+);
+
+
+
+announcementsSnap.forEach(doc=>{
+
+
+const data = doc.data();
+
+
+
+if(
+JSON.stringify(data)
+.toLowerCase()
+.includes(keyword)
+){
+
+
+results.push({
+
+type:"📢 Announcement",
+
+name:data.title || "Announcement",
+
+info:data.priority || ""
+
+});
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+// DISPLAY
+
+
+searchResults.innerHTML="";
+
+
+
+if(results.length === 0){
+
+
+searchResults.innerHTML = `
+
+<div class="expense">
+
+❌ No results found.
+
+</div>
+
+`;
+
+
+return;
 
 
 }
@@ -2463,4 +2389,44 @@ if(globalSearch){
 
 
 
-loadGlobalSearch();
+
+
+results.forEach(item=>{
+
+
+searchResults.innerHTML += `
+
+
+<div class="expense">
+
+
+<h3>
+${item.type}
+</h3>
+
+
+<p>
+<strong>${item.name}</strong>
+</p>
+
+
+<p>
+${item.info}
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+});
+
+
+}
