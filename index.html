@@ -2,164 +2,293 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dalubwikaan Transparency Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Dalubwikaan Transparency Portal</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
 <header>
 
-    <div class="logo">
-        📚 DALUBWIKAAN
-    </div>
+<div class="logo">
 
-    <nav>
+📚 DALUBWIKAAN
 
-        <a href="index.html" class="active">Dashboard</a>
-        <a href="collections.html">Collections</a>
-        <a href="expenses.html">Expenses</a>
-        <a href="projects.html">Projects</a>
-        <a href="announcements.html">Announcements</a>
-        <a href="reports.html">Reports</a>
-        <a href="login.html">🔐 Admin</a>
+</div>
 
-        <button id="themeToggle">
-            🌙 Dark Mode
-        </button>
+<nav>
 
-    </nav>
+<a href="index.html" class="active">Dashboard</a>
+
+<a href="collections.html">Collections</a>
+
+<a href="expenses.html">Expenses</a>
+
+<a href="projects.html">Projects</a>
+
+<a href="announcements.html">Announcements</a>
+
+<a href="reports.html">Reports</a>
+
+<a href="login.html">Admin</a>
+
+<button id="themeToggle">
+
+🌙 Dark Mode
+
+</button>
+
+</nav>
 
 </header>
 
-<main class="container">
+<section class="hero">
 
-    <h1>
-        Dalubwikaan Transparency Portal
-    </h1>
+<h1>
 
-    <p class="subtitle">
-        Financial Transparency Dashboard
-    </p>
+DALUBWIKAAN
 
-    <section class="cards">
+Transparency Portal
 
-        <div class="card">
-            <h3>Total Collection</h3>
-            <h2 id="totalCollection">₱0</h2>
-        </div>
+</h1>
 
-        <div class="card">
-            <h3>Total Expenses</h3>
-            <h2 id="totalExpenses">₱0</h2>
-        </div>
+<p>
 
-        <div class="card">
-            <h3>Current Balance</h3>
-            <h2 id="currentBalance">₱0</h2>
-        </div>
+Transparency • Accountability • Financial Monitoring
 
-        <div class="card">
-            <h3>Projects</h3>
-            <h2 id="projectCount">0</h2>
-        </div>
+</p>
 
-    </section>
+</section>
 
-    <section class="chartSection">
+<section class="cards">
 
-        <h2>Collection by Year Level</h2>
+<div class="card">
 
-        <div class="chartBox">
+<h3>Total Collection</h3>
 
-            <canvas id="collectionChart"></canvas>
+<h1 id="totalCollection">
 
-        </div>
+₱0
 
-    </section>
+</h1>
 
-    <section class="searchSection">
+</div>
 
-        <h2>Search Transparency Records</h2>
+<div class="card">
 
-        <input
-            type="text"
-            id="dashboardSearch"
-            placeholder="Search expenses, projects, announcements...">
+<h3>Total Expenses</h3>
 
-        <div id="dashboardSearchResults"></div>
+<h1 id="totalExpenses">
 
-    </section>
+₱0
 
-    <section>
+</h1>
 
-        <h2>Recent Collections</h2>
+</div>
 
-        <div id="dashboardCollectionContainer" class="grid">
+<div class="card">
 
-            <div class="loading">
-                Loading collections...
-            </div>
+<h3>Current Balance</h3>
 
-        </div>
+<h1 id="currentBalance">
 
-    </section>
+₱0
 
-    <section>
+</h1>
 
-        <h2>Recent Expenses</h2>
+</div>
 
-        <div id="expenseContainer" class="grid">
+<div class="card">
 
-            <div class="loading">
-                Loading expenses...
-            </div>
+<h3>Projects</h3>
 
-        </div>
+<h1 id="projectCount">
 
-    </section>
+0
 
-    <section>
+</h1>
 
-        <h2>Projects</h2>
+</div>
 
-        <div id="projectContainer" class="grid">
+</section>
 
-            <div class="loading">
-                Loading projects...
-            </div>
+<section class="yearCards">
 
-        </div>
+<div class="yearCard">
 
-    </section>
+<h3>1st Year</h3>
 
-    <section>
+<h2 id="firstYear">
 
-        <h2>Announcements</h2>
+₱0
 
-        <div id="dashboardAnnouncementContainer" class="grid">
+</h2>
 
-            <div class="loading">
-                Loading announcements...
-            </div>
+</div>
 
-        </div>
+<div class="yearCard">
 
-    </section>
+<h3>2nd Year</h3>
 
-</main>
+<h2 id="secondYear">
+
+₱0
+
+</h2>
+
+</div>
+
+<div class="yearCard">
+
+<h3>3rd Year</h3>
+
+<h2 id="thirdYear">
+
+₱0
+
+</h2>
+
+</div>
+
+<div class="yearCard">
+
+<h3>4th Year</h3>
+
+<h2 id="fourthYear">
+
+₱0
+
+</h2>
+
+</div>
+
+</section>
+
+<section class="searchSection">
+
+<input
+
+type="text"
+
+id="dashboardSearch"
+
+placeholder="Search projects, announcements, expenses..."
+
+>
+
+</section>
+
+<section>
+
+<div id="dashboardSearchResults"></div>
+
+</section>
+
+<section class="chartSection">
+
+<h2>
+
+Collection Statistics
+
+</h2>
+
+<div class="chartBox">
+
+<canvas id="collectionChart"></canvas>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="panel">
+
+<h2>
+
+Recent Collections
+
+</h2>
+
+<div id="dashboardCollectionContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+
+Latest Expenses
+
+</h2>
+
+<div id="expenseContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="panel">
+
+<h2>
+
+Projects
+
+</h2>
+
+<div id="projectContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+
+Announcements
+
+</h2>
+
+<div id="dashboardAnnouncementContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+</section>
 
 <footer>
 
-    © 2026 Dalubwikaan Transparency Portal
+© 2026 Dalubwikaan Transparency Portal
 
 </footer>
 
@@ -168,4 +297,5 @@
 <script type="module" src="dashboard.js"></script>
 
 </body>
+
 </html>
