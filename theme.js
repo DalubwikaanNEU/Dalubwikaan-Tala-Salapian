@@ -15,6 +15,7 @@ if(savedTheme === "dark"){
 }
 
 
+
 button.addEventListener("click",()=>{
 
 
@@ -23,6 +24,7 @@ button.addEventListener("click",()=>{
 
     if(document.body.classList.contains("dark")){
 
+
         localStorage.setItem("theme","dark");
 
         button.innerHTML="☀️ Light Mode";
@@ -30,9 +32,11 @@ button.addEventListener("click",()=>{
 
     }else{
 
+
         localStorage.setItem("theme","light");
 
         button.innerHTML="🌙 Dark Mode";
+
 
     }
 
