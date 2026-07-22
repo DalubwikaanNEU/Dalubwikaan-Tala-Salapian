@@ -2,277 +2,397 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dalubwikaan Transparency Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+<title>Dalubwikaan Transparency Portal</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-
 <header>
 
-    <div class="logo">
-        📚 DALUBWIKAAN
-    </div>
+<div class="logo">
 
-    <nav>
-
-        <a href="index.html" class="active">Dashboard</a>
-
-        <a href="collections.html">Collections</a>
-
-        <a href="expenses.html">Expenses</a>
-
-        <a href="projects.html">Projects</a>
-
-        <a href="announcements.html">Announcements</a>
-
-        <a href="reports.html">Reports</a>
-
-        <a href="login.html">Admin</a>
-
-        <button id="themeToggle" class="themeBtn">
-            🌙 Dark Mode
-        </button>
-
-    </nav>
-
-</header>
-
-<!-- ================= CONTAINER ================= -->
-
-<div class="container">
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="heroText">
-
-            <h1>
-                Dalubwikaan Transparency Portal
-            </h1>
-
-            <p>
-
-                Transparency • Accountability • Financial Monitoring
-
-                <br><br>
-
-                Monitor collections, expenses, projects,
-                announcements, and organization finances
-                in one modern dashboard.
-
-            </p>
-
-            <a href="collections.html" class="heroBtn">
-
-                View Collections →
-
-            </a>
-
-        </div>
-
-        <div class="heroImage">
-
-            <div class="heroCircle">
-
-                💰
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- SUMMARY -->
-
-    <section class="dashboard">
-
-        <div class="card">
-
-            <h3>Total Collection</h3>
-
-            <h2 id="totalCollection">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>Total Expenses</h3>
-
-            <h2 id="totalExpenses">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>Current Balance</h3>
-
-            <h2 id="currentBalance">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>Projects</h3>
-
-            <h2 id="projectCount">0</h2>
-
-        </div>
-
-    </section>
-
-    <!-- YEAR LEVEL -->
-
-    <section class="dashboard">
-
-        <div class="card">
-
-            <h3>1st Year</h3>
-
-            <h2 id="firstYear">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>2nd Year</h3>
-
-            <h2 id="secondYear">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>3rd Year</h3>
-
-            <h2 id="thirdYear">₱0</h2>
-
-        </div>
-
-        <div class="card">
-
-            <h3>4th Year</h3>
-
-            <h2 id="fourthYear">₱0</h2>
-
-        </div>
-
-    </section>
-
-    <!-- SEARCH -->
-
-    <section class="adminCard">
-
-        <h2>🔍 Search Transparency Records</h2>
-
-        <input
-            type="text"
-            id="dashboardSearch"
-            placeholder="Search expenses, projects, announcements...">
-
-        <div id="dashboardSearchResults"></div>
-
-    </section>
-
-    <!-- CHART -->
-
-    <section class="adminCard">
-
-        <h2>📊 Collection Statistics</h2>
-
-        <div class="chartBox">
-
-            <canvas id="collectionChart"></canvas>
-
-        </div>
-
-    </section>
-
-    <!-- COLLECTIONS + EXPENSES -->
-
-    <section class="grid">
-
-        <div class="adminCard">
-
-            <h2>💰 Recent Collections</h2>
-
-            <div id="dashboardCollectionContainer">
-
-                Loading...
-
-            </div>
-
-        </div>
-
-        <div class="adminCard">
-
-            <h2>💸 Latest Expenses</h2>
-
-            <div id="expenseContainer">
-
-                Loading...
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- PROJECTS + ANNOUNCEMENTS -->
-
-    <section class="grid">
-
-        <div class="adminCard">
-
-            <h2>📂 Projects</h2>
-
-            <div id="projectContainer">
-
-                Loading...
-
-            </div>
-
-        </div>
-
-        <div class="adminCard">
-
-            <h2>📢 Announcements</h2>
-
-            <div id="dashboardAnnouncementContainer">
-
-                Loading...
-
-            </div>
-
-        </div>
-
-    </section>
+📚 DALUBWIKAAN
 
 </div>
 
-<!-- FOOTER -->
+<nav>
+
+<a href="index.html" class="active">Dashboard</a>
+
+<a href="collections.html">Collections</a>
+
+<a href="expenses.html">Expenses</a>
+
+<a href="projects.html">Projects</a>
+
+<a href="announcements.html">Announcements</a>
+
+<a href="reports.html">Reports</a>
+
+<a href="login.html">Admin</a>
+
+<button id="themeToggle" class="themeBtn">
+
+🌙 Dark Mode
+
+</button>
+
+</nav>
+
+</header>
+
+<div class="container">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="heroText">
+
+<span class="tag">
+
+✨ Official Financial Transparency Portal
+
+</span>
+
+<h1>
+
+Dalubwikaan Transparency Portal
+
+</h1>
+
+<p>
+
+Transparency. Accountability. Integrity.
+
+<br><br>
+
+Monitor collections, organization expenses,
+projects, financial reports,
+and official announcements in one centralized platform.
+
+</p>
+
+<div class="heroButtons">
+
+<a href="collections.html" class="heroBtn">
+
+💰 Collections
+
+</a>
+
+<a href="reports.html" class="outlineBtn">
+
+📄 Reports
+
+</a>
+
+</div>
+
+</div>
+
+<div class="heroImage">
+
+<div class="heroCircle">
+
+📚
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= QUICK INFO ================= -->
+
+<section class="quickStats">
+
+<div class="quickCard">
+
+<span>🏫</span>
+
+<div>
+
+<h4>Institution</h4>
+
+<p>New Era University</p>
+
+</div>
+
+</div>
+
+<div class="quickCard">
+
+<span>📅</span>
+
+<div>
+
+<h4>Academic Year</h4>
+
+<p>2026–2027</p>
+
+</div>
+
+</div>
+
+<div class="quickCard">
+
+<span>🏛️</span>
+
+<div>
+
+<h4>Organization</h4>
+
+<p>Dalubwikaan</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= SUMMARY ================= -->
+
+<h2 class="sectionTitle">
+
+📊 Financial Overview
+
+</h2>
+
+<section class="dashboard">
+
+<div class="card">
+
+<h3>Total Collection</h3>
+
+<h2 id="totalCollection">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Total Expenses</h3>
+
+<h2 id="totalExpenses">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Current Balance</h3>
+
+<h2 id="currentBalance">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Projects</h3>
+
+<h2 id="projectCount">0</h2>
+
+</div>
+
+</section>
+
+<!-- ================= YEAR LEVEL ================= -->
+
+<h2 class="sectionTitle">
+
+🎓 Collection Per Year Level
+
+</h2>
+
+<section class="dashboard">
+
+<div class="card">
+
+<h3>1st Year</h3>
+
+<h2 id="firstYear">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>2nd Year</h3>
+
+<h2 id="secondYear">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>3rd Year</h3>
+
+<h2 id="thirdYear">₱0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>4th Year</h3>
+
+<h2 id="fourthYear">₱0</h2>
+
+</div>
+
+</section>
+
+<!-- ================= SEARCH ================= -->
+
+<section class="adminCard">
+
+<h2>
+
+🔍 Search Transparency Records
+
+</h2>
+
+<input
+type="text"
+id="dashboardSearch"
+placeholder="Search collections, expenses, projects, announcements...">
+
+<div id="dashboardSearchResults"></div>
+
+</section>
+
+<!-- ================= CHART ================= -->
+
+<section class="adminCard">
+
+<h2>
+
+📈 Collection Analytics
+
+</h2>
+
+<div class="chartBox">
+
+<canvas id="collectionChart"></canvas>
+
+</div>
+
+</section>
+
+<!-- ================= COLLECTIONS ================= -->
+
+<h2 class="sectionTitle">
+
+💰 Latest Financial Records
+
+</h2>
+
+<section class="grid">
+
+<div class="adminCard">
+
+<h2>
+
+Recent Collections
+
+</h2>
+
+<div id="dashboardCollectionContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="adminCard">
+
+<h2>
+
+Latest Expenses
+
+</h2>
+
+<div id="expenseContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= PROJECTS ================= -->
+
+<h2 class="sectionTitle">
+
+📂 Organization Updates
+
+</h2>
+
+<section class="grid">
+
+<div class="adminCard">
+
+<h2>
+
+Projects
+
+</h2>
+
+<div id="projectContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="adminCard">
+
+<h2>
+
+Announcements
+
+</h2>
+
+<div id="dashboardAnnouncementContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+</section>
+
+</div>
 
 <footer>
 
-    © 2026 Dalubwikaan Transparency Portal
+<p>
 
-    <br>
+© 2026 Dalubwikaan Transparency Portal
 
-    Magsikhay • Manaliksik • Maglingkod
+</p>
+
+<p>
+
+Magsikhay • Manaliksik • Maglingkod
+
+</p>
 
 </footer>
 
