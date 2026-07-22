@@ -7,31 +7,121 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>Dalubwikaan Monthly Financial Report</title>
+
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+
 
 </head>
+
 
 
 <body>
 
 
-<header class="adminHeader printHeader">
 
-<h1>
+<!-- ================= NAVBAR ================= -->
+
+
+<header>
+
+
+<div class="logo">
+
 📚 DALUBWIKAAN
-</h1>
 
-<p>
-Monthly Financial Transparency Report
-</p>
+</div>
+
+
+
+
+<nav>
+
+
+<a href="index.html">
+
+Dashboard
+
+</a>
+
+
+
+<a href="collections.html">
+
+Collections
+
+</a>
+
+
+
+<a href="expenses.html">
+
+Expenses
+
+</a>
+
+
+
+<a href="projects.html">
+
+Projects
+
+</a>
+
+
+
+<a href="reports.html" class="active">
+
+Reports
+
+</a>
+
+
+
+<a href="announcements.html">
+
+Announcements
+
+</a>
+
+
+
+<a href="login.html">
+
+🔐 Admin
+
+</a>
+
+
+
+
+
+<button id="themeToggle" class="themeBtn">
+
+🌙 Dark Mode
+
+</button>
+
+
+
+</nav>
+
+
 
 </header>
 
 
+
+
+
+
+
+<!-- ================= MAIN ================= -->
 
 
 
@@ -45,18 +135,27 @@ Monthly Financial Transparency Report
 
 
 <h1>
-Financial Report Summary
+
+📊 Financial Report Summary
+
 </h1>
 
 
+
 <p id="reportMonth">
+
 📅 Month:
+
 </p>
+
 
 
 <p id="generatedDate">
+
 Generated:
+
 </p>
+
 
 
 </section>
@@ -75,13 +174,22 @@ Generated:
 
 <div class="card">
 
+
 <h3>
+
 Total Collection
+
 </h3>
+
+
 
 <h2 id="reportCollection">
+
 ₱0
+
 </h2>
+
+
 
 </div>
 
@@ -89,17 +197,30 @@ Total Collection
 
 
 
+
+
 <div class="card">
 
+
 <h3>
+
 Total Expenses
+
 </h3>
+
+
 
 <h2 id="reportExpense">
+
 ₱0
+
 </h2>
 
+
+
 </div>
+
+
 
 
 
@@ -107,15 +228,25 @@ Total Expenses
 
 <div class="card">
 
+
 <h3>
+
 Remaining Balance
+
 </h3>
 
+
+
 <h2 id="reportBalance">
+
 ₱0
+
 </h2>
 
+
+
 </div>
+
 
 
 
@@ -129,47 +260,71 @@ Remaining Balance
 
 
 
-<!-- EXPENSE DETAILS -->
+<!-- ================= EXPENSE TABLE ================= -->
+
+
 
 <section class="adminCard">
 
 
 <h2>
+
 💸 Expense Details
+
 </h2>
 
 
 
-<table border="1" width="100%" id="expenseTable">
+
+
+<table id="expenseTable">
+
 
 
 <thead>
 
+
 <tr>
 
+
 <th>
+
 Expense
+
 </th>
 
 
+
 <th>
+
 Category
+
 </th>
 
 
+
 <th>
+
 Amount
+
 </th>
 
 
+
 <th>
+
 Date
+
 </th>
+
 
 
 <th>
+
 Remarks
+
 </th>
+
 
 
 </tr>
@@ -179,23 +334,35 @@ Remarks
 
 
 
+
+
 <tbody id="expenseReportList">
+
 
 
 <tr>
 
+
 <td colspan="5">
+
 Loading expenses...
+
 </td>
+
 
 
 </tr>
 
 
+
 </tbody>
 
 
+
+
+
 </table>
+
 
 
 </section>
@@ -208,52 +375,136 @@ Loading expenses...
 
 
 
+<!-- ================= FILTER ================= -->
+
+
+
 <section class="adminCard noPrint">
 
 
 <h2>
+
 📅 Select Month
+
 </h2>
+
 
 
 
 <select id="monthFilter">
 
 
-<option value="0">January</option>
+<option value="0">
 
-<option value="1">February</option>
+January
 
-<option value="2">March</option>
+</option>
 
-<option value="3">April</option>
 
-<option value="4">May</option>
 
-<option value="5">June</option>
+<option value="1">
 
-<option value="6">July</option>
+February
 
-<option value="7">August</option>
+</option>
 
-<option value="8">September</option>
 
-<option value="9">October</option>
 
-<option value="10">November</option>
+<option value="2">
 
-<option value="11">December</option>
+March
+
+</option>
+
+
+
+<option value="3">
+
+April
+
+</option>
+
+
+
+<option value="4">
+
+May
+
+</option>
+
+
+
+<option value="5">
+
+June
+
+</option>
+
+
+
+<option value="6">
+
+July
+
+</option>
+
+
+
+<option value="7">
+
+August
+
+</option>
+
+
+
+<option value="8">
+
+September
+
+</option>
+
+
+
+<option value="9">
+
+October
+
+</option>
+
+
+
+<option value="10">
+
+November
+
+</option>
+
+
+
+<option value="11">
+
+December
+
+</option>
+
 
 
 </select>
 
 
+
+
 <br><br>
 
 
-<button id="printButton">
+
+
+<button id="printButton" class="btn">
+
 
 🖨️ Print Report
+
 
 </button>
 
@@ -269,25 +520,40 @@ Loading expenses...
 
 
 
+<!-- ================= SIGNATURE ================= -->
+
+
+
 <section class="signatureSection">
 
 
+
+
+
 <div>
 
+
 <p>
+
 Prepared by:
+
 </p>
+
 
 <br><br>
 
 
 <strong>
+
 ____________________
+
 </strong>
 
 
 <p>
+
 Ingat-Yaman
+
 </p>
 
 
@@ -298,22 +564,31 @@ Ingat-Yaman
 
 
 
+
 <div>
 
+
 <p>
+
 Checked by:
+
 </p>
+
 
 <br><br>
 
 
 <strong>
+
 Ychero P. Amancio
+
 </strong>
 
 
 <p>
+
 Bise Presidente Panloob
+
 </p>
 
 
@@ -327,24 +602,33 @@ Bise Presidente Panloob
 
 <div>
 
+
 <p>
+
 Approved by:
+
 </p>
+
 
 <br><br>
 
 
 <strong>
+
 Angel Martina
+
 </strong>
 
 
 <p>
+
 Pangulo
+
 </p>
 
 
 </div>
+
 
 
 
@@ -364,7 +648,46 @@ Pangulo
 
 
 
+<!-- ================= FOOTER ================= -->
+
+
+
+<footer>
+
+
+<p>
+
+
+© 2026 Dalubwikaan Transparency Portal
+
+
+<br>
+
+
+Monthly Financial Transparency Report
+
+
+</p>
+
+
+</footer>
+
+
+
+
+
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+<script src="theme.js"></script>
+
+
 <script type="module" src="reports.js"></script>
+
 
 
 
