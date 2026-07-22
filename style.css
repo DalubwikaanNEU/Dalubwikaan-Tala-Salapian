@@ -1,11 +1,16 @@
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   FINAL CLEAN STYLE.CSS
+   FINAL RESPONSIVE STYLE.CSS
    PART 1/4
+
+   - Desktop + Mobile Compatible
+   - Small Search Bar
+   - Clean Dashboard Layout
 ========================================================== */
 
 
 /* ================= ROOT COLORS ================= */
+
 
 :root{
 
@@ -22,11 +27,9 @@
     --green:#4f8a5b;
     --red:#c74a4a;
 
-    --shadow:0 10px 30px rgba(0,0,0,.12);
+    --shadow:0 8px 25px rgba(0,0,0,.12);
 
 }
-
-
 
 
 
@@ -41,10 +44,9 @@ body.dark{
     --text:#eeeeee;
     --muted:#bbbbbb;
 
-    --shadow:0 10px 30px rgba(0,0,0,.5);
+    --shadow:0 8px 25px rgba(0,0,0,.5);
 
 }
-
 
 
 
@@ -78,9 +80,9 @@ body{
 
     font-family:'Poppins',sans-serif;
 
-    transition:.3s ease;
-
     overflow-x:hidden;
+
+    transition:.3s;
 
 }
 
@@ -91,11 +93,12 @@ body{
 
 
 /* ==========================================================
-   NAVBAR
+   HEADER / NAVBAR
 ========================================================== */
 
 
 header{
+
 
     position:sticky;
 
@@ -121,15 +124,20 @@ header{
 
     box-shadow:0 5px 15px rgba(0,0,0,.08);
 
+
 }
 
 
 
 body.dark header{
 
+
     background:#1a1a1a;
 
+
 }
+
+
 
 
 
@@ -137,9 +145,10 @@ body.dark header{
 
 .logo{
 
-    font-size:28px;
 
     font-family:'Patrick Hand',cursive;
+
+    font-size:30px;
 
     font-weight:bold;
 
@@ -147,16 +156,18 @@ body.dark header{
 
     white-space:nowrap;
 
+
 }
 
 
 
 body.dark .logo{
 
+
     color:var(--accent);
 
-}
 
+}
 
 
 
@@ -165,11 +176,12 @@ body.dark .logo{
 
 nav{
 
+
     display:flex;
 
     align-items:center;
 
-    gap:18px;
+    gap:15px;
 
 }
 
@@ -179,35 +191,45 @@ nav{
 
 nav a{
 
+
     text-decoration:none;
 
     color:#555;
 
-    font-weight:600;
+    font-size:14px;
 
-    font-size:15px;
+    font-weight:600;
 
     transition:.3s;
 
     white-space:nowrap;
 
+
 }
+
 
 
 
 body.dark nav a{
 
+
     color:white;
 
+
 }
+
+
 
 
 
 nav a:hover{
 
+
     color:var(--primary);
 
+
 }
+
 
 
 
@@ -219,6 +241,10 @@ nav a:hover{
 
     border:none;
 
+    background:var(--primary);
+
+    color:white;
+
 
     padding:10px 18px;
 
@@ -227,12 +253,6 @@ nav a:hover{
 
 
     cursor:pointer;
-
-
-    background:var(--primary);
-
-
-    color:white;
 
 
     font-weight:bold;
@@ -245,13 +265,10 @@ nav a:hover{
 
 
 
-
-
 .themeBtn:hover{
 
 
     background:var(--secondary);
-
 
     transform:translateY(-3px);
 
@@ -268,7 +285,7 @@ nav a:hover{
 
 /* ==========================================================
    MINI SEARCH BAR
-   SMALL ONLY - HINDI SASAKOP NG DASHBOARD
+   SMALL + CLEAN
 ========================================================== */
 
 
@@ -278,16 +295,17 @@ nav a:hover{
     width:90%;
 
 
-    max-width:550px;
+    max-width:520px;
 
 
-    margin:25px auto 15px;
+    margin:25px auto;
 
 
     position:relative;
 
 
 }
+
 
 
 
@@ -314,16 +332,13 @@ nav a:hover{
     color:var(--text);
 
 
-    font-size:15px;
+    font-size:14px;
 
 
     outline:none;
 
 
     box-shadow:var(--shadow);
-
-
-    transition:.3s;
 
 
 }
@@ -344,8 +359,6 @@ nav a:hover{
 
 
 
-
-
 #dashboardSearchResults{
 
 
@@ -357,30 +370,28 @@ nav a:hover{
 
     left:0;
 
-
     right:0;
-
-
-    z-index:1000;
 
 
     background:var(--white);
 
 
-    border-radius:20px;
+    border-radius:18px;
 
 
     box-shadow:var(--shadow);
 
 
-    max-height:350px;
+    max-height:300px;
 
 
     overflow-y:auto;
 
 
-}
+    z-index:1000;
 
+
+}
 
 
 
@@ -409,10 +420,10 @@ nav a:hover{
 .hero{
 
 
-    padding:70px 20px;
-
-
     text-align:center;
+
+
+    padding:70px 20px;
 
 
     background:linear-gradient(
@@ -427,8 +438,6 @@ nav a:hover{
 
 
 }
-
-
 
 
 
@@ -455,20 +464,19 @@ body.dark .hero{
 .hero h1{
 
 
+    font-family:'Patrick Hand',cursive;
+
+
     font-size:58px;
 
 
     color:var(--primary);
 
 
-    font-family:'Patrick Hand',cursive;
-
-
     margin-bottom:15px;
 
 
 }
-
 
 
 
@@ -480,6 +488,7 @@ body.dark .hero h1{
 
 
 }
+
 
 
 
@@ -514,7 +523,7 @@ body.dark .hero h1{
 
 
 /* ==========================================================
-   DASHBOARD SUMMARY CARDS
+   DASHBOARD SUMMARY
 ========================================================== */
 
 
@@ -527,212 +536,7 @@ body.dark .hero h1{
     margin:auto;
 
 
-    padding:50px 30px;
-
-
-    display:grid;
-
-
-    grid-template-columns:
-
-    repeat(auto-fit,minmax(240px,1fr));
-
-
-    gap:30px;
-
-
-}
-
-
-
-
-
-.card{
-
-
-    background:var(--white);
-
-
-    padding:35px;
-
-
-    border-radius:25px;
-
-
-    box-shadow:var(--shadow);
-
-
-    position:relative;
-
-
-    overflow:hidden;
-
-
-    transition:.3s;
-
-
-}
-
-
-
-
-
-.card:hover{
-
-
-    transform:translateY(-8px);
-
-
-}
-
-
-
-
-
-.card::before{
-
-
-    content:"";
-
-
-    position:absolute;
-
-
-    top:0;
-
-
-    left:0;
-
-
-    width:100%;
-
-
-    height:7px;
-
-
-    background:linear-gradient(
-
-        to right,
-
-        var(--primary),
-
-        var(--accent)
-
-    );
-
-
-}
-
-
-
-
-
-.card h3{
-
-
-    color:var(--muted);
-
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-
-
-.card h2{
-
-
-    font-size:40px;
-
-
-    color:var(--primary);
-
-
-}
-
-
-
-
-
-body.dark .card h2{
-
-
-    color:var(--accent);
-
-
-}
-
-/* ==========================================================
-   DALUBWIKAAN TRANSPARENCY PORTAL
-   FINAL CLEAN STYLE.CSS
-   PART 2/4
-========================================================== */
-
-
-
-
-
-/* ==========================================================
-   YEAR LEVEL COLLECTION
-========================================================== */
-
-
-.yearSection{
-
-
-    max-width:1300px;
-
-
-    margin:auto;
-
-
-    padding:20px 30px 60px;
-
-
-}
-
-
-
-
-
-.yearSection h2{
-
-
-    font-size:32px;
-
-
-    color:var(--primary);
-
-
-    margin-bottom:30px;
-
-
-    font-family:'Patrick Hand',cursive;
-
-
-}
-
-
-
-
-
-body.dark .yearSection h2{
-
-
-    color:var(--accent);
-
-
-}
-
-
-
-
-
-
-.yearCards{
+    padding:45px 30px;
 
 
     display:grid;
@@ -753,7 +557,7 @@ body.dark .yearSection h2{
 
 
 
-.yearCard{
+.card{
 
 
     background:var(--white);
@@ -766,9 +570,6 @@ body.dark .yearSection h2{
 
 
     box-shadow:var(--shadow);
-
-
-    border:2px dashed #e8d7c4;
 
 
     position:relative;
@@ -785,16 +586,201 @@ body.dark .yearSection h2{
 
 
 
+.card:hover{
 
-.yearCard:hover{
 
-
-    transform:translateY(-8px);
+    transform:translateY(-6px);
 
 
 }
 
 
+
+
+
+
+.card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    top:0;
+
+
+    left:0;
+
+
+    height:6px;
+
+
+    width:100%;
+
+
+    background:linear-gradient(
+
+        to right,
+
+        var(--primary),
+
+        var(--accent)
+
+    );
+
+
+}
+
+
+
+
+
+
+.card h3{
+
+
+    color:var(--muted);
+
+
+    font-size:16px;
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+
+
+
+.card h2{
+
+
+    color:var(--primary);
+
+
+    font-size:38px;
+
+
+}
+
+
+
+body.dark .card h2{
+
+
+    color:var(--accent);
+
+
+}
+/* ==========================================================
+   DALUBWIKAAN TRANSPARENCY PORTAL
+   FINAL RESPONSIVE STYLE.CSS
+   PART 2/4
+========================================================== */
+
+
+
+/* ==========================================================
+   YEAR LEVEL COLLECTION
+========================================================== */
+
+
+.yearSection{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:25px 30px 50px;
+
+}
+
+
+
+.yearSection h2{
+
+    font-family:'Patrick Hand',cursive;
+
+    font-size:32px;
+
+    color:var(--primary);
+
+    margin-bottom:25px;
+
+}
+
+
+
+body.dark .yearSection h2{
+
+    color:var(--accent);
+
+}
+
+
+
+
+.yearCards{
+
+
+    display:grid;
+
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+
+    gap:20px;
+
+
+}
+
+
+
+
+.yearCard{
+
+
+    background:var(--white);
+
+
+    padding:25px;
+
+
+    border-radius:20px;
+
+
+    box-shadow:var(--shadow);
+
+
+    border:2px dashed #e8d7c4;
+
+
+    transition:.3s;
+
+
+    overflow:hidden;
+
+
+    position:relative;
+
+
+}
+
+
+
+.yearCard:hover{
+
+
+    transform:translateY(-6px);
+
+
+}
 
 
 
@@ -813,7 +799,7 @@ body.dark .yearSection h2{
     top:10px;
 
 
-    font-size:55px;
+    font-size:50px;
 
 
     opacity:.08;
@@ -824,26 +810,24 @@ body.dark .yearSection h2{
 
 
 
-
 .yearCard h3{
 
 
     color:var(--muted);
 
+    font-size:16px;
 
-    margin-bottom:15px;
+    margin-bottom:12px;
 
 
 }
 
 
 
-
-
 .yearCard h1{
 
 
-    font-size:42px;
+    font-size:38px;
 
 
     color:var(--green);
@@ -856,11 +840,8 @@ body.dark .yearSection h2{
 
 
 
-
-
-
 /* ==========================================================
-   CHART SECTION
+   COLLECTION CHART
 ========================================================== */
 
 
@@ -873,13 +854,10 @@ body.dark .yearSection h2{
     margin:auto;
 
 
-    padding:10px 30px 60px;
+    padding:20px 30px 50px;
 
 
 }
-
-
-
 
 
 
@@ -889,7 +867,7 @@ body.dark .yearSection h2{
     background:var(--white);
 
 
-    padding:35px;
+    padding:30px;
 
 
     border-radius:25px;
@@ -902,26 +880,22 @@ body.dark .yearSection h2{
 
 
 
-
-
 .chartCard h2{
 
 
     font-family:'Patrick Hand',cursive;
 
 
-    font-size:30px;
-
-
-    margin-bottom:25px;
-
-
     color:var(--primary);
 
 
+    font-size:30px;
+
+
+    margin-bottom:20px;
+
+
 }
-
-
 
 
 
@@ -936,14 +910,13 @@ body.dark .chartCard h2{
 
 
 
-
 .chartCard canvas{
 
 
     width:100%!important;
 
 
-    height:420px!important;
+    height:380px!important;
 
 
 }
@@ -955,9 +928,9 @@ body.dark .chartCard h2{
 
 
 
-
 /* ==========================================================
    EXPENSE SECTION
+   SMALLER + MOBILE FRIENDLY
 ========================================================== */
 
 
@@ -971,34 +944,29 @@ body.dark .chartCard h2{
     margin:auto;
 
 
-    padding:20px 30px 70px;
+    padding:20px 30px 60px;
 
 
 }
-
-
-
 
 
 
 .recentExpenses h2{
 
 
-    font-size:32px;
-
-
-    margin-bottom:25px;
-
-
     font-family:'Patrick Hand',cursive;
+
+
+    font-size:30px;
 
 
     color:var(--primary);
 
 
+    margin-bottom:20px;
+
+
 }
-
-
 
 
 
@@ -1015,7 +983,6 @@ body.dark .recentExpenses h2{
 
 
 
-
 #expenseContainer{
 
 
@@ -1023,15 +990,13 @@ body.dark .recentExpenses h2{
 
 
     grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
 
-    repeat(auto-fit,minmax(300px,1fr));
 
-
-    gap:22px;
+    gap:18px;
 
 
 }
-
 
 
 
@@ -1043,16 +1008,16 @@ body.dark .recentExpenses h2{
     background:var(--white);
 
 
-    padding:25px;
+    padding:20px;
 
 
-    border-radius:20px;
+    border-radius:18px;
 
 
     box-shadow:var(--shadow);
 
 
-    border-left:8px solid var(--red);
+    border-left:6px solid var(--red);
 
 
     transition:.3s;
@@ -1062,12 +1027,10 @@ body.dark .recentExpenses h2{
 
 
 
-
-
 .expense:hover{
 
 
-    transform:translateY(-8px);
+    transform:translateY(-5px);
 
 
 }
@@ -1079,13 +1042,36 @@ body.dark .recentExpenses h2{
 .expense h3{
 
 
+    font-size:18px;
+
+
+    margin-bottom:10px;
+
+
     color:var(--text);
 
 
-    margin-bottom:12px;
+}
+
+
+
+
+
+.expense p{
+
+
+    font-size:14px;
+
+
+    color:var(--muted);
+
+
+    line-height:1.6;
 
 
 }
+
+
 
 
 
@@ -1094,28 +1080,26 @@ body.dark .recentExpenses h2{
 .expenseAmount{
 
 
-    font-size:34px;
-
-
-    color:var(--red);
+    font-size:28px;
 
 
     font-weight:bold;
+
+
+    color:var(--red);
 
 
 }
 
 
 
-
-
 .expenseDate{
 
 
+    font-size:13px;
+
+
     color:var(--muted);
-
-
-    font-size:14px;
 
 
 }
@@ -1130,13 +1114,13 @@ body.dark .recentExpenses h2{
     display:inline-block;
 
 
-    margin-top:15px;
+    padding:6px 12px;
 
 
-    padding:7px 15px;
+    margin-top:10px;
 
 
-    border-radius:50px;
+    border-radius:30px;
 
 
     background:#fdecec;
@@ -1145,7 +1129,7 @@ body.dark .recentExpenses h2{
     color:var(--red);
 
 
-    font-size:14px;
+    font-size:12px;
 
 
     font-weight:bold;
@@ -1166,6 +1150,7 @@ body.dark .recentExpenses h2{
 ========================================================== */
 
 
+
 .projectSection{
 
 
@@ -1175,12 +1160,10 @@ body.dark .recentExpenses h2{
     margin:auto;
 
 
-    padding:10px 30px 80px;
+    padding:20px 30px 70px;
 
 
 }
-
-
 
 
 
@@ -1188,21 +1171,19 @@ body.dark .recentExpenses h2{
 .projectSection h2{
 
 
-    font-size:32px;
-
-
-    margin-bottom:30px;
-
-
     font-family:'Patrick Hand',cursive;
+
+
+    font-size:30px;
 
 
     color:var(--primary);
 
 
+    margin-bottom:25px;
+
+
 }
-
-
 
 
 
@@ -1218,8 +1199,6 @@ body.dark .projectSection h2{
 
 
 
-
-
 #projectContainer{
 
 
@@ -1227,11 +1206,10 @@ body.dark .projectSection h2{
 
 
     grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
 
-    repeat(auto-fit,minmax(300px,1fr));
 
-
-    gap:25px;
+    gap:20px;
 
 
 }
@@ -1247,19 +1225,19 @@ body.dark .projectSection h2{
     background:var(--white);
 
 
-    padding:30px;
+    padding:25px;
 
 
-    border-radius:22px;
+    border-radius:20px;
 
 
     box-shadow:var(--shadow);
 
 
-    position:relative;
-
-
     overflow:hidden;
+
+
+    position:relative;
 
 
     transition:.3s;
@@ -1270,11 +1248,10 @@ body.dark .projectSection h2{
 
 
 
-
 .projectCard:hover{
 
 
-    transform:translateY(-10px);
+    transform:translateY(-7px);
 
 
 }
@@ -1301,16 +1278,16 @@ body.dark .projectSection h2{
     width:100%;
 
 
-    height:7px;
+    height:6px;
 
 
     background:linear-gradient(
 
-        to right,
+    to right,
 
-        var(--green),
+    var(--green),
 
-        #78c091
+    #78c091
 
     );
 
@@ -1324,10 +1301,10 @@ body.dark .projectSection h2{
 .projectCard h3{
 
 
-    margin-bottom:15px;
+    margin-bottom:12px;
 
 
-    color:var(--text);
+    font-size:18px;
 
 
 }
@@ -1339,7 +1316,7 @@ body.dark .projectSection h2{
 .projectBudget{
 
 
-    font-size:34px;
+    font-size:30px;
 
 
     color:var(--green);
@@ -1348,12 +1325,7 @@ body.dark .projectSection h2{
     font-weight:bold;
 
 
-    margin-bottom:15px;
-
-
 }
-
-
 
 
 
@@ -1363,11 +1335,13 @@ body.dark .projectSection h2{
     color:var(--muted);
 
 
-    line-height:1.8;
+    font-size:14px;
+
+
+    line-height:1.7;
 
 
 }
-
 
 
 
@@ -1377,7 +1351,7 @@ body.dark .projectSection h2{
 
 
 /* ==========================================================
-   STATUS BADGES
+   BADGES
 ========================================================== */
 
 
@@ -1387,68 +1361,53 @@ body.dark .projectSection h2{
     display:inline-block;
 
 
-    padding:8px 16px;
+    padding:7px 14px;
 
 
-    border-radius:50px;
+    border-radius:40px;
 
 
-    margin-top:18px;
-
-
-    font-size:13px;
+    font-size:12px;
 
 
     font-weight:bold;
 
 
-}
+    margin-top:15px;
 
+
+}
 
 
 
 
 .completed{
 
-
     background:#dff6e4;
-
 
     color:#2d8a45;
 
-
 }
-
-
 
 
 
 .ongoing{
 
-
     background:#dcecff;
-
 
     color:#2360d9;
 
-
 }
-
-
 
 
 
 .planning{
 
-
     background:#fff3cf;
-
 
     color:#b77a00;
 
-
 }
-
 
 
 
@@ -1468,13 +1427,13 @@ body.dark .projectSection h2{
     display:inline-block;
 
 
-    margin-top:20px;
+    padding:11px 20px;
 
 
-    padding:12px 22px;
+    margin-top:15px;
 
 
-    border-radius:50px;
+    border-radius:40px;
 
 
     background:var(--primary);
@@ -1496,8 +1455,6 @@ body.dark .projectSection h2{
 
 
 
-
-
 .btn:hover{
 
 
@@ -1511,7 +1468,7 @@ body.dark .projectSection h2{
 
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   FINAL CLEAN STYLE.CSS
+   FINAL RESPONSIVE STYLE.CSS
    PART 3/4
 ========================================================== */
 
@@ -1524,10 +1481,27 @@ body.dark .projectSection h2{
 ========================================================== */
 
 
+.tableContainer{
+
+
+    width:100%;
+
+
+    overflow-x:auto;
+
+
+}
+
+
+
+
 table{
 
 
     width:100%;
+
+
+    min-width:650px;
 
 
     border-collapse:collapse;
@@ -1536,7 +1510,7 @@ table{
     background:var(--white);
 
 
-    border-radius:20px;
+    border-radius:18px;
 
 
     overflow:hidden;
@@ -1560,7 +1534,10 @@ table th{
     color:white;
 
 
-    padding:18px;
+    padding:15px;
+
+
+    font-size:14px;
 
 
     text-align:left;
@@ -1575,13 +1552,16 @@ table th{
 table td{
 
 
-    padding:18px;
+    padding:14px;
+
+
+    color:var(--text);
 
 
     border-bottom:1px solid #eee;
 
 
-    color:var(--text);
+    font-size:14px;
 
 
 }
@@ -1612,12 +1592,90 @@ table tr:hover{
 
 
 
-
-
 body.dark table tr:hover{
 
 
     background:#292929;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================================
+   REPORT EXPENSE DETAILS FIX
+   SMALLER CARD STYLE
+========================================================== */
+
+
+
+.expenseDetails{
+
+
+    background:var(--white);
+
+
+    border-radius:18px;
+
+
+    padding:20px;
+
+
+    box-shadow:var(--shadow);
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+.expenseDetails h3{
+
+
+    font-size:18px;
+
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+
+
+.expenseDetails p{
+
+
+    font-size:14px;
+
+
+    color:var(--muted);
+
+
+    margin:5px 0;
+
+
+}
+
+
+
+
+
+
+.expenseDetails strong{
+
+
+    color:var(--text);
 
 
 }
@@ -1643,7 +1701,7 @@ textarea{
     width:100%;
 
 
-    padding:15px;
+    padding:14px;
 
 
     border-radius:12px;
@@ -1652,16 +1710,16 @@ textarea{
     border:2px solid #ddd;
 
 
-    outline:none;
-
-
     background:var(--white);
 
 
     color:var(--text);
 
 
-    font-size:16px;
+    outline:none;
+
+
+    font-size:15px;
 
 
     transition:.3s;
@@ -1687,20 +1745,37 @@ textarea:focus{
 
 
 
+textarea{
+
+
+    resize:vertical;
+
+
+    min-height:120px;
+
+
+}
+
+
+
+
+
 label{
 
 
     display:block;
 
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 
 
     font-weight:600;
 
 
-}
+    color:var(--text);
 
+
+}
 
 
 
@@ -1717,13 +1792,13 @@ label{
 #searchResults{
 
 
-    margin-top:25px;
+    margin-top:20px;
 
 
     display:grid;
 
 
-    gap:20px;
+    gap:15px;
 
 
 }
@@ -1735,7 +1810,52 @@ label{
 #searchResults .expense{
 
 
-    animation:fade .4s ease;
+    animation:fade .3s ease;
+
+
+}
+
+
+
+
+
+
+
+#dashboardSearchResults .expense,
+#dashboardSearchResults .projectCard,
+#dashboardSearchResults .announcementCard{
+
+
+    margin:10px;
+
+
+    padding:15px;
+
+
+    box-shadow:none;
+
+
+}
+
+
+
+
+
+#dashboardSearchResults h3{
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+
+body.dark #dashboardSearchResults h3{
+
+
+    color:var(--accent);
 
 
 }
@@ -1749,7 +1869,7 @@ label{
 
 
 /* ==========================================================
-   STAT CARD
+   STAT CARDS
 ========================================================== */
 
 
@@ -1759,7 +1879,7 @@ label{
     background:var(--white);
 
 
-    padding:30px;
+    padding:25px;
 
 
     border-radius:20px;
@@ -1776,18 +1896,16 @@ label{
 
 
 
-
 .statCard h2{
 
 
-    font-size:42px;
+    font-size:38px;
 
 
     color:var(--primary);
 
 
 }
-
 
 
 
@@ -1819,9 +1937,8 @@ body.dark .statCard h2{
 
 
 
-
 /* ==========================================================
-   ANNOUNCEMENT SECTION
+   ANNOUNCEMENTS
 ========================================================== */
 
 
@@ -1850,13 +1967,16 @@ body.dark .statCard h2{
     text-align:center;
 
 
-    font-size:30px;
+    font-family:'Patrick Hand',cursive;
 
 
-    margin-bottom:30px;
+    font-size:32px;
 
 
     color:var(--primary);
+
+
+    margin-bottom:30px;
 
 
 }
@@ -1885,26 +2005,25 @@ body.dark .announcementSection h2{
     background:var(--white);
 
 
-    padding:25px;
+    padding:22px;
 
 
-    border-radius:20px;
+    border-radius:18px;
 
 
-    margin-bottom:25px;
+    margin-bottom:20px;
 
 
     box-shadow:var(--shadow);
 
 
-    border-left:8px solid #6b4f2a;
+    border-left:7px solid var(--primary);
 
 
     transition:.3s;
 
 
 }
-
 
 
 
@@ -1928,7 +2047,6 @@ body.dark .announcementSection h2{
 
 
 }
-
 
 
 
@@ -1960,13 +2078,13 @@ body.dark .announcementSection h2{
 .announcementMessage{
 
 
-    margin-top:20px;
-
-
-    font-size:16px;
+    margin-top:15px;
 
 
     line-height:1.7;
+
+
+    font-size:15px;
 
 
 }
@@ -1978,7 +2096,7 @@ body.dark .announcementSection h2{
 .announcementDate{
 
 
-    margin-top:20px;
+    margin-top:15px;
 
 
     color:var(--muted);
@@ -2005,7 +2123,10 @@ body.dark .announcementSection h2{
 .adminContainer{
 
 
-    max-width:500px;
+    max-width:450px;
+
+
+    width:90%;
 
 
     margin:60px auto;
@@ -2017,7 +2138,7 @@ body.dark .announcementSection h2{
     background:var(--white);
 
 
-    border-radius:25px;
+    border-radius:22px;
 
 
     box-shadow:var(--shadow);
@@ -2029,9 +2150,10 @@ body.dark .announcementSection h2{
 
 
 
-
-
 .logoutBtn{
+
+
+    border:none;
 
 
     background:#d32f2f;
@@ -2040,19 +2162,16 @@ body.dark .announcementSection h2{
     color:white;
 
 
-    border:none;
-
-
-    padding:12px 24px;
+    padding:12px 22px;
 
 
     border-radius:10px;
 
 
-    font-weight:bold;
-
-
     cursor:pointer;
+
+
+    font-weight:bold;
 
 
     transition:.3s;
@@ -2094,10 +2213,7 @@ body.dark .announcementSection h2{
     background:rgba(255,255,255,.6);
 
 
-    backdrop-filter:blur(14px);
-
-
-    border:1px solid rgba(255,255,255,.4);
+    backdrop-filter:blur(12px);
 
 
 }
@@ -2123,12 +2239,13 @@ body.dark .glass{
 
 
 /* ==========================================================
-   DARK MODE EXTRA FIX
+   DARK MODE FIXES
 ========================================================== */
 
 
 body.dark .announcementCard,
-body.dark .adminContainer{
+body.dark .adminContainer,
+body.dark .expenseDetails{
 
 
     background:#1e1e1e;
@@ -2142,38 +2259,12 @@ body.dark .adminContainer{
 
 
 
-
-body.dark .announcementMessage{
-
-
-    color:#eeeeee;
+body.dark input,
+body.dark select,
+body.dark textarea{
 
 
-}
-
-
-
-
-
-body.dark .announcementDate{
-
-
-    color:#aaaaaa;
-
-
-}
-
-
-
-
-
-body.dark .yearCard,
-body.dark .chartCard,
-body.dark .expense,
-body.dark .projectCard{
-
-
-    border-color:#333;
+    border-color:#444;
 
 
 }
@@ -2183,115 +2274,18 @@ body.dark .projectCard{
 
 
 
+body.dark .expense p,
+body.dark .projectInfo{
 
 
-
-/* ==========================================================
-   ANIMATION
-========================================================== */
-
-
-.fade{
-
-
-    animation:fade .8s ease;
-
-
-}
-
-
-
-
-
-@keyframes fade{
-
-
-    from{
-
-
-        opacity:0;
-
-
-        transform:translateY(20px);
-
-
-    }
-
-
-
-    to{
-
-
-        opacity:1;
-
-
-        transform:translateY(0);
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-.float{
-
-
-    animation:float 4s ease-in-out infinite;
-
-
-}
-
-
-
-
-
-
-
-
-@keyframes float{
-
-
-    0%{
-
-
-        transform:translateY(0);
-
-
-    }
-
-
-
-    50%{
-
-
-        transform:translateY(-8px);
-
-
-    }
-
-
-
-    100%{
-
-
-        transform:translateY(0);
-
-
-    }
+    color:#bbbbbb;
 
 
 }
 
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   FINAL CLEAN STYLE.CSS
+   FINAL RESPONSIVE STYLE.CSS
    PART 4/4
 ========================================================== */
 
@@ -2307,7 +2301,7 @@ body.dark .projectCard{
 footer{
 
 
-    margin-top:80px;
+    margin-top:70px;
 
 
     background:#5b3418;
@@ -2319,27 +2313,23 @@ footer{
     text-align:center;
 
 
-    padding:35px 20px;
+    padding:30px 20px;
 
 
 }
-
-
 
 
 
 footer p{
 
 
-    line-height:2;
+    line-height:1.8;
 
 
-    opacity:.9;
+    font-size:14px;
 
 
 }
-
-
 
 
 
@@ -2367,12 +2357,10 @@ body.dark footer{
 ::-webkit-scrollbar{
 
 
-    width:12px;
+    width:10px;
 
 
 }
-
-
 
 
 
@@ -2386,19 +2374,16 @@ body.dark footer{
 
 
 
-
-
 ::-webkit-scrollbar-thumb{
 
 
     background:var(--primary);
 
 
-    border-radius:50px;
+    border-radius:30px;
 
 
 }
-
 
 
 
@@ -2408,19 +2393,14 @@ body.dark footer{
 
 
 /* ==========================================================
-   SEARCH DROPDOWN DESIGN
+   ANIMATION
 ========================================================== */
 
 
-#dashboardSearchResults .expense,
-#dashboardSearchResults .projectCard,
-#dashboardSearchResults .announcementCard{
+.fade{
 
 
-    margin:10px;
-
-
-    box-shadow:none;
+    animation:fade .5s ease;
 
 
 }
@@ -2429,63 +2409,34 @@ body.dark footer{
 
 
 
-#dashboardSearchResults h3{
+@keyframes fade{
 
 
-    color:var(--primary);
+    from{
 
 
-}
+        opacity:0;
 
 
+        transform:translateY(15px);
 
 
-
-body.dark #dashboardSearchResults h3{
-
-
-    color:var(--accent);
+    }
 
 
-}
+    to{
 
 
+        opacity:1;
 
 
+        transform:translateY(0);
 
 
-
-
-
-/* ==========================================================
-   TABLE MOBILE WRAPPER
-========================================================== */
-
-
-.tableContainer{
-
-
-    width:100%;
-
-
-    overflow-x:auto;
+    }
 
 
 }
-
-
-
-
-
-table{
-
-
-    min-width:600px;
-
-
-}
-
-
 
 
 
@@ -2505,7 +2456,7 @@ table{
 header{
 
 
-    padding:20px;
+    padding:18px 25px;
 
 
     flex-direction:column;
@@ -2518,12 +2469,7 @@ header{
 
 
 
-
-
 nav{
-
-
-    width:100%;
 
 
     justify-content:center;
@@ -2536,23 +2482,30 @@ nav{
 
 
 
-
-
 .hero h1{
 
 
-    font-size:45px;
+    font-size:48px;
 
 
 }
 
 
 
+.dashboard{
+
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+
 }
 
 
 
 
+}
 
 
 
@@ -2577,9 +2530,7 @@ body{
 
 
 
-
-
-/* NAVBAR */
+/* HEADER */
 
 
 header{
@@ -2591,7 +2542,17 @@ header{
     padding:15px;
 
 
-    flex-direction:column;
+    gap:15px;
+
+
+}
+
+
+
+.logo{
+
+
+    font-size:24px;
 
 
     text-align:center;
@@ -2603,28 +2564,19 @@ header{
 
 
 
-.logo{
-
-
-    font-size:24px;
-
-
-}
-
-
-
-
-
 nav{
+
+
+    width:100%;
 
 
     display:flex;
 
 
-    flex-wrap:wrap;
-
-
     justify-content:center;
+
+
+    flex-wrap:wrap;
 
 
     gap:8px;
@@ -2634,25 +2586,22 @@ nav{
 
 
 
-
-
 nav a{
-
-
-    font-size:12px;
-
-
-    padding:8px 12px;
 
 
     background:var(--white);
 
 
-    border-radius:20px;
+    padding:8px 14px;
+
+
+    border-radius:30px;
+
+
+    font-size:12px;
 
 
 }
-
 
 
 
@@ -2672,13 +2621,16 @@ nav a{
 
 
 
+
+
+
 /* SEARCH */
 
 
 .miniSearch{
 
 
-    width:90%;
+    width:92%;
 
 
     margin:20px auto;
@@ -2689,31 +2641,18 @@ nav a{
 
 
 
-
 #dashboardSearch{
 
 
-    font-size:14px;
+    font-size:13px;
 
 
-    padding:12px 18px;
-
-
-}
-
-
-
-
-
-
-
-#dashboardSearchResults{
-
-
-    max-height:250px;
+    padding:11px 16px;
 
 
 }
+
+
 
 
 
@@ -2725,34 +2664,31 @@ nav a{
 .hero{
 
 
-    padding:50px 20px;
+    padding:45px 20px;
 
 
 }
-
-
 
 
 
 .hero h1{
 
 
-    font-size:38px;
+    font-size:36px;
 
 
 }
-
-
 
 
 
 .hero p{
 
 
-    font-size:15px;
+    font-size:14px;
 
 
 }
+
 
 
 
@@ -2773,11 +2709,10 @@ nav a{
     grid-template-columns:1fr;
 
 
-    gap:20px;
+    gap:18px;
 
 
 }
-
 
 
 
@@ -2785,19 +2720,17 @@ nav a{
 .card{
 
 
-    padding:25px;
+    padding:22px;
 
 
 }
-
-
 
 
 
 .card h2{
 
 
-    font-size:32px;
+    font-size:30px;
 
 
 }
@@ -2809,7 +2742,8 @@ nav a{
 
 
 
-/* YEAR */
+
+/* YEAR LEVEL */
 
 
 .yearSection{
@@ -2819,8 +2753,6 @@ nav a{
 
 
 }
-
-
 
 
 
@@ -2834,24 +2766,20 @@ nav a{
 
 
 
-
-
 .yearCard{
 
 
-    padding:25px;
+    padding:22px;
 
 
 }
 
 
 
-
-
 .yearCard h1{
 
 
-    font-size:35px;
+    font-size:32px;
 
 
 }
@@ -2877,8 +2805,6 @@ nav a{
 
 
 
-
-
 .chartCard{
 
 
@@ -2889,12 +2815,10 @@ nav a{
 
 
 
-
-
 .chartCard canvas{
 
 
-    height:250px!important;
+    height:240px!important;
 
 
 }
@@ -2921,7 +2845,6 @@ nav a{
 
 
 
-
 #expenseContainer{
 
 
@@ -2932,12 +2855,30 @@ nav a{
 
 
 
-
-
 .expense{
 
 
-    padding:20px;
+    padding:18px;
+
+
+}
+
+
+
+.expense h3{
+
+
+    font-size:16px;
+
+
+}
+
+
+
+.expense p{
+
+
+    font-size:13px;
 
 
 }
@@ -2960,7 +2901,6 @@ nav a{
 
 
 }
-
 
 
 
@@ -2993,16 +2933,26 @@ nav a{
 
 
 
-/* ADMIN */
+/* TABLE */
 
 
-.adminContainer{
+.tableContainer{
 
 
-    width:90%;
+    width:100%;
 
 
-    margin:40px auto;
+    overflow-x:auto;
+
+
+}
+
+
+
+table{
+
+
+    min-width:650px;
 
 
 }
@@ -3015,13 +2965,16 @@ nav a{
 
 
 
-/* TABLE */
+/* ADMIN */
 
 
-.tableContainer{
+.adminContainer{
 
 
-    overflow-x:auto;
+    margin:30px auto;
+
+
+    padding:22px;
 
 
 }
@@ -3039,7 +2992,7 @@ nav a{
 
 
 /* ==========================================================
-   SMALL PHONE FIX
+   SMALL PHONE
 ========================================================== */
 
 
@@ -3057,8 +3010,6 @@ nav a{
 
 
 
-
-
 nav{
 
 
@@ -3069,15 +3020,16 @@ nav{
 
 
 
-
-
 nav a{
 
 
-    width:100%;
+    width:auto;
 
 
-    text-align:center;
+    font-size:11px;
+
+
+    padding:7px 10px;
 
 
 }
@@ -3089,68 +3041,17 @@ nav a{
 .themeBtn{
 
 
-    width:100%;
+    width:auto;
 
 
 }
 
-
-
-
-
-
-
-.miniSearch{
-
-
-    width:95%;
-
-
-}
 
 
 
 
 
 .hero h1{
-
-
-    font-size:32px;
-
-
-}
-
-
-
-
-
-.hero p{
-
-
-    font-size:14px;
-
-
-}
-
-
-
-
-
-
-
-.card h2{
-
-
-    font-size:28px;
-
-
-}
-
-
-
-
-
-.yearCard h1{
 
 
     font-size:30px;
@@ -3162,10 +3063,10 @@ nav a{
 
 
 
-.chartCard canvas{
+.hero p{
 
 
-    height:220px!important;
+    font-size:13px;
 
 
 }
@@ -3174,10 +3075,62 @@ nav a{
 
 
 
+
+.card h2{
+
+
+    font-size:26px;
+
+
+}
+
+
+
+
+
+
+.chartCard canvas{
+
+
+    height:200px!important;
+
+
+}
+
+
+
+
+
+
+.expense{
+
+
+    border-left-width:5px;
+
+
+}
+
+
+
+
+
+.expenseDetails{
+
+
+    padding:15px;
+
+
+}
+
+
+
+
+
+
 footer{
 
 
-    font-size:13px;
+    font-size:12px;
 
 
     padding:25px 15px;
@@ -3198,29 +3151,40 @@ footer{
 
 
 /* ==========================================================
-   TEXT SELECTION
+   FINAL FIX
 ========================================================== */
 
 
-::selection{
+
+img,
+canvas{
 
 
-    background:var(--primary);
-
-
-    color:white;
+    max-width:100%;
 
 
 }
 
 
 
+button{
+
+
+    font-family:'Poppins',sans-serif;
+
+
+}
 
 
 
+a{
+
+
+    -webkit-tap-highlight-color:transparent;
+
+
+}
 
 
 
-/* ==========================================================
-   END OF FINAL DALUBWIKAAN STYLE.CSS
-========================================================== */
+/* END FINAL STYLE.CSS */
