@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="style.css">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
 
 </head>
@@ -25,17 +25,96 @@
 
 
 
-<header class="adminHeader announcementHeader">
+
+<!-- ================= NAVBAR ================= -->
 
 
-<h1>
-📢 Dalubwikaan Announcements
-</h1>
+<header>
 
 
-<p>
-Official announcements and organizational updates
-</p>
+<div class="logo">
+
+📚 DALUBWIKAAN
+
+</div>
+
+
+
+
+
+<nav>
+
+
+
+<a href="index.html">
+
+Dashboard
+
+</a>
+
+
+
+<a href="collections.html">
+
+Collections
+
+</a>
+
+
+
+<a href="expenses.html">
+
+Expenses
+
+</a>
+
+
+
+<a href="projects.html">
+
+Projects
+
+</a>
+
+
+
+<a href="reports.html">
+
+Reports
+
+</a>
+
+
+
+<a href="announcements.html" class="active">
+
+Announcements
+
+</a>
+
+
+
+<a href="login.html">
+
+🔐 Admin
+
+</a>
+
+
+
+
+
+<button id="themeToggle" class="themeBtn">
+
+🌙 Dark Mode
+
+</button>
+
+
+
+
+</nav>
+
 
 
 </header>
@@ -44,16 +123,29 @@ Official announcements and organizational updates
 
 
 
+
+
+<!-- ================= MAIN ================= -->
+
+
+
 <main class="announcementContainer">
+
+
 
 
 
 <section class="announcementSection">
 
 
+
 <h2>
-📌 Latest Updates
+
+📢 Latest Updates
+
 </h2>
+
+
 
 
 
@@ -61,22 +153,32 @@ Official announcements and organizational updates
 <div id="announcementList">
 
 
+
 <div class="announcementCard">
 
 
-<p>
+<h3>
+
 Loading announcements...
-</p>
+
+</h3>
+
 
 
 </div>
 
 
+
 </div>
+
+
 
 
 
 </section>
+
+
+
 
 
 
@@ -88,16 +190,24 @@ Loading announcements...
 
 
 
+<!-- ================= FOOTER ================= -->
+
+
+
 <footer>
 
 
 <p>
 
+
 © 2026 Dalubwikaan Transparency Portal
+
 
 <br>
 
-Magsikhay at Manaliksik.
+
+Official Announcements and Organizational Updates
+
 
 </p>
 
@@ -110,7 +220,17 @@ Magsikhay at Manaliksik.
 
 
 
+<!-- ================= SCRIPTS ================= -->
+
+
+
+<script src="theme.js"></script>
+
+
 <script type="module" src="announcements.js"></script>
+
+
+
 
 
 </body>
