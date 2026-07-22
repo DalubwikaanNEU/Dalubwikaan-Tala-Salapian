@@ -9,11 +9,12 @@
 
 <title>Dalubwikaan Admin Dashboard</title>
 
+
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+
 
 </head>
 
@@ -21,22 +22,73 @@
 <body>
 
 
+
+<!-- ================= HEADER ================= -->
+
+
 <header class="adminHeader">
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+">
+
 
 <div>
-<h1>📚 Dalubwikaan Admin Dashboard</h1>
-<p>Financial Management & Transparency System</p>
+
+
+<h1>
+📚 Dalubwikaan Admin Dashboard
+</h1>
+
+
+<p>
+Financial Management & Transparency System
+</p>
+
+
 </div>
 
-<button id="logoutBtn" class="logoutBtn">
-🚪 Logout
+
+
+
+
+<div style="
+display:flex;
+gap:10px;
+">
+
+
+<button id="themeToggle" class="themeBtn">
+
+🌙 Dark Mode
+
 </button>
 
+
+
+<button id="logoutBtn" class="logoutBtn">
+
+🚪 Logout
+
+</button>
+
+
+
 </div>
 
+
+
+</div>
+
+
 </header>
+
+
 
 
 
@@ -46,33 +98,51 @@
 
 
 
-<!-- ================= COLLECTIONS ================= -->
+
+
+<!-- ================= COLLECTION ================= -->
+
 
 <section class="adminCard">
 
-<h2>💰 Weekly Collection</h2>
+
+<h2>
+💰 Add Weekly Collection
+</h2>
 
 
-<input type="text" id="week" placeholder="Week">
 
-<input type="date" id="collectionDate">
-
-<input type="number" id="firstYearCollection" placeholder="1st Year">
-
-<input type="number" id="secondYearCollection" placeholder="2nd Year">
-
-<input type="number" id="thirdYearCollection" placeholder="3rd Year">
-
-<input type="number" id="fourthYearCollection" placeholder="4th Year">
-
-<input type="text" id="collector" placeholder="Collector">
+<input id="week" type="text" placeholder="Week">
 
 
-<button onclick="saveCollection()">
+<input id="collectionDate" type="date">
+
+
+
+<input id="firstYearCollection" type="number" placeholder="1st Year Collection">
+
+
+<input id="secondYearCollection" type="number" placeholder="2nd Year Collection">
+
+
+<input id="thirdYearCollection" type="number" placeholder="3rd Year Collection">
+
+
+<input id="fourthYearCollection" type="number" placeholder="4th Year Collection">
+
+
+<input id="collector" type="text" placeholder="Collector Name">
+
+
+
+
+
+<button class="btn" onclick="saveCollection()">
 
 Save Collection
 
 </button>
+
 
 
 </section>
@@ -82,16 +152,14 @@ Save Collection
 
 
 
-<!-- ================= MANAGE COLLECTIONS ================= -->
-
 
 <section class="adminCard">
 
-<h2>📋 Manage Collections</h2>
 
-<p>
-Edit or remove collection records.
-</p>
+<h2>
+📋 Collection Records
+</h2>
+
 
 
 <div id="adminCollectionList">
@@ -101,6 +169,7 @@ Loading collections...
 </div>
 
 
+
 </section>
 
 
@@ -110,34 +179,67 @@ Loading collections...
 
 
 
-<!-- ================= EXPENSES ================= -->
+
+<!-- ================= EXPENSE ================= -->
+
+
 
 <section class="adminCard">
 
-<h2>💸 Add Expense</h2>
 
-
-<input type="text" id="expenseTitle" placeholder="Expense Title">
-
-<input type="text" id="expenseCategory" placeholder="Category">
-
-<input type="number" id="expenseAmount" placeholder="Amount">
-
-<input type="date" id="expenseDate">
-
-<input type="url" id="expenseReceipt" placeholder="Google Drive Receipt Link">
-
-<textarea id="expenseRemarks" placeholder="Remarks"></textarea>
+<h2>
+💸 Add Expense
+</h2>
 
 
 
-<button onclick="saveExpense()">
+<input id="expenseTitle"
+type="text"
+placeholder="Expense Title">
+
+
+
+<input id="expenseCategory"
+type="text"
+placeholder="Category">
+
+
+
+<input id="expenseAmount"
+type="number"
+placeholder="Amount">
+
+
+
+<input id="expenseDate"
+type="date">
+
+
+
+<input id="expenseReceipt"
+type="url"
+placeholder="Receipt Link">
+
+
+
+<textarea 
+id="expenseRemarks"
+placeholder="Expense Remarks">
+</textarea>
+
+
+
+
+
+<button class="btn" onclick="saveExpense()">
 
 Save Expense
 
 </button>
 
 
+
+
 </section>
 
 
@@ -146,18 +248,12 @@ Save Expense
 
 
 
-
-<!-- ================= MANAGE EXPENSES ================= -->
-
 <section class="adminCard">
 
-<h2>📋 Manage Expenses</h2>
 
-
-<p>
-Edit or remove current budget allocations.
-</p>
-
+<h2>
+📋 Expense Records
+</h2>
 
 
 <div id="adminExpenseList">
@@ -177,50 +273,80 @@ Loading expenses...
 
 
 
-<!-- ================= PROJECTS ================= -->
+<!-- ================= PROJECT ================= -->
+
+
 
 <section class="adminCard">
 
 
-<h2>📂 Add Project</h2>
+<h2>
+📂 Add Project
+</h2>
 
 
-<input type="text" id="projectTitle" placeholder="Project Title">
 
 
-<textarea id="projectDescription" placeholder="Description"></textarea>
+<input id="projectTitle"
+type="text"
+placeholder="Project Title">
 
 
-<input type="number" id="projectBudget" placeholder="Budget">
+
+<textarea 
+id="projectDescription"
+placeholder="Project Description">
+</textarea>
 
 
-<input type="number" id="projectSpent" placeholder="Spent">
+
+
+<input id="projectBudget"
+type="number"
+placeholder="Project Budget">
+
+
+
+<input id="projectSpent"
+type="number"
+placeholder="Amount Spent">
+
+
+
 
 
 <select id="projectStatus">
 
-<option>
+
+<option value="Planning">
 Planning
 </option>
 
-<option>
+
+<option value="Ongoing">
 Ongoing
 </option>
 
-<option>
+
+<option value="Completed">
 Completed
 </option>
+
+
 
 </select>
 
 
 
 
-<button onclick="saveProject()">
+
+
+<button class="btn" onclick="saveProject()">
 
 Save Project
 
 </button>
+
 
 
 
@@ -229,18 +355,16 @@ Save Project
 
 
 
-<!-- ================= MANAGE PROJECTS ================= -->
+
+
 
 
 <section class="adminCard">
 
 
-<h2>📋 Manage Projects</h2>
-
-
-<p>
-Edit or remove current projects.
-</p>
+<h2>
+📋 Project Records
+</h2>
 
 
 
@@ -257,26 +381,41 @@ Loading projects...
 
 
 
-<!-- ================= ADD ANNOUNCEMENT ================= -->
+
+
+
+
+
+<!-- ================= ANNOUNCEMENTS ================= -->
+
 
 
 <section class="adminCard">
 
 
-<h2>📢 Announcement</h2>
+<h2>
+📢 Post Announcement
+</h2>
+
+
 
 
 <input 
-type="text" 
-id="announcementTitle" 
-placeholder="Title">
+id="announcementTitle"
+type="text"
+placeholder="Announcement Title">
 
 
 
-<textarea 
-id="announcementMessage" 
-placeholder="Announcement">
+
+
+
+<textarea
+id="announcementMessage"
+placeholder="Announcement Message">
 </textarea>
+
+
 
 
 
@@ -284,19 +423,26 @@ placeholder="Announcement">
 <select id="announcementPriority">
 
 
-<option>
-Low
+<option value="Low">
+
+🟢 Low
+
 </option>
 
 
-<option>
-Medium
+<option value="Medium">
+
+🟡 Medium
+
 </option>
 
 
-<option>
-High
+<option value="High">
+
+🔴 High
+
 </option>
+
 
 
 </select>
@@ -304,11 +450,16 @@ High
 
 
 
-<button onclick="saveAnnouncement()">
+
+
+
+<button class="btn" onclick="saveAnnouncement()">
 
 Post Announcement
 
 </button>
+
+
 
 
 
@@ -320,18 +471,14 @@ Post Announcement
 
 
 
-<!-- ================= MANAGE ANNOUNCEMENTS ================= -->
-
 
 <section class="adminCard">
 
 
-<h2>📋 Manage Announcements</h2>
+<h2>
+📋 Announcement Records
+</h2>
 
-
-<p>
-Edit or remove posted announcements.
-</p>
 
 
 
@@ -358,11 +505,44 @@ Loading announcements...
 
 
 
+
+
+
+<footer>
+
+
+<p>
+
+© 2026 Dalubwikaan Transparency Portal
+
+<br>
+
+Admin Management System
+
+</p>
+
+
+</footer>
+
+
+
+
+
+
+
+
+
 <script type="module" src="admin.js"></script>
+
+
 <script type="module" src="authGuard.js"></script>
+
+
+<script src="theme.js"></script>
 
 
 
 </body>
+
 
 </html>
