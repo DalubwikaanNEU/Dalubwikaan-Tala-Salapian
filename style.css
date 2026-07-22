@@ -1,0 +1,1019 @@
+/* ==========================================================
+   DALUBWIKAAN TRANSPARENCY PORTAL
+   STYLE.CSS
+   Part 1
+========================================================== */
+
+:root{
+
+    --primary:#6b3e1f;
+    --secondary:#8f5a37;
+    --accent:#d8b892;
+    --light:#fdf8f2;
+    --white:#ffffff;
+    --green:#4f8a5b;
+    --red:#c74a4a;
+    --blue:#4678d6;
+    --yellow:#f0b429;
+    --shadow:0 10px 30px rgba(0,0,0,.12);
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--light);
+    color:#333;
+    font-family:'Poppins',sans-serif;
+
+}
+
+/* ===================== NAVBAR ===================== */
+
+header{
+
+    position:sticky;
+    top:0;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 60px;
+
+    background:rgba(255,255,255,.92);
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    z-index:999;
+
+}
+
+.logo{
+
+    font-size:28px;
+    font-family:'Patrick Hand',cursive;
+    color:var(--primary);
+    font-weight:bold;
+
+}
+
+nav{
+
+    display:flex;
+    gap:20px;
+
+}
+
+nav a{
+
+    text-decoration:none;
+    color:#555;
+    font-weight:600;
+    transition:.3s;
+    position:relative;
+
+}
+
+nav a:hover{
+
+    color:var(--primary);
+
+}
+
+nav a.active{
+
+    color:var(--primary);
+
+}
+
+nav a.active::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-8px;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:var(--primary);
+    border-radius:50px;
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+    width:100%;
+
+    padding:80px 20px;
+
+    text-align:center;
+
+    background:linear-gradient(135deg,#fffdf8,#f7ecdf);
+
+}
+
+.hero h1{
+
+    font-size:58px;
+
+    color:var(--primary);
+
+    font-family:'Patrick Hand',cursive;
+
+    margin-bottom:15px;
+
+}
+
+.hero p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#555;
+
+    line-height:1.8;
+
+    font-size:18px;
+
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:50px 30px;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:30px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    height:7px;
+
+    background:linear-gradient(
+    to right,
+    var(--primary),
+    var(--accent)
+    );
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card h3{
+
+    color:#777;
+
+    margin-bottom:15px;
+
+}
+
+.card h2{
+
+    font-size:40px;
+
+    color:var(--primary);
+
+}
+
+/* ==========================================================
+   STYLE.CSS
+   Part 2
+==========================================================*/
+
+/* ===================== YEAR SECTION ===================== */
+
+.yearSection{
+
+    max-width:1300px;
+    margin:auto;
+    padding:20px 30px 60px;
+
+}
+
+.yearSection h2{
+
+    font-size:32px;
+    color:var(--primary);
+    margin-bottom:30px;
+    font-family:'Patrick Hand',cursive;
+
+}
+
+.yearCards{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+
+}
+
+.yearCard{
+
+    background:var(--white);
+    border-radius:22px;
+    padding:30px;
+    box-shadow:var(--shadow);
+    transition:.35s;
+    border:2px dashed #e8d7c4;
+    position:relative;
+    overflow:hidden;
+
+}
+
+.yearCard::after{
+
+    content:"📚";
+    position:absolute;
+    right:15px;
+    top:10px;
+    font-size:55px;
+    opacity:.08;
+
+}
+
+.yearCard:hover{
+
+    transform:translateY(-8px) scale(1.02);
+
+}
+
+.yearCard h3{
+
+    color:#666;
+    margin-bottom:15px;
+
+}
+
+.yearCard h1{
+
+    color:var(--green);
+    font-size:42px;
+
+}
+
+/* ===================== CHART ===================== */
+
+.chartSection{
+
+    max-width:1300px;
+    margin:auto;
+    padding:10px 30px 60px;
+
+}
+
+.chartCard{
+
+    background:white;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:var(--shadow);
+
+}
+
+.chartCard h2{
+
+    margin-bottom:25px;
+    color:var(--primary);
+    font-family:'Patrick Hand',cursive;
+    font-size:30px;
+
+}
+
+.chartCard canvas{
+
+    width:100% !important;
+    height:420px !important;
+
+}
+
+/* ===================== RECENT EXPENSES ===================== */
+
+.recentExpenses{
+
+    max-width:1300px;
+    margin:auto;
+    padding:20px 30px 70px;
+
+}
+
+.recentExpenses h2{
+
+    margin-bottom:25px;
+    color:var(--primary);
+    font-size:32px;
+    font-family:'Patrick Hand',cursive;
+
+}
+
+#expenseContainer{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:22px;
+
+}
+
+.expense{
+
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    transition:.35s;
+    border-left:8px solid var(--red);
+
+}
+
+.expense:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.expense h3{
+
+    color:#444;
+    margin-bottom:12px;
+
+}
+
+.expenseAmount{
+
+    font-size:34px;
+    color:var(--red);
+    font-weight:bold;
+    margin:10px 0;
+
+}
+
+.expenseDate{
+
+    color:#888;
+    font-size:14px;
+
+}
+
+.expenseCategory{
+
+    display:inline-block;
+    margin-top:15px;
+    background:#fdecec;
+    color:var(--red);
+    padding:7px 15px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+
+}
+
+/* ===================== PROJECTS ===================== */
+
+.projectSection{
+
+    max-width:1300px;
+    margin:auto;
+    padding:10px 30px 80px;
+
+}
+
+.projectSection h2{
+
+    margin-bottom:30px;
+    color:var(--primary);
+    font-size:32px;
+    font-family:'Patrick Hand',cursive;
+
+}
+
+#projectContainer{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+
+}
+
+.projectCard{
+
+    background:white;
+    border-radius:22px;
+    padding:30px;
+    box-shadow:var(--shadow);
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+
+}
+
+.projectCard:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.projectCard::before{
+
+    content:"";
+
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:7px;
+    background:linear-gradient(to right,var(--green),#78c091);
+
+}
+
+.projectCard h3{
+
+    margin-bottom:15px;
+    color:#333;
+
+}
+
+.projectBudget{
+
+    font-size:34px;
+    color:var(--green);
+    font-weight:bold;
+    margin-bottom:15px;
+
+}
+
+.projectInfo{
+
+    color:#666;
+    line-height:1.8;
+
+}
+
+/* ===================== STATUS BADGES ===================== */
+
+.badge{
+
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:700;
+    margin-top:18px;
+
+}
+
+.completed{
+
+    background:#dff6e4;
+    color:#2d8a45;
+
+}
+
+.ongoing{
+
+    background:#dcecff;
+    color:#2360d9;
+
+}
+
+.planning{
+
+    background:#fff3cf;
+    color:#b77a00;
+
+}
+
+/* ===================== BUTTONS ===================== */
+
+.btn{
+
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 22px;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    background:var(--primary);
+    color:white;
+    font-weight:600;
+    transition:.3s;
+    text-decoration:none;
+
+}
+
+.btn:hover{
+
+    background:var(--secondary);
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================================
+   STYLE.CSS
+   Part 3
+==========================================================*/
+
+/* ===================== FOOTER ===================== */
+
+footer{
+
+    margin-top:80px;
+    background:#5b3418;
+    color:white;
+    text-align:center;
+    padding:35px 20px;
+
+}
+
+footer p{
+
+    line-height:2;
+    opacity:.9;
+
+}
+
+/* ===================== SCROLLBAR ===================== */
+
+::-webkit-scrollbar{
+
+    width:12px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#efe4d5;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+    border-radius:50px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--secondary);
+
+}
+
+/* ===================== GLASS EFFECT ===================== */
+
+.glass{
+
+    background:rgba(255,255,255,.6);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.4);
+
+}
+
+/* ===================== FADE ANIMATION ===================== */
+
+.fade{
+
+    animation:fade .8s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===================== FLOAT ANIMATION ===================== */
+
+.float{
+
+    animation:float 4s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===================== LOADING ===================== */
+
+.loading{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    border:6px solid #eee;
+    border-top:6px solid var(--primary);
+
+    animation:spin 1s linear infinite;
+
+    margin:auto;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ===================== TABLE ===================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+}
+
+table th{
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:18px;
+
+}
+
+table td{
+
+    padding:18px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+table tr:hover{
+
+    background:#faf6f1;
+
+}
+
+/* ===================== FORM ===================== */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    border:2px solid #ddd;
+
+    outline:none;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:var(--primary);
+
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+}
+
+/* ===================== SEARCH ===================== */
+
+.searchBox{
+
+    max-width:500px;
+
+    margin:30px auto;
+
+}
+
+/* ===================== STATISTICS CARD ===================== */
+
+.statCard{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+}
+
+.statCard h2{
+
+    color:var(--primary);
+
+    font-size:42px;
+
+}
+
+.statCard span{
+
+    color:#777;
+
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media(max-width:1100px){
+
+header{
+
+    padding:20px;
+
+    flex-direction:column;
+
+}
+
+nav{
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+.hero h1{
+
+    font-size:45px;
+
+}
+
+}
+
+/* ===================== TABLET ===================== */
+
+@media(max-width:768px){
+
+.dashboard{
+
+    grid-template-columns:1fr;
+
+}
+
+.yearCards{
+
+    grid-template-columns:1fr;
+
+}
+
+#expenseContainer{
+
+    grid-template-columns:1fr;
+
+}
+
+#projectContainer{
+
+    grid-template-columns:1fr;
+
+}
+
+.chartCard canvas{
+
+    height:300px !important;
+
+}
+
+.hero{
+
+    padding:60px 20px;
+
+}
+
+.hero h1{
+
+    font-size:38px;
+
+}
+
+.hero p{
+
+    font-size:16px;
+
+}
+
+}
+
+/* ===================== MOBILE ===================== */
+
+@media(max-width:480px){
+
+.logo{
+
+    font-size:22px;
+
+}
+
+nav{
+
+    gap:12px;
+
+}
+
+nav a{
+
+    font-size:14px;
+
+}
+
+.card{
+
+    padding:25px;
+
+}
+
+.card h2{
+
+    font-size:32px;
+
+}
+
+.yearCard h1{
+
+    font-size:34px;
+
+}
+
+.chartCard{
+
+    padding:20px;
+
+}
+
+.recentExpenses{
+
+    padding:20px;
+
+}
+
+.projectSection{
+
+    padding:20px;
+
+}
+
+footer{
+
+    font-size:14px;
+
+}
+
+}
+
+/* ===================== HOVER EFFECTS ===================== */
+
+.card,
+.yearCard,
+.projectCard,
+.expense{
+
+    cursor:pointer;
+
+}
+
+.card:hover,
+.yearCard:hover,
+.projectCard:hover,
+.expense:hover{
+
+    box-shadow:0 18px 40px rgba(0,0,0,.15);
+
+}
+
+/* ===================== SELECTION ===================== */
+
+::selection{
+
+    background:var(--primary);
+
+    color:white;
+
+}
