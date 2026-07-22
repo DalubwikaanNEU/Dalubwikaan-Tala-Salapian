@@ -3,13 +3,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import {
     getFirestore,
     collection,
-    getDocs
+    getDocs,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-
 // ================= FIREBASE =================
-
 
 const firebaseConfig = {
 
@@ -34,16 +34,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-
 console.log("📢 Announcement Firebase Connected!");
 
 
 
 
 
-
 // ================= LOAD ANNOUNCEMENTS =================
-
 
 
 async function loadAnnouncements(){
@@ -54,31 +51,29 @@ document.getElementById("announcementList");
 
 
 
-if(!container){
-
-console.error("Announcement container not found");
-
-return;
-
-}
+if(!container) return;
 
 
 
 try{
 
 
+const announcementQuery = query(
 
-const snapshot =
-await getDocs(
-collection(db,"announcements")
+collection(db,"announcements"),
+
+orderBy("createdAt","desc")
+
 );
 
 
 
+const snapshot =
+await getDocs(announcementQuery);
+
+
 
 container.innerHTML = "";
-
-
 
 
 
@@ -87,20 +82,26 @@ if(snapshot.empty){
 
 container.innerHTML = `
 
-<div class="expense">
+<div class="announcementCard">
+
+<h3>
+📭 No Announcements Yet
+</h3>
 
 <p>
-No announcements yet.
+There are currently no posted announcements.
 </p>
 
 </div>
 
 `;
 
+
 return;
 
-
 }
+
+
 
 
 
@@ -113,7 +114,10 @@ let announcements = [];
 snapshot.forEach((doc)=>{
 
 
-announcements.push(doc.data());
+const data = doc.data();
+
+
+announcements.push(data);
 
 
 });
@@ -122,23 +126,37 @@ announcements.push(doc.data());
 
 
 
-// SORT NEWEST FIRST
+
+
+// PRIORITY SORTING
+
+const priorityRank = {
+
+"High":1,
+
+"Medium":2,
+
+"Low":3
+
+};
+
+
 
 announcements.sort((a,b)=>{
 
 
-let dateA =
-a.createdAt?.seconds || 0;
+return (
 
+(priorityRank[a.priority] || 3)
 
-let dateB =
-b.createdAt?.seconds || 0;
+-
 
+(priorityRank[b.priority] || 3)
 
-return dateB - dateA;
-
+);
 
 });
+
 
 
 
@@ -152,6 +170,8 @@ announcements.forEach((data)=>{
 
 let badge = "";
 
+let badgeClass = "";
+
 
 
 if(data.priority === "High"){
@@ -159,22 +179,30 @@ if(data.priority === "High"){
 
 badge = "🔴 HIGH";
 
+badgeClass = "high";
+
 
 }
+
 
 else if(data.priority === "Medium"){
 
 
 badge = "🟡 MEDIUM";
 
+badgeClass = "medium";
+
 
 }
+
 
 else{
 
 
 badge = "🟢 LOW";
 
+badgeClass = "low";
+
 
 }
 
@@ -184,25 +212,49 @@ badge = "🟢 LOW";
 
 
 
-let postedDate = "No date";
+let datePosted = "No date";
 
 
 
 if(data.createdAt){
 
 
+
 if(data.createdAt.seconds){
 
 
-postedDate =
+datePosted =
 new Date(
 data.createdAt.seconds * 1000
-).toLocaleDateString();
+)
+.toLocaleDateString(
+"en-PH",
+{
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+);
 
 
 }
 
+
+else if(data.createdAt instanceof Date){
+
+
+datePosted =
+data.createdAt.toLocaleDateString();
+
+
 }
+
+
+}
+
+
+
+
 
 
 
@@ -211,34 +263,48 @@ data.createdAt.seconds * 1000
 container.innerHTML += `
 
 
-<div class="expense announcementCard">
+<div class="announcementCard fadeIn">
+
+
+<div class="announcementHeader">
 
 
 <h2>
-📢 ${data.title || "Untitled"}
+📢 ${data.title || "Untitled Announcement"}
 </h2>
 
 
+<span class="priority ${badgeClass}">
 
-<h4>
 ${badge}
-</h4>
+
+</span>
+
+
+</div>
 
 
 
-<p>
-${data.message || ""}
+
+<p class="announcementMessage">
+
+${data.message || "No message provided."}
+
 </p>
 
 
 
-<small>
-📅 Posted: ${postedDate}
-</small>
+
+<div class="announcementFooter">
+
+📅 Posted: ${datePosted}
+
+</div>
 
 
 
 </div>
+
 
 
 `;
@@ -250,14 +316,14 @@ ${data.message || ""}
 
 
 
-}
 
+}
 
 catch(error){
 
 
 console.error(
-"Announcement loading error:",
+"Announcement Error:",
 error
 );
 
@@ -265,17 +331,22 @@ error
 
 container.innerHTML = `
 
-<div class="expense">
 
-<p>
-❌ Error loading announcements
-</p>
+<div class="announcementCard">
+
+
+<h3>
+❌ Failed to Load Announcements
+</h3>
+
 
 <p>
 ${error.message}
 </p>
 
+
 </div>
+
 
 `;
 
@@ -286,9 +357,6 @@ ${error.message}
 
 
 }
-
-
-
 
 
 
