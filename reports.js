@@ -1,35 +1,75 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+// =====================================================
+// DALUBWIKAAN TRANSPARENCY PORTAL
+// FINAL REPORTS.JS
+// PART 1/4
+// FIREBASE CONNECTION + HELPERS
+// =====================================================
+
+
+
+// ================= FIREBASE IMPORT =================
+
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+
 
 import {
-    getFirestore,
-    collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+getFirestore,
+
+collection,
+
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 
-// ================= FIREBASE =================
+
+
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
 
 
 const firebaseConfig = {
 
+
     apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+
 
     authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
+
     projectId: "dalubwikaan--26-8e646",
+
 
     storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
 
+
     messagingSenderId: "409516392020",
 
+
     appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+
 
 };
 
 
 
+
+
+
+// INITIALIZE FIREBASE
+
+
 const app = initializeApp(firebaseConfig);
+
+
 
 const db = getFirestore(app);
 
@@ -38,25 +78,75 @@ const db = getFirestore(app);
 
 
 
-// ================= DATE HELPER =================
+console.log(
+
+"🔥 Reports Firebase Connected"
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================================
+// DATE CONVERTER
+// SUPPORTS FIRESTORE TIMESTAMP + NORMAL DATE
+// =====================================================
+
 
 
 function convertDate(value){
 
 
-    if(!value) return null;
 
+    if(!value){
 
-
-    if(value.seconds){
-
-        return new Date(value.seconds * 1000);
+        return null;
 
     }
 
 
 
-    return new Date(value);
+
+
+    if(value.seconds){
+
+
+        return new Date(
+
+            value.seconds * 1000
+
+        );
+
+
+    }
+
+
+
+
+
+
+    const date = new Date(value);
+
+
+
+
+
+    if(isNaN(date)){
+
+
+        return null;
+
+
+    }
+
+
+
+    return date;
 
 
 }
@@ -67,7 +157,9 @@ function convertDate(value){
 
 
 
-// ================= LOAD REPORT =================
+// =====================================================
+// LOAD REPORT FUNCTION
+// =====================================================
 
 
 
@@ -78,24 +170,51 @@ async function loadReport(){
 
 
         const monthFilter =
-        document.getElementById("monthFilter");
+
+        document.getElementById(
+
+            "monthFilter"
+
+        );
 
 
 
-        if(!monthFilter) return;
+        if(!monthFilter){
+
+
+            console.warn(
+
+            "Month filter missing"
+
+            );
+
+
+            return;
+
+
+        }
+
+
 
 
 
         const selectedMonth =
-        Number(monthFilter.value);
+
+        Number(
+
+            monthFilter.value
+
+        );
+
+
 
 
 
 
         let totalCollection = 0;
 
-        let totalExpense = 0;
 
+        let totalExpense = 0;
 
 
         let expenseList = [];
@@ -104,47 +223,239 @@ async function loadReport(){
 
 
 
-        // ================= COLLECTIONS =================
+        console.log(
+
+        "Loading month:",
+
+        selectedMonth
+
+        );
+
+    // =====================================================
+// PART 2/4
+// COLLECTIONS + EXPENSES DATA FETCHING
+// =====================================================
 
 
 
-        const collectionSnap =
-        await getDocs(
-            collection(db,"collections")
+
+
+// =====================================================
+// LOAD COLLECTIONS
+// =====================================================
+
+
+const collectionSnap =
+
+await getDocs(
+
+    collection(
+
+        db,
+
+        "collections"
+
+    )
+
+);
+
+
+
+
+
+
+collectionSnap.forEach((doc)=>{
+
+
+
+    const data = doc.data();
+
+
+
+
+    const date =
+
+    convertDate(
+
+        data.date
+
+    );
+
+
+
+
+
+
+    // IF DATE EXISTS AND MATCHES SELECTED MONTH
+
+
+    if(
+
+        date &&
+
+        date.getMonth() === selectedMonth
+
+    ){
+
+
+
+        const amount =
+
+
+
+        Number(data.firstYear || 0)
+
+        +
+
+        Number(data.secondYear || 0)
+
+        +
+
+        Number(data.thirdYear || 0)
+
+        +
+
+        Number(data.fourthYear || 0);
+
+
+
+
+
+
+        totalCollection += amount;
+
+
+
+    }
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// =====================================================
+// LOAD EXPENSES
+// =====================================================
+
+
+
+const expenseSnap =
+
+await getDocs(
+
+    collection(
+
+        db,
+
+        "expenses"
+
+    )
+
+);
+
+
+
+
+
+
+expenseSnap.forEach((doc)=>{
+
+
+
+    const data = doc.data();
+
+
+
+
+
+    const date =
+
+    convertDate(
+
+        data.date
+
+    );
+
+
+
+
+
+
+    if(
+
+        date &&
+
+        date.getMonth() === selectedMonth
+
+    ){
+
+
+
+
+
+        const amount =
+
+        Number(
+
+            data.amount || 0
+
         );
 
 
 
 
-        collectionSnap.forEach((doc)=>{
 
-
-            const data = doc.data();
-
-
-
-            const date =
-            convertDate(data.date);
+        totalExpense += amount;
 
 
 
-            if(date && date.getMonth() === selectedMonth){
 
 
 
-                totalCollection +=
 
-                Number(data.firstYear || 0) +
-
-                Number(data.secondYear || 0) +
-
-                Number(data.thirdYear || 0) +
-
-                Number(data.fourthYear || 0);
+        expenseList.push({
 
 
 
-            }
+            title:
+
+            data.title || "No Title",
+
+
+
+
+            category:
+
+            data.category || "Others",
+
+
+
+
+            amount:
+
+            amount,
+
+
+
+
+            date:
+
+            formatDate(data.date),
+
+
+
+
+            remarks:
+
+            data.remarks || "No remarks"
+
 
 
 
@@ -153,106 +464,96 @@ async function loadReport(){
 
 
 
+    }
 
 
 
 
 
-        // ================= EXPENSES =================
+});
 
 
 
-        const expenseSnap =
-        await getDocs(
-            collection(db,"expenses")
-        );
 
 
 
 
-        expenseSnap.forEach((doc)=>{
 
 
-            const data = doc.data();
+// =====================================================
+// SORT EXPENSES
+// HIGHEST AMOUNT FIRST
+// =====================================================
 
 
 
-            const date =
-            convertDate(data.date);
+expenseList.sort(
 
+    (a,b)=>{
 
 
-            if(date && date.getMonth() === selectedMonth){
+        return b.amount - a.amount;
 
 
+    }
 
-                const amount =
-                Number(data.amount || 0);
+);
 
 
 
-                totalExpense += amount;
 
 
 
-                expenseList.push({
 
-                    title:data.title || "No Title",
 
-                    category:data.category || "-",
+console.log(
 
-                    amount:amount,
+"Collections:",
 
-                    date:data.date || "-",
+totalCollection
 
-                    remarks:data.remarks || "-"
+);
 
-                });
 
 
+console.log(
 
-            }
+"Expenses:",
 
+totalExpense
 
+);
 
-        });
 
 
 
 
 
 
+// DISPLAY DATA
 
 
-        // SORT EXPENSES
+displayExpenses(
 
+    expenseList
 
+);
 
-        expenseList.sort((a,b)=>{
 
-            return b.amount - a.amount;
 
-        });
 
+displayTotals(
 
+    totalCollection,
 
+    totalExpense
 
+);
 
 
 
 
-        displayExpenses(expenseList);
-
-
-
-        displayTotals(
-            totalCollection,
-            totalExpense
-        );
-
-
-
-        displayReportInfo();
+displayReportInfo();
 
 
 
@@ -263,38 +564,51 @@ async function loadReport(){
     catch(error){
 
 
+
         console.error(
-            "Report Error:",
-            error
+
+        "Report Loading Error:",
+
+        error
+
         );
 
 
 
-        const list =
+
+        const table =
+
         document.getElementById(
+
             "expenseReportList"
+
         );
 
 
 
-        if(list){
 
-            list.innerHTML = `
+
+        if(table){
+
+
+            table.innerHTML = `
 
             <tr>
 
             <td colspan="5">
 
-            ❌ Failed to load report.
+            ❌ Unable to load financial report.
 
             </td>
 
+
             </tr>
+
 
             `;
 
-        }
 
+        }
 
 
     }
@@ -311,7 +625,75 @@ async function loadReport(){
 
 
 
-// ================= DISPLAY EXPENSE TABLE =================
+// =====================================================
+// DATE FORMATTER
+// =====================================================
+
+
+
+function formatDate(value){
+
+
+
+    const date =
+
+    convertDate(value);
+
+
+
+
+
+    if(!date){
+
+
+        return "-";
+
+
+    }
+
+
+
+
+
+    return date.toLocaleDateString(
+
+        "en-PH",
+
+        {
+
+
+            year:"numeric",
+
+
+            month:"short",
+
+
+            day:"numeric"
+
+
+        }
+
+
+    );
+
+
+
+}
+
+// =====================================================
+// PART 3/4
+// DISPLAY EXPENSES + DISPLAY TOTALS
+// =====================================================
+
+
+
+
+
+
+// =====================================================
+// DISPLAY EXPENSE DETAILS
+// COMPACT TABLE FORMAT
+// =====================================================
 
 
 
@@ -320,17 +702,32 @@ function displayExpenses(list){
 
 
     const table =
+
     document.getElementById(
+
         "expenseReportList"
+
     );
 
 
 
-    if(!table) return;
+
+
+    if(!table){
+
+        return;
+
+    }
+
+
+
 
 
 
     table.innerHTML = "";
+
+
+
 
 
 
@@ -342,24 +739,34 @@ function displayExpenses(list){
 
         table.innerHTML = `
 
+
         <tr>
 
-        <td colspan="5">
 
-        No expense records for this month.
+            <td colspan="5" class="emptyData">
 
-        </td>
+
+                No expense records found.
+
+
+            </td>
+
+
 
         </tr>
 
-        `;
 
+
+        `;
 
 
         return;
 
 
     }
+
+
+
 
 
 
@@ -373,46 +780,78 @@ function displayExpenses(list){
         table.innerHTML += `
 
 
+
         <tr>
 
 
-        <td>
+            <td data-label="Expense">
 
-        ${expense.title}
+                <strong>
 
-        </td>
+                ${expense.title}
+
+                </strong>
 
 
-
-        <td>
-
-        ${expense.category}
-
-        </td>
+            </td>
 
 
 
-        <td>
-
-        ₱${expense.amount.toLocaleString()}
-
-        </td>
 
 
-
-        <td>
-
-        ${expense.date}
-
-        </td>
+            <td data-label="Category">
 
 
+                <span class="expenseTag">
 
-        <td>
+                ${expense.category}
 
-        ${expense.remarks}
+                </span>
 
-        </td>
+
+            </td>
+
+
+
+
+
+            <td data-label="Amount">
+
+
+                <strong class="amountText">
+
+
+                ₱${expense.amount.toLocaleString()}
+
+
+                </strong>
+
+
+            </td>
+
+
+
+
+
+            <td data-label="Date">
+
+
+                ${expense.date}
+
+
+            </td>
+
+
+
+
+
+            <td data-label="Remarks">
+
+
+                ${expense.remarks}
+
+
+            </td>
 
 
 
@@ -438,49 +877,85 @@ function displayExpenses(list){
 
 
 
-// ================= DISPLAY TOTALS =================
+
+
+// =====================================================
+// DISPLAY SUMMARY CARDS
+// =====================================================
 
 
 
 function displayTotals(
+
 collection,
+
 expense
+
 ){
 
 
 
     const balance =
+
     collection - expense;
 
 
 
-    const reportCollection =
+
+
+
+
+    const collectionBox =
+
     document.getElementById(
+
         "reportCollection"
+
     );
 
 
 
-    const reportExpense =
+
+
+    const expenseBox =
+
     document.getElementById(
+
         "reportExpense"
+
     );
 
 
 
-    const reportBalance =
+
+
+    const balanceBox =
+
     document.getElementById(
+
         "reportBalance"
+
     );
 
 
 
 
 
-    if(reportCollection){
 
-        reportCollection.innerHTML =
-        "₱" + collection.toLocaleString();
+
+
+
+    if(collectionBox){
+
+
+        collectionBox.innerHTML =
+
+
+        "₱" +
+
+        collection.toLocaleString();
+
+
 
     }
 
@@ -488,24 +963,43 @@ expense
 
 
 
-    if(reportExpense){
 
-        reportExpense.innerHTML =
-        "₱" + expense.toLocaleString();
+
+    if(expenseBox){
+
+
+        expenseBox.innerHTML =
+
+
+        "₱" +
+
+        expense.toLocaleString();
+
+
+
+    }
+
+
+
+
+
+
+
+    if(balanceBox){
+
+
+        balanceBox.innerHTML =
+
+
+        "₱" +
+
+        balance.toLocaleString();
+
+
 
     }
 
 
-
-
-
-
-    if(reportBalance){
-
-        reportBalance.innerHTML =
-        "₱" + balance.toLocaleString();
-
-    }
 
 
 
@@ -519,7 +1013,10 @@ expense
 
 
 
-// ================= REPORT INFO =================
+
+// =====================================================
+// REPORT HEADER INFORMATION
+// =====================================================
 
 
 
@@ -528,46 +1025,84 @@ function displayReportInfo(){
 
 
     const filter =
+
     document.getElementById(
+
         "monthFilter"
+
     );
 
 
 
-    if(!filter) return;
+
+
+    if(!filter){
+
+
+        return;
+
+
+    }
 
 
 
-    const month =
+
+
+    const selectedMonth =
+
 
     filter.options[
+
         filter.selectedIndex
+
     ].text;
 
 
 
 
 
-    const reportMonth =
+
+
+
+    const monthDisplay =
+
     document.getElementById(
+
         "reportMonth"
+
     );
 
 
 
-    const generatedDate =
+
+
+
+
+    const dateDisplay =
+
     document.getElementById(
+
         "generatedDate"
+
     );
 
 
 
 
 
-    if(reportMonth){
 
-        reportMonth.innerHTML =
-        "📅 Month: " + month;
+
+    if(monthDisplay){
+
+
+        monthDisplay.innerHTML =
+
+
+        "📅 Month: " +
+
+        selectedMonth;
+
+
 
     }
 
@@ -575,45 +1110,79 @@ function displayReportInfo(){
 
 
 
-    if(generatedDate){
 
-        generatedDate.innerHTML =
+
+    if(dateDisplay){
+
+
+        dateDisplay.innerHTML =
+
 
         "Generated: " +
 
         new Date()
-        .toLocaleDateString();
+
+        .toLocaleDateString(
+
+            "en-PH"
+
+        );
+
+
 
     }
+
 
 
 
 }
 
+// =====================================================
+// PART 4/4
+// EVENTS + PRINT + AUTO START
+// =====================================================
 
 
 
 
 
 
-
-// ================= EVENTS =================
+// =====================================================
+// MONTH FILTER EVENT
+// =====================================================
 
 
 
 const monthFilter =
+
 document.getElementById(
+
     "monthFilter"
+
 );
+
+
+
 
 
 
 if(monthFilter){
 
 
+
     monthFilter.addEventListener(
+
         "change",
-        loadReport
+
+        ()=>{
+
+
+            loadReport();
+
+
+
+        }
+
     );
 
 
@@ -624,23 +1193,46 @@ if(monthFilter){
 
 
 
+
+
+
+// =====================================================
+// PRINT REPORT BUTTON
+// =====================================================
+
+
+
 const printButton =
+
 document.getElementById(
+
     "printButton"
+
 );
+
+
+
 
 
 
 if(printButton){
 
 
+
     printButton.addEventListener(
+
         "click",
+
         ()=>{
+
+
 
             window.print();
 
+
+
         }
+
     );
 
 
@@ -653,7 +1245,46 @@ if(printButton){
 
 
 
-// ================= START =================
+
+// =====================================================
+// AUTO LOAD REPORT
+// =====================================================
 
 
-loadReport();
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+
+    loadReport();
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+console.log(
+
+"✅ Reports System Ready"
+
+);
+
+
+
+
+
+// =====================================================
+// END OF FINAL REPORTS.JS
+// =====================================================
