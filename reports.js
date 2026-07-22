@@ -41,10 +41,14 @@ console.log("📊 Reports Firebase Connected!");
 
 
 
+
 // ================= LOAD REPORT =================
 
 
 async function loadReport(){
+
+
+try{
 
 
 const selectedMonth =
@@ -118,6 +122,7 @@ Number(data.fourthYear || 0);
 
 
 
+
 // ===== EXPENSES =====
 
 
@@ -178,11 +183,9 @@ document.getElementById("reportCollection").innerHTML =
 
 
 
-
 document.getElementById("reportExpense").innerHTML =
 
 "₱" + totalExpense.toLocaleString();
-
 
 
 
@@ -192,8 +195,32 @@ document.getElementById("reportBalance").innerHTML =
 "₱" +
 
 (
-totalCollection-totalExpense
+totalCollection - totalExpense
 ).toLocaleString();
+
+
+
+
+
+displayReportInfo();
+
+
+
+}
+
+
+
+catch(error){
+
+
+console.error(
+"Report Error:",
+error
+);
+
+
+
+}
 
 
 
@@ -206,7 +233,78 @@ totalCollection-totalExpense
 
 
 
-// CHANGE MONTH
+
+// ================= REPORT INFO =================
+
+
+
+function displayReportInfo(){
+
+
+const monthSelect =
+
+document.getElementById("monthFilter");
+
+
+
+const monthName =
+
+monthSelect.options[
+monthSelect.selectedIndex
+].text;
+
+
+
+
+
+document.getElementById("reportMonth").innerHTML =
+
+"📅 Month: " + monthName;
+
+
+
+
+
+document.getElementById("generatedDate").innerHTML =
+
+"Generated: " +
+
+new Date().toLocaleDateString();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= PRINT REPORT =================
+
+
+
+window.printReport = function(){
+
+
+window.print();
+
+
+};
+
+
+
+
+
+
+
+
+
+// ================= CHANGE MONTH =================
+
 
 
 document
@@ -219,6 +317,9 @@ document
 loadReport();
 
 
+displayReportInfo();
+
+
 });
 
 
@@ -227,6 +328,11 @@ loadReport();
 
 
 
-// START
+
+
+// ================= START =================
+
 
 loadReport();
+
+displayReportInfo();
