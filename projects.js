@@ -7,13 +7,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-
 // ================= FIREBASE =================
 
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
 
 authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
@@ -47,14 +46,14 @@ console.log("📂 Projects Firebase Connected!");
 async function loadProjects(){
 
 
-const container =
+const container = 
 document.getElementById("projectList");
 
 
 
 if(!container){
 
-console.error("Project container not found");
+console.error("Project container missing");
 
 return;
 
@@ -65,14 +64,13 @@ return;
 try{
 
 
-const snapshot =
-await getDocs(
+const snapshot = await getDocs(
 collection(db,"projects")
 );
 
 
 
-container.innerHTML = "";
+container.innerHTML="";
 
 
 
@@ -83,17 +81,17 @@ if(snapshot.empty){
 
 container.innerHTML = `
 
+<div class="projectCard">
 
-<div class="expense">
-
+<h2>
+No Projects Yet
+</h2>
 
 <p>
-No projects available yet.
+No project records available.
 </p>
 
-
 </div>
-
 
 `;
 
@@ -107,10 +105,12 @@ return;
 
 
 
+
 snapshot.forEach((item)=>{
 
 
-const project = item.data();
+const data = item.data();
+
 
 
 
@@ -119,26 +119,28 @@ let statusClass = "";
 
 
 
-if(project.status === "Completed"){
+if(data.status === "Ongoing"){
 
 
-statusClass = "completed";
+statusClass = "statusOngoing";
+
+
+}
+
+
+else if(data.status === "Completed"){
+
+
+statusClass = "statusCompleted";
 
 
 }
 
-else if(project.status === "Ongoing"){
-
-
-statusClass = "ongoing";
-
-
-}
 
 else{
 
 
-statusClass = "planning";
+statusClass = "statusPlanning";
 
 
 }
@@ -148,41 +150,19 @@ statusClass = "planning";
 
 
 
-let budget =
-Number(project.budget || 0);
+
+const budget =
+Number(data.budget || 0);
 
 
 
-let spent =
-Number(project.spent || 0);
+const spent =
+Number(data.spent || 0);
 
 
 
-let remaining =
+const remaining =
 budget - spent;
-
-
-
-let progress = 0;
-
-
-
-if(budget > 0){
-
-progress =
-(spent / budget) * 100;
-
-}
-
-
-
-
-
-if(progress > 100){
-
-progress = 100;
-
-}
 
 
 
@@ -193,100 +173,72 @@ progress = 100;
 container.innerHTML += `
 
 
+
 <div class="projectCard">
 
 
 
-<div class="projectHeader">
-
-
 <h2>
-📂 ${project.title || "Untitled Project"}
+📂 ${data.title || "Untitled Project"}
 </h2>
 
 
-<span class="status ${statusClass}">
-${project.status || "Planning"}
+
+
+<p>
+
+${data.description || "No description provided."}
+
+</p>
+
+
+
+
+
+<span class="projectStatus ${statusClass}">
+
+${data.status || "Planning"}
+
 </span>
 
 
-</div>
 
 
 
+<p class="projectMoney">
 
-
-<p>
-
-${project.description || "No description available."}
-
-</p>
-
-
-
-
-
-
-<div class="projectFinance">
-
-
-<p>
 💰 Budget:
-<strong>
 ₱${budget.toLocaleString()}
-</strong>
+
 </p>
 
 
 
+
 <p>
-💸 Used:
-<strong>
+
+💸 Spent:
 ₱${spent.toLocaleString()}
-</strong>
+
 </p>
+
 
 
 
 <p>
-💵 Remaining:
-<strong>
+
+📊 Remaining:
+
 ₱${remaining.toLocaleString()}
-</strong>
+
 </p>
 
 
 
-</div>
-
-
-
-
-
-
-
-<div class="progressContainer">
-
-
-<div class="progressBar"
-style="width:${progress}%">
-
-</div>
 
 
 </div>
 
-
-
-<small>
-
-${progress.toFixed(0)}% of budget utilized
-
-</small>
-
-
-
-</div>
 
 
 `;
@@ -298,7 +250,6 @@ ${progress.toFixed(0)}% of budget utilized
 
 
 }
-
 
 
 catch(error){
@@ -314,11 +265,11 @@ error
 container.innerHTML = `
 
 
-<div class="expense">
+<div class="projectCard">
 
-<p>
-❌ Failed loading projects
-</p>
+<h2>
+❌ Error Loading Projects
+</h2>
 
 
 <p>
