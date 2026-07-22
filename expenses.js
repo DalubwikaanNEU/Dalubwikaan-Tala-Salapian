@@ -6,202 +6,467 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
+
 // ================= FIREBASE =================
 
+
 const firebaseConfig = {
+
     apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+
     authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+
     projectId: "dalubwikaan--26-8e646",
+
     storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+
     messagingSenderId: "409516392020",
+
     appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+
 };
 
+
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
-console.log("💸 Expenses Connected!");
+
 
 let allExpenses = [];
 
+
+
+
 // ================= LOAD EXPENSES =================
 
-async function loadExpenses() {
 
-    const container = document.getElementById("expenseContainer");
+async function loadExpenses(){
 
-    if (!container) return;
 
-    container.innerHTML = "<p>Loading expenses...</p>";
+    const container =
+    document.getElementById("expenseContainer");
 
-    try {
 
-        const snapshot = await getDocs(collection(db, "expenses"));
+    if(!container) return;
+
+
+
+    container.innerHTML = `
+
+    <div class="expense">
+
+    Loading expenses...
+
+    </div>
+
+    `;
+
+
+
+    try{
+
+
+        const snapshot =
+        await getDocs(
+            collection(db,"expenses")
+        );
+
+
 
         allExpenses = [];
 
-        snapshot.forEach((doc) => {
+
+
+        snapshot.forEach((doc)=>{
+
 
             allExpenses.push({
-                id: doc.id,
+
+                id:doc.id,
+
                 ...doc.data()
+
             });
 
-        });
-
-        // Sort newest first
-        allExpenses.sort((a, b) => {
-
-            const dateA = a.createdAt?.seconds || 0;
-            const dateB = b.createdAt?.seconds || 0;
-
-            return dateB - dateA;
 
         });
+
+
+
+        allExpenses.sort((a,b)=>{
+
+
+            const A =
+            a.createdAt?.seconds || 0;
+
+
+            const B =
+            b.createdAt?.seconds || 0;
+
+
+            return B-A;
+
+
+        });
+
+
 
         displayExpenses(allExpenses);
 
+
+
     }
 
-    catch (error) {
+
+
+    catch(error){
+
 
         console.error(error);
 
+
+
         container.innerHTML = `
-            <div class="expense">
-                ❌ Failed to load expenses.
-            </div>
-        `;
-
-    }
-
-}
-
-// ================= DISPLAY =================
-
-function displayExpenses(expenses) {
-
-    const container = document.getElementById("expenseContainer");
-
-    const totalExpense = document.getElementById("totalExpense");
-
-    const expenseCount = document.getElementById("expenseCount");
-
-    container.innerHTML = "";
-
-    let total = 0;
-
-    expenseCount.innerHTML = expenses.length;
-
-    expenses.forEach((expense) => {
-
-        total += Number(expense.amount || 0);
-
-        let date = "No Date";
-
-        if (expense.date) {
-
-            date = expense.date;
-
-        }
-        else if (expense.createdAt?.seconds) {
-
-            date = new Date(
-                expense.createdAt.seconds * 1000
-            ).toLocaleDateString();
-
-        }
-
-        let receiptButton = "";
-
-        if (expense.receipt) {
-
-            receiptButton = `
-                <a href="${expense.receipt}" target="_blank">
-                    <button>📄 View Receipt</button>
-                </a>
-            `;
-
-        }
-
-        container.innerHTML += `
 
         <div class="expense">
 
-            <h2>💸 ${expense.title || "Untitled Expense"}</h2>
-
-            <p><strong>Category:</strong> ${expense.category || "N/A"}</p>
-
-            <p><strong>Amount:</strong> ₱${Number(expense.amount || 0).toLocaleString()}</p>
-
-            <p><strong>Date:</strong> ${date}</p>
-
-            <p><strong>Remarks:</strong><br>${expense.remarks || "No remarks."}</p>
-
-            ${receiptButton}
+        ❌ Failed to load expenses.
 
         </div>
 
         `;
 
+
+    }
+
+
+
+}
+
+
+
+
+
+// ================= DISPLAY =================
+
+
+
+function displayExpenses(list){
+
+
+    const container =
+    document.getElementById("expenseContainer");
+
+
+    const totalDisplay =
+    document.getElementById("totalExpense");
+
+
+    const countDisplay =
+    document.getElementById("expenseCount");
+
+
+
+    container.innerHTML = "";
+
+
+
+    let total = 0;
+
+
+
+    countDisplay.innerHTML =
+    list.length;
+
+
+
+
+    if(list.length === 0){
+
+
+        container.innerHTML = `
+
+        <div class="expense">
+
+        <h3>🔍 No Expense Found</h3>
+
+        <p>
+        Try another keyword or category.
+        </p>
+
+        </div>
+
+        `;
+
+
+
+        totalDisplay.innerHTML = "₱0";
+
+        return;
+
+
+    }
+
+
+
+
+    list.forEach((expense)=>{
+
+
+        const amount =
+        Number(expense.amount || 0);
+
+
+
+        total += amount;
+
+
+
+        let date = "No Date";
+
+
+
+        if(expense.date){
+
+
+            date = expense.date;
+
+
+        }
+
+        else if(expense.createdAt?.seconds){
+
+
+            date =
+            new Date(
+                expense.createdAt.seconds * 1000
+            ).toLocaleDateString();
+
+
+        }
+
+
+
+        let receipt = "";
+
+
+
+        if(expense.receipt){
+
+
+            receipt = `
+
+            <br>
+
+            <a href="${expense.receipt}" target="_blank">
+
+            <button class="btn">
+
+            📄 View Receipt
+
+            </button>
+
+            </a>
+
+            `;
+
+
+        }
+
+
+
+
+        container.innerHTML += `
+
+
+        <div class="expense">
+
+
+        <h2>
+
+        💸 ${expense.title || "Untitled Expense"}
+
+        </h2>
+
+
+
+        <p>
+
+        <strong>Category:</strong>
+
+        ${expense.category || "N/A"}
+
+        </p>
+
+
+
+        <p>
+
+        <strong>Amount:</strong>
+
+        ₱${amount.toLocaleString()}
+
+        </p>
+
+
+
+        <p>
+
+        <strong>Date:</strong>
+
+        ${date}
+
+        </p>
+
+
+
+        <p>
+
+        <strong>Remarks:</strong>
+
+        <br>
+
+        ${expense.remarks || "No remarks."}
+
+        </p>
+
+
+
+        ${receipt}
+
+
+
+        </div>
+
+
+        `;
+
+
     });
 
-    totalExpense.innerHTML = "₱" + total.toLocaleString();
+
+
+    totalDisplay.innerHTML =
+    "₱" + total.toLocaleString();
+
+
 
 }
 
-// ================= SEARCH =================
 
-const searchExpense = document.getElementById("searchExpense");
 
-if (searchExpense) {
 
-    searchExpense.addEventListener("input", filterExpenses);
 
-}
 
-// ================= CATEGORY FILTER =================
-
-const categoryFilter = document.getElementById("categoryFilter");
-
-if (categoryFilter) {
-
-    categoryFilter.addEventListener("change", filterExpenses);
-
-}
 
 // ================= FILTER =================
 
-function filterExpenses() {
 
-    const keyword = document
-        .getElementById("searchExpense")
-        .value
-        .toLowerCase();
 
-    const category = document
-        .getElementById("categoryFilter")
-        .value;
+function filterExpenses(){
 
-    const filtered = allExpenses.filter((expense) => {
 
-        const matchTitle =
-            (expense.title || "")
-            .toLowerCase()
-            .includes(keyword);
+    const keyword =
+
+    document
+    .getElementById("searchExpense")
+    .value
+    .toLowerCase()
+    .trim();
+
+
+
+    const category =
+
+    document
+    .getElementById("categoryFilter")
+    .value;
+
+
+
+
+    const filtered =
+
+    allExpenses.filter((expense)=>{
+
+
+
+        const searchable = `
+
+        ${expense.title || ""}
+
+        ${expense.category || ""}
+
+        ${expense.remarks || ""}
+
+        ${expense.date || ""}
+
+        `.toLowerCase();
+
+
+
+        const matchSearch =
+
+        searchable.includes(keyword);
+
+
 
         const matchCategory =
-            category === "All" ||
-            expense.category === category;
 
-        return matchTitle && matchCategory;
+        category === "All"
+
+        ||
+
+        expense.category === category;
+
+
+
+        return matchSearch && matchCategory;
+
+
 
     });
 
+
+
     displayExpenses(filtered);
+
+
 
 }
 
+
+
+
+
+
+// ================= EVENTS =================
+
+
+
+document
+.getElementById("searchExpense")
+.addEventListener(
+"input",
+filterExpenses
+);
+
+
+
+document
+.getElementById("categoryFilter")
+.addEventListener(
+"change",
+filterExpenses
+);
+
+
+
+
+
 // ================= START =================
+
 
 loadExpenses();
