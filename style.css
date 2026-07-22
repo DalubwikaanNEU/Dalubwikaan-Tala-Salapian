@@ -1662,3 +1662,20 @@ body.dark .projectCard{
     border-color:#333;
 
 }
+
+#searchResults{
+
+margin-top:25px;
+
+display:grid;
+
+gap:20px;
+
+}
+
+
+#searchResults .expense{
+
+animation:fade .4s ease;
+
+}
