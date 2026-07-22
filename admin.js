@@ -29,7 +29,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-console.log("Admin Firebase Connected!");
+console.log("🔥 Admin Firebase Connected!");
+
 
 
 
@@ -48,43 +49,31 @@ try{
 
 const expenseData = {
 
-
 title:
 document.getElementById("expenseTitle").value,
-
 
 category:
 document.getElementById("expenseCategory").value,
 
-
 amount:
 Number(document.getElementById("expenseAmount").value),
-
 
 date:
 document.getElementById("expenseDate").value,
 
-
 receipt:
 document.getElementById("expenseReceipt").value,
-
 
 remarks:
 document.getElementById("expenseRemarks").value,
 
-
 createdAt:
 new Date()
-
-
 
 };
 
 
 
-
-
-// UPDATE EXISTING EXPENSE
 
 if(editingExpenseID){
 
@@ -95,19 +84,14 @@ expenseData
 );
 
 
-alert("Expense updated successfully!");
+alert("✅ Expense updated!");
 
 
 editingExpenseID = null;
 
 
-
 }
 
-
-
-
-// ADD NEW EXPENSE
 
 else{
 
@@ -118,7 +102,7 @@ expenseData
 );
 
 
-alert("Expense saved successfully!");
+alert("✅ Expense saved!");
 
 
 }
@@ -137,9 +121,11 @@ loadAdminExpenses();
 catch(error){
 
 
+console.error(error);
+
+
 alert(
-"Error saving expense: " 
-+ error.message
+"Error: " + error.message
 );
 
 
@@ -154,10 +140,16 @@ alert(
 
 
 
-// DISPLAY EXPENSES IN ADMIN
+
+
+// ================= SHOW EXPENSES =================
+
 
 
 async function loadAdminExpenses(){
+
+
+try{
 
 
 const container =
@@ -178,6 +170,24 @@ container.innerHTML="";
 
 
 
+if(snapshot.empty){
+
+
+container.innerHTML =
+`
+<p>No expenses recorded.</p>
+`;
+
+
+return;
+
+
+}
+
+
+
+
+
 snapshot.forEach((item)=>{
 
 
@@ -185,8 +195,9 @@ const expense = item.data();
 
 
 
-container.innerHTML += `
+container.innerHTML +=
 
+`
 
 <div class="expense">
 
@@ -197,19 +208,27 @@ ${expense.title}
 
 
 <p>
-Category: ${expense.category}
+📌 Category:
+${expense.category}
 </p>
 
 
 <p>
-Amount: ₱${expense.amount}
+💰 Amount:
+₱${Number(expense.amount).toLocaleString()}
+</p>
+
+
+<p>
+📅 Date:
+${expense.date}
 </p>
 
 
 
 <button onclick="editExpense('${item.id}')">
 
-Edit
+✏️ Edit
 
 </button>
 
@@ -217,7 +236,7 @@ Edit
 
 <button onclick="deleteExpense('${item.id}')">
 
-Delete
+🗑️ Delete
 
 </button>
 
@@ -233,7 +252,25 @@ Delete
 });
 
 
+
 }
+
+
+catch(error){
+
+
+console.error(
+"Loading expense error:",
+error
+);
+
+
+}
+
+
+
+}
+
 
 
 
@@ -246,10 +283,16 @@ loadAdminExpenses();
 
 
 
-// DELETE EXPENSE
+
+// ================= DELETE =================
+
 
 
 window.deleteExpense = async function(id){
+
+
+if(!confirm("Delete this expense?")) return;
+
 
 
 await deleteDoc(
@@ -258,11 +301,11 @@ doc(db,"expenses",id)
 
 
 
-alert("Expense deleted!");
-
+alert("🗑️ Expense deleted!");
 
 
 loadAdminExpenses();
+
 
 
 };
@@ -273,10 +316,14 @@ loadAdminExpenses();
 
 
 
-// EDIT EXPENSE
+
+
+// ================= EDIT =================
+
 
 
 window.editExpense = async function(id){
+
 
 
 const expenseRef =
@@ -284,13 +331,14 @@ doc(db,"expenses",id);
 
 
 
-const expenseSnap =
+const snapshot =
 await getDoc(expenseRef);
 
 
 
 const expense =
-expenseSnap.data();
+snapshot.data();
+
 
 
 
@@ -311,11 +359,11 @@ expense.date;
 
 
 document.getElementById("expenseReceipt").value =
-expense.receipt;
+expense.receipt || "";
 
 
 document.getElementById("expenseRemarks").value =
-expense.remarks;
+expense.remarks || "";
 
 
 
@@ -324,12 +372,13 @@ editingExpenseID = id;
 
 
 alert(
-"Edit mode activated. Press Save Expense to update."
+"✏️ Edit mode ON. Click Save Expense after editing."
 );
 
 
 
 };
+
 
 
 
@@ -363,7 +412,9 @@ document.getElementById("expenseRemarks").value="";
 
 
 
+
 // ================= COLLECTION =================
+
 
 
 window.saveCollection = async function(){
@@ -386,19 +437,19 @@ document.getElementById("collectionDate").value,
 
 
 firstYear:
-Number(document.getElementById("firstYearCollection").value),
+Number(document.getElementById("firstYearCollection").value || 0),
 
 
 secondYear:
-Number(document.getElementById("secondYearCollection").value),
+Number(document.getElementById("secondYearCollection").value || 0),
 
 
 thirdYear:
-Number(document.getElementById("thirdYearCollection").value),
+Number(document.getElementById("thirdYearCollection").value || 0),
 
 
 fourthYear:
-Number(document.getElementById("fourthYearCollection").value),
+Number(document.getElementById("fourthYearCollection").value || 0),
 
 
 collector:
@@ -412,19 +463,20 @@ new Date()
 });
 
 
-alert("Collection saved successfully!");
+alert("✅ Collection saved!");
 
 
 }
+
 
 catch(error){
 
-alert(
-"Error saving collection: "
-+ error.message
-);
+
+alert(error.message);
+
 
 }
+
 
 
 };
@@ -438,6 +490,7 @@ alert(
 
 
 // ================= PROJECTS =================
+
 
 
 window.saveProject = async function(){
@@ -460,11 +513,11 @@ document.getElementById("projectDescription").value,
 
 
 budget:
-Number(document.getElementById("projectBudget").value),
+Number(document.getElementById("projectBudget").value || 0),
 
 
 spent:
-Number(document.getElementById("projectSpent").value),
+Number(document.getElementById("projectSpent").value || 0),
 
 
 status:
@@ -478,7 +531,7 @@ new Date()
 });
 
 
-alert("Project saved successfully!");
+alert("✅ Project saved!");
 
 
 }
@@ -486,10 +539,7 @@ alert("Project saved successfully!");
 
 catch(error){
 
-alert(
-"Error saving project: "
-+error.message
-);
+alert(error.message);
 
 }
 
@@ -505,6 +555,7 @@ alert(
 
 
 // ================= ANNOUNCEMENT =================
+
 
 
 window.saveAnnouncement = async function(){
@@ -537,7 +588,7 @@ new Date()
 });
 
 
-alert("Announcement posted successfully!");
+alert("✅ Announcement posted!");
 
 
 }
@@ -545,10 +596,7 @@ alert("Announcement posted successfully!");
 
 catch(error){
 
-alert(
-"Error posting announcement: "
-+error.message
-);
+alert(error.message);
 
 }
 
