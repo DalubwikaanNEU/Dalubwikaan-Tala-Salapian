@@ -1711,3 +1711,64 @@ body.dark #searchResults .expense h2{
     color:var(--accent);
 
 }
+
+/* ================= DASHBOARD SEARCH ================= */
+
+
+.searchSection{
+
+max-width:1200px;
+
+margin:40px auto;
+
+padding:30px;
+
+background:var(--white);
+
+border-radius:25px;
+
+box-shadow:var(--shadow);
+
+}
+
+
+
+.searchSection h2{
+
+color:var(--primary);
+
+font-family:'Patrick Hand',cursive;
+
+font-size:32px;
+
+margin-bottom:20px;
+
+}
+
+
+
+#dashboardSearch{
+
+width:100%;
+
+padding:16px;
+
+border-radius:50px;
+
+border:2px solid var(--accent);
+
+font-size:16px;
+
+}
+
+
+
+#dashboardSearchResults{
+
+margin-top:25px;
+
+display:grid;
+
+gap:20px;
+
+}
