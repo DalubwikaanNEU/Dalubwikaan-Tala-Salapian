@@ -3188,3 +3188,171 @@ a{
 
 
 /* END FINAL STYLE.CSS */
+
+/* ==============================
+   REPORT EXPENSE TABLE FIX
+   DESKTOP + MOBILE
+============================== */
+
+
+.adminCard{
+
+    background:var(--white);
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+}
+
+
+
+#expenseTable{
+
+    width:100%;
+
+    font-size:14px;
+
+}
+
+
+
+#expenseTable th{
+
+    padding:12px;
+
+    font-size:14px;
+
+}
+
+
+
+#expenseTable td{
+
+    padding:12px;
+
+    vertical-align:middle;
+
+}
+
+
+
+.amountText{
+
+    color:var(--red);
+
+}
+
+
+
+
+
+.expenseTag{
+
+    background:#fdecec;
+
+    color:var(--red);
+
+    padding:5px 12px;
+
+    border-radius:50px;
+
+    font-size:12px;
+
+}
+
+
+
+
+
+
+.emptyData{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:var(--muted);
+
+}
+
+
+
+
+
+
+/* MOBILE REPORT TABLE */
+
+@media(max-width:768px){
+
+
+
+#expenseTable{
+
+    min-width:0;
+
+}
+
+
+
+#expenseTable thead{
+
+    display:none;
+
+}
+
+
+
+#expenseTable tr{
+
+    display:block;
+
+    background:var(--white);
+
+    margin-bottom:15px;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+#expenseTable td{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:8px 0;
+
+    border:none;
+
+    font-size:13px;
+
+}
+
+
+
+#expenseTable td::before{
+
+    content:attr(data-label);
+
+    font-weight:bold;
+
+    color:var(--muted);
+
+}
+
+
+
+}
