@@ -1,188 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalubwikaan • Collections</title>
 
-<title>Dalubwikaan Collections</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <script type="module" src="collections.js" defer></script>
 </head>
-
 <body>
 
-<!-- ================= HEADER ================= -->
-
 <header>
+    <h1>📚 Dalubwikaan Transparency Portal</h1>
 
-<div class="logo">
-📚 DALUBWIKAAN
-</div>
-
-
-<nav>
-
-<a href="index.html">
-Dashboard
-</a>
-
-<a href="collections.html" class="active">
-Collections
-</a>
-
-<a href="expenses.html">
-Expenses
-</a>
-
-<a href="projects.html">
-Projects
-</a>
-
-<a href="reports.html">
-Reports
-</a>
-
-<a href="announcements.html">
-Announcements
-</a>
-
-<a href="login.html">
-🔐 Admin
-</a>
-
-
-<button id="themeToggle" class="themeBtn">
-🌙 Dark Mode
-</button>
-
-
-</nav>
-
+    <nav>
+        <a href="index.html">Dashboard</a>
+        <a href="collections.html" class="active">Collections</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="projects.html">Projects</a>
+        <a href="announcements.html">Announcements</a>
+        <a href="login.html">Admin</a>
+    </nav>
 </header>
 
-<!-- ================= MAIN ================= -->
+<main class="container">
 
-<main class="adminContainer">
+    <div class="card">
+        <h2>Collection Summary</h2>
 
-<!-- ================= SUMMARY ================= -->
+        <div class="summary-grid">
 
-<section class="adminCard">
+            <div class="summary-card">
+                <h3>Total Collection</h3>
+                <p id="totalCollection">₱0</p>
+            </div>
 
-<h2>📊 Collection Summary</h2>
+            <div class="summary-card">
+                <h3>Total Records</h3>
+                <p id="collectionCount">0</p>
+            </div>
 
-<div class="dashboard">
+        </div>
+    </div>
 
-<div class="card">
+    <div class="card">
 
-<h3>Total Collection</h3>
+        <h2>Search Collections</h2>
 
-<h2 id="totalCollection">
-₱0
-</h2>
+        <input
+            type="text"
+            id="searchCollection"
+            placeholder="Search by week or collector..."
+        >
 
-</div>
+        <br><br>
 
-<div class="card">
+        <select id="yearFilter">
 
-<h3>Total Records</h3>
+            <option value="all">All Year Levels</option>
 
-<h2 id="collectionCount">
-0
-</h2>
+            <option value="1">1st Year</option>
 
-</div>
+            <option value="2">2nd Year</option>
 
-</div>
+            <option value="3">3rd Year</option>
 
-</section>
+            <option value="4">4th Year</option>
 
-<!-- ================= SEARCH ================= -->
+        </select>
 
-<section class="adminCard">
+    </div>
 
-<h2>🔍 Search & Filter</h2>
+    <div class="card">
 
-<input
-type="text"
-id="searchCollection"
-placeholder="Search Week or Collector...">
+        <h2>Collection Records</h2>
 
-<br><br>
+        <div id="collectionList">
 
-<select id="yearFilter">
+            <p>Loading collections...</p>
 
-<option value="all">
-All Year Levels
-</option>
+        </div>
 
-<option value="1">
-1st Year
-</option>
-
-<option value="2">
-2nd Year
-</option>
-
-<option value="3">
-3rd Year
-</option>
-
-<option value="4">
-4th Year
-</option>
-
-</select>
-
-</section>
-
-<!-- ================= COLLECTION RECORDS ================= -->
-
-<section class="adminCard">
-
-<h2>📋 Collection Records</h2>
-
-<div id="collectionList">
-
-<div class="expense">
-
-Loading collections...
-
-</div>
-
-</div>
-
-</section>
+    </div>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-<p>
-
-© 2026 Dalubwikaan Transparency Portal
-
-<br>
-
-Magsikhay at Manaliksik.
-
-</p>
-
-</footer>
-
-<script src="theme.js"></script>
-
-<script type="module" src="collections.js"></script>
-
 </body>
-</html>
-
-</body>
-
 </html>
