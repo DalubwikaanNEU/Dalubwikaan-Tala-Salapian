@@ -1,5 +1,3 @@
-console.log("THEME JS LOADED");
-
 const button = document.getElementById("themeToggle");
 
 
