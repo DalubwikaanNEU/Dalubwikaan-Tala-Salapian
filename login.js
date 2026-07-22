@@ -23,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // PALITAN ITO KUNG MAGBABAGO ANG ADMIN EMAIL
-const ADMIN_EMAIL = "admin@dalubwikaan.com";
+const ADMIN_EMAIL = "admin@dalubwikaan.neu.com";
 
 window.loginAdmin = async function () {
 
@@ -54,7 +54,7 @@ window.loginAdmin = async function () {
             return;
         }
 
-        alert("✅ Welcome Admin!");
+        alert("✅ Maligayang pagdating, Admin!");
 
         window.location.replace("admin.html");
 
