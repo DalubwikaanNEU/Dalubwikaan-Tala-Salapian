@@ -40,6 +40,8 @@ Financial Summary and Transparency Report
 
 
 
+
+
 <main class="adminContainer">
 
 
@@ -47,6 +49,7 @@ Financial Summary and Transparency Report
 
 
 <section class="dashboard">
+
 
 
 <div class="card">
@@ -62,6 +65,7 @@ Total Collection
 
 
 </div>
+
 
 
 
@@ -101,6 +105,7 @@ Balance
 </div>
 
 
+
 </section>
 
 
@@ -117,6 +122,7 @@ Balance
 <h2>
 📅 Select Month
 </h2>
+
 
 
 <select id="monthFilter">
@@ -186,6 +192,56 @@ December
 
 
 
+
+<br><br>
+
+
+
+<button onclick="printReport()">
+
+🖨️ Print Monthly Report
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- REPORT INFORMATION -->
+
+
+<section class="adminCard">
+
+
+<h2>
+📄 Report Information
+</h2>
+
+
+
+<p id="reportMonth">
+
+📅 Month:
+
+</p>
+
+
+
+<p id="generatedDate">
+
+Generated:
+
+</p>
+
+
+
 </section>
 
 
@@ -201,7 +257,9 @@ December
 
 
 
+
 <script type="module" src="reports.js"></script>
+
 
 
 </body>
