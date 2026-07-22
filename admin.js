@@ -1,7 +1,7 @@
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
 // ADMIN.JS PART 1/3
-// FIREBASE CONNECTION + AUTH + DASHBOARD CONNECTION
+// FIREBASE CONNECTION + AUTH + DASHBOARD
 // =====================================================
 
 
@@ -10,24 +10,50 @@
 
 
 import { initializeApp }
+
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
 
+
 import {
-    getFirestore,
-    collection,
-    getDocs,
-    getCountFromServer
+
+getFirestore,
+
+collection,
+
+getDocs,
+
+getCountFromServer,
+
+addDoc,
+
+updateDoc,
+
+deleteDoc,
+
+doc,
+
+getDoc
+
 }
+
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
+
 import {
-    getAuth,
-    signOut,
-    onAuthStateChanged
+
+getAuth,
+
+signOut,
+
+onAuthStateChanged
+
 }
+
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+
 
 
 
@@ -35,19 +61,33 @@ from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 // ================= FIREBASE CONFIG =================
 
 
+
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
-    authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+apiKey:
+"AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
-    projectId: "dalubwikaan--26-8e646",
 
-    storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+authDomain:
+"dalubwikaan--26-8e646.firebaseapp.com",
 
-    messagingSenderId: "409516392020",
 
-    appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+projectId:
+"dalubwikaan--26-8e646",
+
+
+storageBucket:
+"dalubwikaan--26-8e646.firebasestorage.app",
+
+
+messagingSenderId:
+"409516392020",
+
+
+appId:
+"1:409516392020:web:87d462a5927449c69eb7c1"
+
 
 };
 
@@ -55,20 +95,33 @@ const firebaseConfig = {
 
 
 
-// ================= INITIALIZE FIREBASE =================
 
 
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
-
-const auth = getAuth(app);
+// ================= INITIALIZE =================
 
 
 
-console.log("🔥 Firebase Connected");
+const app =
+initializeApp(firebaseConfig);
+
+
+
+const db =
+getFirestore(app);
+
+
+
+const auth =
+getAuth(app);
+
+
+
+
+console.log(
+"🔥 Firebase Connected"
+);
+
+
 
 
 
@@ -79,33 +132,44 @@ console.log("🔥 Firebase Connected");
 // =====================================================
 
 
-onAuthStateChanged(auth,(user)=>{
+
+onAuthStateChanged(
+auth,
+(user)=>{
 
 
-    if(user){
+if(user){
 
 
-        console.log(
-            "Admin Logged In:",
-            user.email
-        );
+console.log(
+"✅ Admin Logged:",
+user.email
+);
 
 
-    }
+
+}
 
 
-    else{
+
+else{
 
 
-        console.log(
-            "No Admin Logged In"
-        );
+console.log(
+"⚠️ No user logged in"
+);
 
 
-    }
+
+}
 
 
-});
+
+}
+
+);
+
+
 
 
 
@@ -117,20 +181,30 @@ onAuthStateChanged(auth,(user)=>{
 // =====================================================
 
 
+
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
 const logoutBtn =
-document.getElementById("logoutBtn");
+document.getElementById(
+"logoutBtn"
+);
+
+
 
 
 
 if(logoutBtn){
 
 
-logoutBtn.onclick = async()=>{
+
+logoutBtn.onclick =
+async()=>{
+
 
 
 try{
@@ -146,169 +220,8 @@ alert(
 
 
 
-window.location.href="login.html";
-
-
-
-}
-
-
-catch(error){
-
-
-console.error(error);
-
-
-
-alert(
-"❌ Logout Failed"
-);
-
-
-}
-
-
-};
-
-
-}
-
-
-});
-
-
-
-
-
-
-
-// =====================================================
-// DASHBOARD STATISTICS
-// CONNECT FIRESTORE TO DASHBOARD
-// =====================================================
-
-
-
-async function loadDashboardStats(){
-
-
-
-try{
-
-
-
-const collections =
-await getCountFromServer(
-collection(db,"collections")
-);
-
-
-
-const expenses =
-await getCountFromServer(
-collection(db,"expenses")
-);
-
-
-
-const projects =
-await getCountFromServer(
-collection(db,"projects")
-);
-
-
-
-const announcements =
-await getCountFromServer(
-collection(db,"announcements")
-);
-
-
-
-
-
-
-
-const totalCollections =
-document.getElementById(
-"totalCollections"
-);
-
-
-
-const totalExpenses =
-document.getElementById(
-"totalExpenses"
-);
-
-
-
-const totalProjects =
-document.getElementById(
-"totalProjects"
-);
-
-
-
-const totalAnnouncements =
-document.getElementById(
-"totalAnnouncements"
-);
-
-
-
-
-
-
-if(totalCollections){
-
-
-totalCollections.innerHTML =
-collections.data().count;
-
-
-}
-
-
-
-if(totalExpenses){
-
-
-totalExpenses.innerHTML =
-expenses.data().count;
-
-
-}
-
-
-
-if(totalProjects){
-
-
-totalProjects.innerHTML =
-projects.data().count;
-
-
-}
-
-
-
-if(totalAnnouncements){
-
-
-totalAnnouncements.innerHTML =
-announcements.data().count;
-
-
-}
-
-
-
-
-
-console.log(
-"📊 Dashboard Connected to Firebase"
-);
+window.location.href =
+"login.html";
 
 
 
@@ -321,8 +234,238 @@ catch(error){
 
 
 console.error(
-"Dashboard Error:",
 error
+);
+
+
+
+alert(
+"❌ Logout failed"
+);
+
+
+
+}
+
+
+
+};
+
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================================
+// DASHBOARD STATISTICS
+// =====================================================
+
+
+
+async function loadDashboardStats(){
+
+
+
+try{
+
+
+
+const collectionCount =
+
+await getCountFromServer(
+
+collection(
+db,
+"collections"
+)
+
+);
+
+
+
+
+
+const expenseCount =
+
+await getCountFromServer(
+
+collection(
+db,
+"expenses"
+)
+
+);
+
+
+
+
+
+const projectCount =
+
+await getCountFromServer(
+
+collection(
+db,
+"projects"
+)
+
+);
+
+
+
+
+
+const announcementCount =
+
+await getCountFromServer(
+
+collection(
+db,
+"announcements"
+)
+
+);
+
+
+
+
+
+
+
+const totalCollections =
+
+document.getElementById(
+"totalCollections"
+);
+
+
+
+
+
+const totalExpenses =
+
+document.getElementById(
+"totalExpenses"
+);
+
+
+
+
+
+const totalProjects =
+
+document.getElementById(
+"totalProjects"
+);
+
+
+
+
+
+const totalAnnouncements =
+
+document.getElementById(
+"totalAnnouncements"
+);
+
+
+
+
+
+
+
+
+
+if(totalCollections){
+
+
+totalCollections.innerHTML =
+
+collectionCount.data().count;
+
+
+}
+
+
+
+
+if(totalExpenses){
+
+
+totalExpenses.innerHTML =
+
+expenseCount.data().count;
+
+
+}
+
+
+
+
+
+if(totalProjects){
+
+
+totalProjects.innerHTML =
+
+projectCount.data().count;
+
+
+}
+
+
+
+
+
+if(totalAnnouncements){
+
+
+totalAnnouncements.innerHTML =
+
+announcementCount.data().count;
+
+
+}
+
+
+
+
+
+
+console.log(
+"📊 Dashboard Connected"
+);
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(
+
+"Dashboard Error:",
+
+error
+
 );
 
 
@@ -332,6 +475,8 @@ error
 
 
 }
+
+
 
 
 
@@ -346,14 +491,19 @@ error
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
 loadDashboardStats();
 
 
-});
+
+}
+
+);
 
 
 
@@ -365,8 +515,10 @@ console.log(
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
 // ADMIN.JS PART 2/3
-// COLLECTION + EXPENSE + PROJECT CRUD
+// COLLECTION + EXPENSE + PROJECT MANAGEMENT
 // =====================================================
+
+
 
 
 
@@ -376,6 +528,7 @@ console.log(
 
 
 let editingCollectionID = null;
+
 
 
 
@@ -395,8 +548,10 @@ week:
 document.getElementById("week").value.trim(),
 
 
+
 date:
 document.getElementById("collectionDate").value,
+
 
 
 firstYear:
@@ -405,10 +560,12 @@ document.getElementById("firstYearCollection").value || 0
 ),
 
 
+
 secondYear:
 Number(
 document.getElementById("secondYearCollection").value || 0
 ),
+
 
 
 thirdYear:
@@ -417,14 +574,17 @@ document.getElementById("thirdYearCollection").value || 0
 ),
 
 
+
 fourthYear:
 Number(
 document.getElementById("fourthYearCollection").value || 0
 ),
 
 
+
 collector:
 document.getElementById("collector").value.trim(),
+
 
 
 updatedAt:new Date()
@@ -435,16 +595,30 @@ updatedAt:new Date()
 
 
 
+
+
 if(editingCollectionID){
 
 
+
 await updateDoc(
-doc(db,"collections",editingCollectionID),
+
+doc(
+db,
+"collections",
+editingCollectionID
+),
+
 data
+
 );
 
 
-alert("✅ Collection Updated");
+
+alert(
+"✅ Collection Updated"
+);
+
 
 
 editingCollectionID=null;
@@ -455,22 +629,39 @@ editingCollectionID=null;
 
 
 
+
 else{
 
 
+
 await addDoc(
-collection(db,"collections"),
+
+collection(
+db,
+"collections"
+),
+
 {
+
 ...data,
+
 createdAt:new Date()
+
 }
+
 );
 
 
-alert("✅ Collection Saved");
+
+alert(
+"✅ Collection Saved"
+);
+
 
 
 }
+
+
 
 
 
@@ -480,6 +671,7 @@ clearCollectionForm();
 loadAdminCollections();
 
 
+
 }
 
 
@@ -487,12 +679,18 @@ loadAdminCollections();
 catch(error){
 
 
-console.error(error);
+
+console.error(
+"Collection Error:",
+error
+);
+
 
 
 alert(
-"❌ Collection Error: "+error.message
+"❌ "+error.message
 );
+
 
 
 }
@@ -500,6 +698,7 @@ alert(
 
 
 };
+
 
 
 
@@ -514,10 +713,14 @@ alert(
 async function loadAdminCollections(){
 
 
+
 const container =
+
 document.getElementById(
 "adminCollectionList"
 );
+
+
 
 
 
@@ -525,10 +728,25 @@ if(!container)return;
 
 
 
+
+
+try{
+
+
+
 const snapshot =
+
 await getDocs(
-collection(db,"collections")
+
+collection(
+db,
+"collections"
+)
+
 );
+
+
+
 
 
 
@@ -536,19 +754,46 @@ container.innerHTML="";
 
 
 
+
+
+
+if(snapshot.empty){
+
+
+container.innerHTML =
+"<p>No collection records.</p>";
+
+
+return;
+
+
+}
+
+
+
+
+
+
 snapshot.forEach((item)=>{
+
 
 
 const data=item.data();
 
 
 
+
 const total =
 
-Number(data.firstYear||0)+
-Number(data.secondYear||0)+
-Number(data.thirdYear||0)+
-Number(data.fourthYear||0);
+Number(data.firstYear || 0)+
+
+Number(data.secondYear || 0)+
+
+Number(data.thirdYear || 0)+
+
+Number(data.fourthYear || 0);
+
+
 
 
 
@@ -581,13 +826,19 @@ container.innerHTML += `
 
 
 <button onclick="editCollection('${item.id}')">
+
 ✏️ Edit
+
 </button>
+
 
 
 <button onclick="deleteCollection('${item.id}')">
+
 🗑️ Delete
+
 </button>
+
 
 
 </div>
@@ -604,6 +855,23 @@ container.innerHTML += `
 
 
 
+catch(error){
+
+
+
+console.error(error);
+
+
+
+}
+
+
+
+}
+
+
+
+
 
 
 
@@ -611,18 +879,33 @@ container.innerHTML += `
 window.deleteCollection = async function(id){
 
 
+
 await deleteDoc(
-doc(db,"collections",id)
+
+doc(
+db,
+"collections",
+id
+)
+
 );
 
 
-alert("🗑️ Deleted");
+
+alert(
+"🗑️ Deleted"
+);
+
 
 
 loadAdminCollections();
 
 
+
 };
+
+
+
 
 
 
@@ -632,10 +915,19 @@ loadAdminCollections();
 window.editCollection = async function(id){
 
 
+
 const snap =
+
 await getDoc(
-doc(db,"collections",id)
+
+doc(
+db,
+"collections",
+id
+)
+
 );
+
 
 
 
@@ -643,32 +935,40 @@ const data=snap.data();
 
 
 
+
 document.getElementById("week").value =
 data.week || "";
+
 
 
 document.getElementById("collectionDate").value =
 data.date || "";
 
 
+
 document.getElementById("firstYearCollection").value =
 data.firstYear || 0;
+
 
 
 document.getElementById("secondYearCollection").value =
 data.secondYear || 0;
 
 
+
 document.getElementById("thirdYearCollection").value =
 data.thirdYear || 0;
+
 
 
 document.getElementById("fourthYearCollection").value =
 data.fourthYear || 0;
 
 
+
 document.getElementById("collector").value =
 data.collector || "";
+
 
 
 
@@ -677,6 +977,10 @@ editingCollectionID=id;
 
 
 };
+
+
+
+
 
 
 
@@ -697,11 +1001,14 @@ function clearCollectionForm(){
 ].forEach(id=>{
 
 
-const el=document.getElementById(id);
+const element =
+document.getElementById(id);
 
 
-if(el)
-el.value="";
+
+if(element)
+element.value="";
+
 
 
 });
@@ -718,27 +1025,43 @@ editingCollectionID=null;
 
 
 
+
+
 // =====================================================
 // EXPENSE SYSTEM
 // =====================================================
+
 
 
 let editingExpenseID=null;
 
 
 
+
+
+
 window.saveExpense = async function(){
+
+
+
+try{
+
 
 
 const data={
 
 
+
 title:
-document.getElementById("expenseTitle").value,
+document.getElementById("expenseTitle").value.trim(),
+
+
 
 
 category:
-document.getElementById("expenseCategory").value,
+document.getElementById("expenseCategory").value.trim(),
+
+
 
 
 amount:
@@ -747,19 +1070,28 @@ document.getElementById("expenseAmount").value || 0
 ),
 
 
+
+
 date:
 document.getElementById("expenseDate").value,
 
 
+
+
 receipt:
-document.getElementById("expenseReceipt").value,
+document.getElementById("expenseReceipt").value.trim(),
+
+
 
 
 remarks:
-document.getElementById("expenseRemarks").value,
+document.getElementById("expenseRemarks").value.trim(),
+
+
 
 
 updatedAt:new Date()
+
 
 
 };
@@ -767,37 +1099,33 @@ updatedAt:new Date()
 
 
 
-if(editingExpenseID){
 
-
-await updateDoc(
-doc(db,"expenses",editingExpenseID),
-data
-);
-
-
-alert("✅ Expense Updated");
-
-
-}
-
-
-else{
 
 
 await addDoc(
-collection(db,"expenses"),
+
+collection(
+db,
+"expenses"
+),
+
 {
+
 ...data,
+
 createdAt:new Date()
+
 }
+
 );
 
 
-alert("✅ Expense Saved");
 
 
-}
+
+alert(
+"✅ Expense Saved"
+);
 
 
 
@@ -807,7 +1135,33 @@ clearExpenseForm();
 loadAdminExpenses();
 
 
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(error);
+
+
+
+alert(
+"❌ Expense Error: "+error.message
+);
+
+
+
+}
+
+
+
 };
+
+
+
 
 
 
@@ -817,10 +1171,14 @@ loadAdminExpenses();
 async function loadAdminExpenses(){
 
 
+
 const container =
+
 document.getElementById(
 "adminExpenseList"
 );
+
+
 
 
 
@@ -828,10 +1186,20 @@ if(!container)return;
 
 
 
+
+
 const snapshot =
+
 await getDocs(
-collection(db,"expenses")
+
+collection(
+db,
+"expenses"
+)
+
 );
+
+
 
 
 
@@ -839,10 +1207,15 @@ container.innerHTML="";
 
 
 
+
+
 snapshot.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -851,31 +1224,40 @@ container.innerHTML += `
 
 <div class="expense">
 
+
 <h3>
 💸 ${data.title}
 </h3>
+
 
 <p>
 ${data.category}
 </p>
 
+
 <p>
-₱${Number(data.amount).toLocaleString()}
+₱${Number(data.amount || 0).toLocaleString()}
 </p>
 
 
+
 <button onclick="deleteExpense('${item.id}')">
+
 🗑️ Delete
+
 </button>
 
 
+
 </div>
+
 
 `;
 
 
 
 });
+
 
 
 }
@@ -885,18 +1267,31 @@ ${data.category}
 
 
 
+
 window.deleteExpense = async function(id){
 
 
+
 await deleteDoc(
-doc(db,"expenses",id)
+
+doc(
+db,
+"expenses",
+id
+)
+
 );
 
 
-alert("🗑️ Expense Deleted");
+
+alert(
+"🗑️ Expense Deleted"
+);
+
 
 
 loadAdminExpenses();
+
 
 
 };
@@ -905,7 +1300,10 @@ loadAdminExpenses();
 
 
 
+
+
 function clearExpenseForm(){
+
 
 
 [
@@ -919,17 +1317,22 @@ function clearExpenseForm(){
 ].forEach(id=>{
 
 
-const el=document.getElementById(id);
+const element =
+document.getElementById(id);
 
 
-if(el)
-el.value="";
+
+if(element)
+element.value="";
+
 
 
 });
 
 
+
 }
+
 
 
 
@@ -948,15 +1351,24 @@ window.saveProject = async function(){
 
 
 
+try{
+
+
+
 const data={
 
 
+
 title:
-document.getElementById("projectTitle").value,
+document.getElementById("projectTitle").value.trim(),
+
+
 
 
 description:
-document.getElementById("projectDescription").value,
+document.getElementById("projectDescription").value.trim(),
+
+
 
 
 budget:
@@ -965,17 +1377,24 @@ document.getElementById("projectBudget").value || 0
 ),
 
 
+
+
 spent:
 Number(
 document.getElementById("projectSpent").value || 0
 ),
 
 
+
+
 status:
 document.getElementById("projectStatus").value,
 
 
+
+
 updatedAt:new Date()
+
 
 
 };
@@ -984,9 +1403,13 @@ updatedAt:new Date()
 
 
 
+
 await addDoc(
 
-collection(db,"projects"),
+collection(
+db,
+"projects"
+),
 
 {
 
@@ -1000,13 +1423,43 @@ createdAt:new Date()
 
 
 
-alert("✅ Project Saved");
+
+
+
+alert(
+"✅ Project Saved"
+);
+
 
 
 loadAdminProjects();
 
 
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(error);
+
+
+
+alert(
+"❌ Project Error: "+error.message
+);
+
+
+
+}
+
+
+
 };
+
 
 
 
@@ -1019,9 +1472,12 @@ async function loadAdminProjects(){
 
 
 const container =
+
 document.getElementById(
 "adminProjectList"
 );
+
+
 
 
 
@@ -1029,10 +1485,21 @@ if(!container)return;
 
 
 
+
+
 const snapshot =
+
 await getDocs(
-collection(db,"projects")
+
+collection(
+db,
+"projects"
+)
+
 );
+
+
+
 
 
 
@@ -1040,10 +1507,16 @@ container.innerHTML="";
 
 
 
+
+
+
 snapshot.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -1064,7 +1537,7 @@ ${data.description}
 
 
 <p>
-Budget: ₱${data.budget}
+Budget: ₱${Number(data.budget || 0).toLocaleString()}
 </p>
 
 
@@ -1075,8 +1548,11 @@ Status: ${data.status}
 
 
 <button onclick="deleteProject('${item.id}')">
+
 🗑️ Delete
+
 </button>
+
 
 
 </div>
@@ -1089,7 +1565,10 @@ Status: ${data.status}
 });
 
 
+
 }
+
+
 
 
 
@@ -1099,18 +1578,31 @@ Status: ${data.status}
 window.deleteProject = async function(id){
 
 
+
 await deleteDoc(
-doc(db,"projects",id)
+
+doc(
+db,
+"projects",
+id
+)
+
 );
 
 
-alert("🗑️ Project Deleted");
+
+alert(
+"🗑️ Project Deleted"
+);
+
 
 
 loadAdminProjects();
 
 
+
 };
+
 
 
 
@@ -1124,7 +1616,9 @@ loadAdminProjects();
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
@@ -1137,7 +1631,11 @@ loadAdminExpenses();
 loadAdminProjects();
 
 
-});
+}
+
+);
+
+
 
 
 
@@ -1147,8 +1645,9 @@ console.log(
 // =====================================================
 // DALUBWIKAAN ADMIN SYSTEM
 // ADMIN.JS PART 3/3
-// ANNOUNCEMENT + SEARCH + THEME + FINAL SYSTEM
+// ANNOUNCEMENT + SEARCH + FINAL INITIALIZATION
 // =====================================================
+
 
 
 
@@ -1159,7 +1658,10 @@ console.log(
 // =====================================================
 
 
+
 let editingAnnouncementID = null;
+
+
 
 
 
@@ -1167,7 +1669,9 @@ let editingAnnouncementID = null;
 window.saveAnnouncement = async function(){
 
 
+
 try{
+
 
 
 const data = {
@@ -1177,15 +1681,19 @@ title:
 document.getElementById("announcementTitle").value.trim(),
 
 
+
 message:
 document.getElementById("announcementMessage").value.trim(),
+
 
 
 priority:
 document.getElementById("announcementPriority").value,
 
 
+
 updatedAt:new Date()
+
 
 
 };
@@ -1193,15 +1701,21 @@ updatedAt:new Date()
 
 
 
+
+
+
 if(!data.title || !data.message){
 
 
+
 alert(
-"⚠️ Complete announcement details"
+"⚠️ Please complete announcement details."
 );
 
 
+
 return;
+
 
 
 }
@@ -1209,9 +1723,15 @@ return;
 
 
 
+
+
+
 await addDoc(
 
-collection(db,"announcements"),
+collection(
+db,
+"announcements"
+),
 
 {
 
@@ -1225,9 +1745,17 @@ createdAt:new Date()
 
 
 
+
+
+
+
 alert(
 "📢 Announcement Posted"
 );
+
+
+
+
 
 
 
@@ -1238,6 +1766,8 @@ loadAdminAnnouncements();
 
 
 
+
+
 }
 
 
@@ -1245,12 +1775,18 @@ loadAdminAnnouncements();
 catch(error){
 
 
-console.error(error);
+
+console.error(
+"Announcement Error:",
+error
+);
+
 
 
 alert(
-"❌ Announcement Error: "+error.message
+"❌ "+error.message
 );
+
 
 
 }
@@ -1266,14 +1802,24 @@ alert(
 
 
 
+
+
+
+// ================= LOAD ANNOUNCEMENTS =================
+
+
+
 async function loadAdminAnnouncements(){
 
 
 
 const container =
+
 document.getElementById(
 "adminAnnouncementList"
 );
+
+
 
 
 
@@ -1281,10 +1827,26 @@ if(!container)return;
 
 
 
+
+
+
+try{
+
+
+
 const snapshot =
+
 await getDocs(
-collection(db,"announcements")
+
+collection(
+db,
+"announcements"
+)
+
 );
+
+
+
 
 
 
@@ -1292,10 +1854,39 @@ container.innerHTML="";
 
 
 
+
+
+
+
+if(snapshot.empty){
+
+
+
+container.innerHTML =
+"<p>No announcements posted.</p>";
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
 snapshot.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
+
 
 
 
@@ -1306,23 +1897,30 @@ container.innerHTML += `
 
 
 <h3>
-📢 ${data.title}
+📢 ${data.title || "Announcement"}
 </h3>
 
 
+
 <p>
-${data.message}
+${data.message || ""}
 </p>
 
 
+
 <p>
-Priority: ${data.priority}
+Priority:
+${data.priority || "Low"}
 </p>
+
+
 
 
 
 <button onclick="deleteAnnouncement('${item.id}')">
+
 🗑️ Delete
+
 </button>
 
 
@@ -1342,11 +1940,38 @@ Priority: ${data.priority}
 
 
 
+catch(error){
+
+
+
+console.error(error);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
 
 
 
 
 window.deleteAnnouncement = async function(id){
+
+
+
+if(!confirm("Delete announcement?"))
+return;
+
+
+
+
 
 
 await deleteDoc(
@@ -1361,16 +1986,24 @@ id
 
 
 
+
+
+
 alert(
 "🗑️ Announcement Deleted"
 );
 
 
 
+
+
+
 loadAdminAnnouncements();
 
 
+
 };
+
 
 
 
@@ -1382,25 +2015,35 @@ function clearAnnouncementForm(){
 
 
 
-[
-"announcementTitle",
+const title =
+document.getElementById(
+"announcementTitle"
+);
+
+
+
+const message =
+document.getElementById(
 "announcementMessage"
-
-].forEach(id=>{
-
-
-const el=document.getElementById(id);
+);
 
 
-if(el)
-el.value="";
+
+if(title)
+title.value="";
 
 
-});
+
+if(message)
+message.value="";
 
 
 
 }
+
+
+
+
 
 
 
@@ -1416,13 +2059,17 @@ el.value="";
 
 
 const globalSearch =
+
 document.getElementById(
 "globalSearch"
 );
 
 
 
+
+
 const searchResults =
+
 document.getElementById(
 "searchResults"
 );
@@ -1433,21 +2080,30 @@ document.getElementById(
 
 
 
+
 if(globalSearch){
 
 
+
 globalSearch.addEventListener(
+
 "input",
+
 ()=>{
 
 
 searchEverything();
 
 
-});
+}
+
+);
+
 
 
 }
+
+
 
 
 
@@ -1460,14 +2116,24 @@ async function searchEverything(){
 
 
 
-if(!searchResults)return;
+if(!searchResults)
+return;
+
+
+
 
 
 
 const keyword =
+
 globalSearch.value
+
 .toLowerCase()
+
 .trim();
+
+
+
 
 
 
@@ -1475,13 +2141,30 @@ globalSearch.value
 if(keyword===""){
 
 
-searchResults.innerHTML="";
+
+searchResults.innerHTML =
+
+`
+
+<div class="expense">
+
+<p>
+Type something to search...
+</p>
+
+</div>
+
+`;
+
 
 
 return;
 
 
+
 }
+
+
 
 
 
@@ -1493,17 +2176,35 @@ let results="";
 
 
 
+
+
+
+// COLLECTION SEARCH
+
+
+
 const collections =
+
 await getDocs(
-collection(db,"collections")
+
+collection(
+db,
+"collections"
+)
+
 );
+
+
 
 
 
 collections.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -1514,22 +2215,28 @@ JSON.stringify(data)
 ){
 
 
+
 results += `
 
 
 <div class="expense">
 
+
 <h3>
 💰 Collection
 </h3>
 
-<p>
-${data.week}
-</p>
 
 <p>
-${data.collector}
+${data.week || ""}
 </p>
+
+
+<p>
+Collector:
+${data.collector || ""}
+</p>
+
 
 
 </div>
@@ -1542,6 +2249,7 @@ ${data.collector}
 }
 
 
+
 });
 
 
@@ -1551,17 +2259,35 @@ ${data.collector}
 
 
 
+
+
+// EXPENSE SEARCH
+
+
+
 const expenses =
+
 await getDocs(
-collection(db,"expenses")
+
+collection(
+db,
+"expenses"
+)
+
 );
+
+
+
 
 
 
 expenses.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -1572,17 +2298,25 @@ JSON.stringify(data)
 ){
 
 
+
 results += `
 
 
 <div class="expense">
 
+
 <h3>
 💸 Expense
 </h3>
 
+
 <p>
-${data.title}
+${data.title || ""}
+</p>
+
+
+<p>
+₱${Number(data.amount || 0).toLocaleString()}
 </p>
 
 
@@ -1596,6 +2330,7 @@ ${data.title}
 }
 
 
+
 });
 
 
@@ -1605,17 +2340,35 @@ ${data.title}
 
 
 
+
+// PROJECT SEARCH
+
+
+
 const projects =
+
 await getDocs(
-collection(db,"projects")
+
+collection(
+db,
+"projects"
+)
+
 );
+
+
+
+
 
 
 
 projects.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -1626,17 +2379,25 @@ JSON.stringify(data)
 ){
 
 
+
 results += `
 
 
 <div class="expense">
 
+
 <h3>
 📂 Project
 </h3>
 
+
 <p>
-${data.title}
+${data.title || ""}
+</p>
+
+
+<p>
+${data.status || ""}
 </p>
 
 
@@ -1650,6 +2411,7 @@ ${data.title}
 }
 
 
+
 });
 
 
@@ -1659,17 +2421,34 @@ ${data.title}
 
 
 
+
+// ANNOUNCEMENT SEARCH
+
+
+
 const announcements =
+
 await getDocs(
-collection(db,"announcements")
+
+collection(
+db,
+"announcements"
+)
+
 );
+
+
+
 
 
 
 announcements.forEach((item)=>{
 
 
+
 const data=item.data();
+
+
 
 
 
@@ -1680,18 +2459,22 @@ JSON.stringify(data)
 ){
 
 
+
 results += `
 
 
 <div class="expense">
 
+
 <h3>
 📢 Announcement
 </h3>
 
+
 <p>
-${data.title}
+${data.title || ""}
 </p>
+
 
 
 </div>
@@ -1704,7 +2487,11 @@ ${data.title}
 }
 
 
+
 });
+
+
+
 
 
 
@@ -1715,11 +2502,17 @@ ${data.title}
 if(results===""){
 
 
-searchResults.innerHTML = `
+
+searchResults.innerHTML =
+
+`
 
 <div class="expense">
 
+<h3>
 ❌ No Result Found
+</h3>
+
 
 </div>
 
@@ -1732,7 +2525,10 @@ searchResults.innerHTML = `
 else{
 
 
-searchResults.innerHTML=results;
+
+searchResults.innerHTML =
+results;
+
 
 
 }
@@ -1740,6 +2536,8 @@ searchResults.innerHTML=results;
 
 
 }
+
+
 
 
 
@@ -1750,125 +2548,13 @@ searchResults.innerHTML=results;
 
 
 // =====================================================
-// DARK / LIGHT MODE
-// =====================================================
-
-
-
-const themeToggle =
-document.getElementById(
-"themeToggle"
-);
-
-
-
-
-
-
-
-function applyTheme(){
-
-
-
-const saved =
-localStorage.getItem(
-"dalubTheme"
-);
-
-
-
-
-if(saved==="dark"){
-
-
-document.body.classList.add(
-"dark-mode"
-);
-
-
-
-if(themeToggle)
-themeToggle.innerHTML="☀️ Light Mode";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-if(themeToggle){
-
-
-
-themeToggle.onclick=()=>{
-
-
-document.body.classList.toggle(
-"dark-mode"
-);
-
-
-
-const dark =
-document.body.classList.contains(
-"dark-mode"
-);
-
-
-
-localStorage.setItem(
-"dalubTheme",
-dark ? "dark":"light"
-);
-
-
-
-
-themeToggle.innerHTML =
-dark
-?
-"☀️ Light Mode"
-:
-"🌙 Dark Mode";
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-applyTheme();
-
-
-
-
-
-
-
-
-// =====================================================
-// FINAL ADMIN START
+// FINAL ADMIN INITIALIZATION
 // =====================================================
 
 
 
 async function startAdminSystem(){
+
 
 
 console.log(
@@ -1877,16 +2563,25 @@ console.log(
 
 
 
+
+
+
 await loadAdminCollections();
+
 
 
 await loadAdminExpenses();
 
 
+
 await loadAdminProjects();
 
 
+
 await loadAdminAnnouncements();
+
+
+
 
 
 
@@ -1904,15 +2599,23 @@ console.log(
 
 
 
+
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
 startAdminSystem();
 
 
-});
+
+}
+
+);
+
+
 
 
 
