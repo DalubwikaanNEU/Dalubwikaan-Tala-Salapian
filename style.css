@@ -871,3 +871,261 @@ grid-template-columns:1fr;
 }
 
 }
+/* ============================
+   GRID LAYOUT
+============================ */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(450px,1fr));
+    gap:30px;
+    margin:40px 0;
+}
+
+/* ============================
+   CHART
+============================ */
+
+.chartBox{
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    height:450px;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+}
+
+/* ============================
+   SEARCH
+============================ */
+
+.searchSection{
+    margin:40px 0;
+}
+
+.searchSection input{
+
+    width:100%;
+    padding:18px 25px;
+
+    border-radius:60px;
+
+    border:2px solid #ddd;
+
+    outline:none;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.searchSection input:focus{
+
+    border-color:#c79d2d;
+
+    box-shadow:0 0 18px rgba(199,157,45,.25);
+
+}
+
+/* ============================
+   SEARCH RESULTS
+============================ */
+
+#dashboardSearchResults{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:20px;
+
+    margin-top:30px;
+
+}
+.expense{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    border-top:6px solid #d4af37;
+
+}
+
+.expense:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.expense h2{
+
+    color:#6b3f17;
+
+    margin-bottom:15px;
+
+}
+
+.expense h3{
+
+    color:#8d5b2d;
+
+    margin-top:15px;
+
+}
+
+.expense p{
+
+    margin:10px 0;
+
+    color:#555;
+
+    line-height:1.7;
+
+}
+.projectCard{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.projectCard:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.projectCard h3{
+
+    color:#6b3f17;
+
+    margin-bottom:12px;
+
+}
+
+.projectBudget{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#8d5b2d;
+
+}
+.announcementCard{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    border-left:7px solid #d4af37;
+
+    transition:.35s;
+
+}
+
+.announcementCard:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.high{
+
+    border-left-color:#ff4444;
+
+}
+
+.medium{
+
+    border-left-color:#ff9800;
+
+}
+
+.low{
+
+    border-left-color:#43a047;
+
+}
+footer{
+
+    text-align:center;
+
+    padding:35px;
+
+    margin-top:60px;
+
+    color:#666;
+
+    background:white;
+
+    box-shadow:0 -3px 15px rgba(0,0,0,.05);
+
+}
+@media(max-width:900px){
+
+header{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+nav{
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+.hero{
+
+    grid-template-columns:1fr;
+
+    text-align:center;
+
+}
+
+.heroCircle{
+
+    width:180px;
+
+    height:180px;
+
+    font-size:70px;
+
+}
+
+.grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.dashboard{
+
+    grid-template-columns:1fr;
+
+}
+
+}
