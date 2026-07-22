@@ -7,13 +7,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <title>Dalubwikaan Projects</title>
 
 
 <link rel="stylesheet" href="style.css">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
 
 </head>
@@ -22,17 +23,93 @@
 <body>
 
 
-<header class="adminHeader">
+
+<!-- ================= NAVBAR ================= -->
 
 
-<h1>
-📂 Dalubwikaan Projects
-</h1>
+<header>
 
 
-<p>
-Organization Projects and Program Transparency
-</p>
+<div class="logo">
+
+📚 DALUBWIKAAN
+
+</div>
+
+
+
+
+<nav>
+
+
+<a href="index.html">
+
+Dashboard
+
+</a>
+
+
+
+<a href="collections.html">
+
+Collections
+
+</a>
+
+
+
+<a href="expenses.html">
+
+Expenses
+
+</a>
+
+
+
+<a href="projects.html" class="active">
+
+Projects
+
+</a>
+
+
+
+<a href="reports.html">
+
+Reports
+
+</a>
+
+
+
+<a href="announcements.html">
+
+Announcements
+
+</a>
+
+
+
+<a href="login.html">
+
+🔐 Admin
+
+</a>
+
+
+
+
+
+<button id="themeToggle" class="themeBtn">
+
+🌙 Dark Mode
+
+</button>
+
+
+
+</nav>
+
 
 
 </header>
@@ -42,7 +119,14 @@ Organization Projects and Program Transparency
 
 
 
+
+<!-- ================= MAIN ================= -->
+
+
+
 <main class="adminContainer">
+
+
 
 
 
@@ -50,13 +134,18 @@ Organization Projects and Program Transparency
 
 
 <h2>
+
 ✨ Current Projects
+
 </h2>
 
 
 <p>
+
 View all ongoing and completed Dalubwikaan projects.
+
 </p>
+
 
 
 </section>
@@ -65,12 +154,26 @@ View all ongoing and completed Dalubwikaan projects.
 
 
 
+
+
+
 <section id="projectList" class="projectGrid">
 
 
-<p>
+
+<div class="projectCard">
+
+
+<h3>
+
 Loading projects...
-</p>
+
+</h3>
+
+
+
+</div>
+
 
 
 </section>
@@ -87,14 +190,30 @@ Loading projects...
 
 
 
+
+<!-- ================= FOOTER ================= -->
+
+
+
 <footer>
 
+
 <p>
+
+
 © 2026 Dalubwikaan Transparency Portal
+
+
+<br>
+
+
+Organization Projects and Program Transparency
+
+
 </p>
 
-Magsikhay at Manaliksik.
-  
+
+
 </footer>
 
 
@@ -102,7 +221,16 @@ Magsikhay at Manaliksik.
 
 
 
+
+
+<!-- ================= SCRIPTS ================= -->
+
+
+<script src="theme.js"></script>
+
+
 <script type="module" src="projects.js"></script>
+
 
 
 
