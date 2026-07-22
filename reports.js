@@ -10,19 +10,20 @@ import {
 
 // ================= FIREBASE =================
 
+
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
 
-  authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+    authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
 
-  projectId: "dalubwikaan--26-8e646",
+    projectId: "dalubwikaan--26-8e646",
 
-  storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+    storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
 
-  messagingSenderId: "409516392020",
+    messagingSenderId: "409516392020",
 
-  appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+    appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 };
 
@@ -34,7 +35,32 @@ const db = getFirestore(app);
 
 
 
-console.log("📊 Reports Firebase Connected!");
+
+
+
+// ================= DATE HELPER =================
+
+
+function convertDate(value){
+
+
+    if(!value) return null;
+
+
+
+    if(value.seconds){
+
+        return new Date(value.seconds * 1000);
+
+    }
+
+
+
+    return new Date(value);
+
+
+}
+
 
 
 
@@ -44,83 +70,85 @@ console.log("📊 Reports Firebase Connected!");
 // ================= LOAD REPORT =================
 
 
+
 async function loadReport(){
 
 
-try{
+    try{
 
 
-const monthFilter =
-document.getElementById("monthFilter");
+        const monthFilter =
+        document.getElementById("monthFilter");
 
 
-if(!monthFilter) return;
 
+        if(!monthFilter) return;
 
 
-const selectedMonth =
-Number(monthFilter.value);
 
+        const selectedMonth =
+        Number(monthFilter.value);
 
 
-let totalCollection = 0;
 
-let totalExpense = 0;
 
+        let totalCollection = 0;
 
+        let totalExpense = 0;
 
-let expenseHTML = "";
 
 
+        let expenseList = [];
 
 
 
-// ================= COLLECTIONS =================
 
 
-const collectionSnap =
-await getDocs(collection(db,"collections"));
+        // ================= COLLECTIONS =================
 
 
 
-collectionSnap.forEach((doc)=>{
+        const collectionSnap =
+        await getDocs(
+            collection(db,"collections")
+        );
 
 
-const data = doc.data();
 
 
+        collectionSnap.forEach((doc)=>{
 
-if(data.date){
 
+            const data = doc.data();
 
-const date = new Date(data.date);
 
 
+            const date =
+            convertDate(data.date);
 
-if(date.getMonth() === selectedMonth){
 
 
-totalCollection +=
+            if(date && date.getMonth() === selectedMonth){
 
-Number(data.firstYear || 0) +
 
-Number(data.secondYear || 0) +
 
-Number(data.thirdYear || 0) +
+                totalCollection +=
 
-Number(data.fourthYear || 0);
+                Number(data.firstYear || 0) +
 
+                Number(data.secondYear || 0) +
 
-}
+                Number(data.thirdYear || 0) +
 
+                Number(data.fourthYear || 0);
 
-}
 
 
-});
+            }
 
 
 
+        });
 
 
 
@@ -128,203 +156,357 @@ Number(data.fourthYear || 0);
 
 
 
-// ================= EXPENSES =================
 
 
-const expenseSnap =
-await getDocs(collection(db,"expenses"));
+        // ================= EXPENSES =================
 
 
 
-let hasExpense = false;
+        const expenseSnap =
+        await getDocs(
+            collection(db,"expenses")
+        );
 
 
 
-expenseSnap.forEach((doc)=>{
 
+        expenseSnap.forEach((doc)=>{
 
-const data = doc.data();
 
+            const data = doc.data();
 
 
-if(data.date){
 
+            const date =
+            convertDate(data.date);
 
-const date = new Date(data.date);
 
 
+            if(date && date.getMonth() === selectedMonth){
 
-if(date.getMonth() === selectedMonth){
 
 
-hasExpense = true;
+                const amount =
+                Number(data.amount || 0);
 
 
-totalExpense += Number(data.amount || 0);
 
+                totalExpense += amount;
 
 
 
-expenseHTML += `
+                expenseList.push({
 
+                    title:data.title || "No Title",
 
-<tr>
+                    category:data.category || "-",
 
-<td>
-${data.title || "No title"}
-</td>
+                    amount:amount,
 
+                    date:data.date || "-",
 
-<td>
-${data.category || "-"}
-</td>
+                    remarks:data.remarks || "-"
 
+                });
 
-<td>
-₱${Number(data.amount || 0).toLocaleString()}
-</td>
 
 
-<td>
-${data.date || "-"}
-</td>
+            }
 
 
-<td>
-${data.remarks || "-"}
-</td>
 
+        });
 
-</tr>
 
 
-`;
 
 
 
-}
 
 
-}
+        // SORT EXPENSES
 
 
 
-});
+        expenseList.sort((a,b)=>{
 
+            return b.amount - a.amount;
 
+        });
 
 
 
-if(!hasExpense){
 
 
-expenseHTML = `
 
-<tr>
 
-<td colspan="5">
 
-No expense records for this month.
+        displayExpenses(expenseList);
 
-</td>
 
-</tr>
 
-`;
+        displayTotals(
+            totalCollection,
+            totalExpense
+        );
 
-}
 
 
+        displayReportInfo();
 
-const expenseList =
-document.getElementById("expenseReportList");
 
 
+    }
 
-if(expenseList){
 
-expenseList.innerHTML = expenseHTML;
 
-}
+    catch(error){
 
 
+        console.error(
+            "Report Error:",
+            error
+        );
 
 
 
+        const list =
+        document.getElementById(
+            "expenseReportList"
+        );
 
 
 
+        if(list){
 
-// ================= DISPLAY =================
+            list.innerHTML = `
 
+            <tr>
 
+            <td colspan="5">
 
-const reportCollection =
-document.getElementById("reportCollection");
+            ❌ Failed to load report.
 
+            </td>
 
-const reportExpense =
-document.getElementById("reportExpense");
+            </tr>
 
+            `;
 
-const reportBalance =
-document.getElementById("reportBalance");
+        }
 
 
 
+    }
 
 
-if(reportCollection){
-
-reportCollection.innerHTML =
-
-"₱" + totalCollection.toLocaleString();
-
-}
-
-
-
-if(reportExpense){
-
-reportExpense.innerHTML =
-
-"₱" + totalExpense.toLocaleString();
-
-}
-
-
-
-if(reportBalance){
-
-reportBalance.innerHTML =
-
-"₱" +
-
-(totalCollection - totalExpense)
-.toLocaleString();
 
 }
 
 
 
 
-displayReportInfo();
+
+
+
+
+
+// ================= DISPLAY EXPENSE TABLE =================
+
+
+
+function displayExpenses(list){
+
+
+
+    const table =
+    document.getElementById(
+        "expenseReportList"
+    );
+
+
+
+    if(!table) return;
+
+
+
+    table.innerHTML = "";
+
+
+
+
+
+    if(list.length === 0){
+
+
+
+        table.innerHTML = `
+
+        <tr>
+
+        <td colspan="5">
+
+        No expense records for this month.
+
+        </td>
+
+        </tr>
+
+        `;
+
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+    list.forEach((expense)=>{
+
+
+
+        table.innerHTML += `
+
+
+        <tr>
+
+
+        <td>
+
+        ${expense.title}
+
+        </td>
+
+
+
+        <td>
+
+        ${expense.category}
+
+        </td>
+
+
+
+        <td>
+
+        ₱${expense.amount.toLocaleString()}
+
+        </td>
+
+
+
+        <td>
+
+        ${expense.date}
+
+        </td>
+
+
+
+        <td>
+
+        ${expense.remarks}
+
+        </td>
+
+
+
+        </tr>
+
+
+
+        `;
+
+
+
+    });
 
 
 
 }
 
 
-catch(error){
 
 
-console.error(
-"Report Error:",
-error
-);
 
 
-}
+
+
+
+// ================= DISPLAY TOTALS =================
+
+
+
+function displayTotals(
+collection,
+expense
+){
+
+
+
+    const balance =
+    collection - expense;
+
+
+
+    const reportCollection =
+    document.getElementById(
+        "reportCollection"
+    );
+
+
+
+    const reportExpense =
+    document.getElementById(
+        "reportExpense"
+    );
+
+
+
+    const reportBalance =
+    document.getElementById(
+        "reportBalance"
+    );
+
+
+
+
+
+    if(reportCollection){
+
+        reportCollection.innerHTML =
+        "₱" + collection.toLocaleString();
+
+    }
+
+
+
+
+
+    if(reportExpense){
+
+        reportExpense.innerHTML =
+        "₱" + expense.toLocaleString();
+
+    }
+
+
+
+
+
+
+    if(reportBalance){
+
+        reportBalance.innerHTML =
+        "₱" + balance.toLocaleString();
+
+    }
+
 
 
 }
@@ -340,104 +522,69 @@ error
 // ================= REPORT INFO =================
 
 
+
 function displayReportInfo(){
 
 
-const monthFilter =
-document.getElementById("monthFilter");
 
-
-if(!monthFilter) return;
-
-
-
-const monthName =
-
-monthFilter.options[
-monthFilter.selectedIndex
-].text;
+    const filter =
+    document.getElementById(
+        "monthFilter"
+    );
 
 
 
+    if(!filter) return;
 
 
-const reportMonth =
-document.getElementById("reportMonth");
 
-const generatedDate =
-document.getElementById("generatedDate");
+    const month =
+
+    filter.options[
+        filter.selectedIndex
+    ].text;
 
 
 
 
 
-if(reportMonth){
-
-reportMonth.innerHTML =
-"📅 Month: " + monthName;
-
-}
+    const reportMonth =
+    document.getElementById(
+        "reportMonth"
+    );
 
 
 
-
-if(generatedDate){
-
-generatedDate.innerHTML =
-
-"Generated: " +
-
-new Date().toLocaleDateString();
-
-}
-
-
-
-}
+    const generatedDate =
+    document.getElementById(
+        "generatedDate"
+    );
 
 
 
 
 
+    if(reportMonth){
+
+        reportMonth.innerHTML =
+        "📅 Month: " + month;
+
+    }
 
 
 
 
-// ================= PRINT BUTTON =================
 
+    if(generatedDate){
 
-function setupPrintButton(){
+        generatedDate.innerHTML =
 
+        "Generated: " +
 
-const printButton =
-document.getElementById("printButton");
+        new Date()
+        .toLocaleDateString();
 
-
-
-if(!printButton) return;
-
-
-
-
-printButton.addEventListener(
-"click",
-function(){
-
-
-
-console.log(
-"Printing report..."
-);
-
-
-
-window.print();
-
-
-
-}
-
-);
+    }
 
 
 
@@ -450,31 +597,54 @@ window.print();
 
 
 
+// ================= EVENTS =================
 
-// ================= MONTH CHANGE =================
 
 
 const monthFilter =
-document.getElementById("monthFilter");
+document.getElementById(
+    "monthFilter"
+);
 
 
 
 if(monthFilter){
 
 
-monthFilter.addEventListener(
-"change",
-function(){
-
-
-loadReport();
-
-
-});
+    monthFilter.addEventListener(
+        "change",
+        loadReport
+    );
 
 
 }
 
+
+
+
+
+
+const printButton =
+document.getElementById(
+    "printButton"
+);
+
+
+
+if(printButton){
+
+
+    printButton.addEventListener(
+        "click",
+        ()=>{
+
+            window.print();
+
+        }
+    );
+
+
+}
 
 
 
@@ -487,7 +657,3 @@ loadReport();
 
 
 loadReport();
-
-displayReportInfo();
-
-setupPrintButton();
