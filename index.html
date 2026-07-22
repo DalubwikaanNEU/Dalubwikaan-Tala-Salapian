@@ -8,7 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<title>Dalubwikaan Transparency Portal</title>
+<title>
+Dalubwikaan Transparency Portal
+</title>
+
 
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,13 +22,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
 
+
 <link rel="stylesheet" href="style.css">
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
 </head>
+
 
 
 
@@ -39,6 +42,7 @@
 <header>
 
 
+
 <div class="logo">
 
 📚 DALUBWIKAAN
@@ -47,47 +51,72 @@
 
 
 
+
+
 <nav>
 
 
+
 <a href="index.html" class="active">
+
 Dashboard
+
 </a>
+
 
 
 <a href="collections.html">
+
 Collections
+
 </a>
+
 
 
 <a href="expenses.html">
+
 Expenses
+
 </a>
+
 
 
 <a href="projects.html">
+
 Projects
+
 </a>
+
 
 
 <a href="reports.html">
+
 Reports
+
 </a>
+
 
 
 <a href="announcements.html">
+
 Announcements
+
 </a>
+
 
 
 <a href="login.html">
+
 🔐 Admin
+
 </a>
+
+
 
 
 
 <button 
-id="themeToggle" 
+id="themeToggle"
 class="themeBtn">
 
 🌙
@@ -95,7 +124,9 @@ class="themeBtn">
 </button>
 
 
+
 </nav>
+
 
 
 </header>
@@ -104,21 +135,24 @@ class="themeBtn">
 
 
 
-<!-- ================= SEARCH BAR ================= -->
+
+
+<!-- ================= MINI SEARCH ================= -->
 
 
 <section class="miniSearch">
 
 
-<input 
+<input
 
 id="dashboardSearch"
 
 type="text"
 
-placeholder="🔎 Search transparency records..."
+placeholder="🔎 Search records..."
 
 >
+
 
 
 
@@ -129,16 +163,16 @@ placeholder="🔎 Search transparency records..."
 
 
 
-</section>
-
-<!-- ================= HERO ================= -->
+</section><!-- ================= HERO ================= -->
 
 
 <section class="hero">
 
 
 <h1>
+
 Transparency Portal
+
 </h1>
 
 
@@ -158,6 +192,7 @@ Every contribution from our members is accounted for with integrity and transpar
 
 
 
+
 <!-- ================= DASHBOARD SUMMARY ================= -->
 
 
@@ -169,7 +204,9 @@ Every contribution from our members is accounted for with integrity and transpar
 
 
 <h3>
+
 Total Collection
+
 </h3>
 
 
@@ -190,7 +227,9 @@ Total Collection
 
 
 <h3>
+
 Total Expenses
+
 </h3>
 
 
@@ -211,7 +250,9 @@ Total Expenses
 
 
 <h3>
+
 Current Balance
+
 </h3>
 
 
@@ -232,7 +273,9 @@ Current Balance
 
 
 <h3>
+
 Projects
+
 </h3>
 
 
@@ -249,15 +292,28 @@ Projects
 
 </section>
 
+
+
+
+
+
+
+
+
 <!-- ================= YEAR LEVEL COLLECTION ================= -->
 
 
 <section class="yearSection">
 
 
+
 <h2>
+
 Collection by Year Level
+
 </h2>
+
+
 
 
 
@@ -266,12 +322,17 @@ Collection by Year Level
 
 
 
+
+
 <div class="yearCard">
 
 
 <h3>
+
 1st Year
+
 </h3>
+
 
 
 <h1 id="firstYear">
@@ -281,7 +342,10 @@ Collection by Year Level
 </h1>
 
 
+
 </div>
+
+
 
 
 
@@ -291,8 +355,11 @@ Collection by Year Level
 
 
 <h3>
+
 2nd Year
+
 </h3>
+
 
 
 <h1 id="secondYear">
@@ -302,7 +369,10 @@ Collection by Year Level
 </h1>
 
 
+
 </div>
+
+
 
 
 
@@ -312,8 +382,11 @@ Collection by Year Level
 
 
 <h3>
+
 3rd Year
+
 </h3>
+
 
 
 <h1 id="thirdYear">
@@ -323,7 +396,10 @@ Collection by Year Level
 </h1>
 
 
+
 </div>
+
+
 
 
 
@@ -333,8 +409,11 @@ Collection by Year Level
 
 
 <h3>
+
 4th Year
+
 </h3>
+
 
 
 <h1 id="fourthYear">
@@ -344,21 +423,20 @@ Collection by Year Level
 </h1>
 
 
+
+</div>
+
+
+
+
+
+
 </div>
 
 
-
-</div>
 
 
 </section>
-
-
-
-
-
-
-
 
 <!-- ================= COLLECTION CHART ================= -->
 
@@ -366,23 +444,38 @@ Collection by Year Level
 <section class="chartSection">
 
 
+
 <div class="chartCard">
 
 
+
 <h2>
+
 Collection Statistics
+
 </h2>
 
 
 
+
+<div class="chartWrapper">
+
+
 <canvas id="collectionChart"></canvas>
+
+
+</div>
+
 
 
 
 </div>
 
 
+
 </section>
+
+
 
 
 
@@ -396,9 +489,13 @@ Collection Statistics
 <section class="recentExpenses">
 
 
+
 <h2>
+
 Recent Budget Allocation
+
 </h2>
+
 
 
 
@@ -411,7 +508,9 @@ Recent Budget Allocation
 
 
 <span>
+
 Loading...
+
 </span>
 
 
@@ -419,11 +518,22 @@ Loading...
 
 
 
+
 </div>
 
 
 
+
+
 </section>
+
+
+
+
+
+
+
+
 
 <!-- ================= PROJECTS ================= -->
 
@@ -431,9 +541,13 @@ Loading...
 <section class="projectSection">
 
 
+
 <h2>
+
 Current Projects
+
 </h2>
+
 
 
 
@@ -444,13 +558,19 @@ Current Projects
 
 <div class="projectCard">
 
+
 Loading...
 
+
+</div>
+
+
+
+
+
 </div>
 
 
-
-</div>
 
 
 
@@ -462,19 +582,71 @@ Loading...
 
 
 
+
+
+<!-- ================= ANNOUNCEMENTS ================= -->
+
+
+<section class="announcementContainer">
+
+
+
+<h2>
+
+📢 Announcements
+
+</h2>
+
+
+
+
+
+<div id="dashboardAnnouncementContainer">
+
+
+
+<div class="announcementCard">
+
+
+<p>
+
+No announcements yet.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</section>
+
 <!-- ================= FOOTER ================= -->
 
 
 <footer>
 
 
+
 <p>
 
 © 2026 Dalubwikaan Transparency Portal
 
+
 <br>
 
-Created for transparency and accountability.
+
+Magsikhay at Manaliksik.
+
 
 </p>
 
@@ -489,16 +661,33 @@ Created for transparency and accountability.
 
 
 
-<!-- ================= SCRIPTS ================= -->
+<!-- ================= JAVASCRIPT ================= -->
 
 
-<script type="module" src="index.js"></script>
+
+<!-- Firebase + Dashboard System -->
+
+<script 
+type="module" 
+src="index.js">
+</script>
 
 
-<script src="./theme.js"></script>
+
+
+
+<!-- Dark / Light Mode -->
+
+<script 
+src="./theme.js">
+</script>
+
+
+
 
 
 
 </body>
+
 
 </html>
