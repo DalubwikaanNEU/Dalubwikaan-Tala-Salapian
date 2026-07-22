@@ -1,9 +1,6 @@
-// =====================================================
-// DALUBWIKAAN TRANSPARENCY PORTAL
-// dashboard.js
-// PART 1
-// Firebase Initialization
-// =====================================================
+// ==========================
+// DALUBWIKAAN DASHBOARD.JS
+// ==========================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
@@ -13,219 +10,187 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-
-// ================= FIREBASE CONFIG =================
+// ================= FIREBASE =================
 
 const firebaseConfig = {
-
-    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+    apiKey: "YOUR_API_KEY",
     authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
     projectId: "dalubwikaan--26-8e646",
     storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
     messagingSenderId: "409516392020",
     appId: "1:409516392020:web:87d462a5927449c69eb7c1"
-
 };
-
-
-// ================= INITIALIZE =================
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-console.log("✅ Firebase Connected");
+// ================= LOAD DASHBOARD =================
 
+async function loadDashboard() {
 
-// ================= GLOBAL DATA =================
+    // Collections
+    const collectionsSnapshot = await getDocs(collection(db, "collections"));
 
-const dashboard = {
+    let totalCollection = 0;
 
-    collections: [],
-    expenses: [],
-    projects: [],
-    announcements: []
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    let fourth = 0;
 
-};
+    const collectionContainer = document.getElementById("collectionContainer");
+    collectionContainer.innerHTML = "";
 
-window.dashboard = dashboard;
+    collectionsSnapshot.forEach(doc => {
 
+        const data = doc.data();
 
-// ================= LOAD COLLECTIONS =================
+        const total =
+            Number(data.firstYear || 0) +
+            Number(data.secondYear || 0) +
+            Number(data.thirdYear || 0) +
+            Number(data.fourthYear || 0);
 
-async function loadCollections(){
+        totalCollection += total;
 
-    dashboard.collections = [];
+        first += Number(data.firstYear || 0);
+        second += Number(data.secondYear || 0);
+        third += Number(data.thirdYear || 0);
+        fourth += Number(data.fourthYear || 0);
 
-    const snapshot = await getDocs(collection(db,"collections"));
+        collectionContainer.innerHTML += `
 
-    snapshot.forEach(doc=>{
+<div class="card">
 
-        dashboard.collections.push({
+<h3>${data.week || "Collection"}</h3>
 
-            id:doc.id,
-            ...doc.data()
+<p>${data.collector || ""}</p>
 
-        });
+<p>${data.date || ""}</p>
 
-    });
+<h2>₱${total.toLocaleString()}</h2>
 
-    console.log("Collections:",dashboard.collections.length);
+</div>
 
-}
-
-
-// ================= LOAD EXPENSES =================
-
-async function loadExpenses(){
-
-    dashboard.expenses=[];
-
-    const snapshot=await getDocs(collection(db,"expenses"));
-
-    snapshot.forEach(doc=>{
-
-        dashboard.expenses.push({
-
-            id:doc.id,
-            ...doc.data()
-
-        });
+`;
 
     });
 
-    console.log("Expenses:",dashboard.expenses.length);
+    // Expenses
 
-}
+    const expensesSnapshot = await getDocs(collection(db, "expenses"));
 
+    let totalExpense = 0;
 
-// ================= LOAD PROJECTS =================
+    const expenseContainer = document.getElementById("expenseContainer");
+    expenseContainer.innerHTML = "";
 
-async function loadProjects(){
+    expensesSnapshot.forEach(doc => {
 
-    dashboard.projects=[];
+        const data = doc.data();
 
-    const snapshot=await getDocs(collection(db,"projects"));
+        totalExpense += Number(data.amount || 0);
 
-    snapshot.forEach(doc=>{
+        expenseContainer.innerHTML += `
 
-        dashboard.projects.push({
+<div class="card">
 
-            id:doc.id,
-            ...doc.data()
+<h3>${data.title}</h3>
 
-        });
+<p>${data.category}</p>
 
-    });
+<h2>₱${Number(data.amount).toLocaleString()}</h2>
 
-    console.log("Projects:",dashboard.projects.length);
+</div>
 
-}
-
-
-// ================= LOAD ANNOUNCEMENTS =================
-
-async function loadAnnouncements(){
-
-    dashboard.announcements=[];
-
-    const snapshot=await getDocs(collection(db,"announcements"));
-
-    snapshot.forEach(doc=>{
-
-        dashboard.announcements.push({
-
-            id:doc.id,
-            ...doc.data()
-
-        });
+`;
 
     });
 
-    console.log("Announcements:",dashboard.announcements.length);
+    // Projects
 
-}
+    const projectsSnapshot = await getDocs(collection(db, "projects"));
 
+    const projectContainer = document.getElementById("projectContainer");
 
-// ================= MONEY FORMAT =================
+    projectContainer.innerHTML = "";
 
-function money(value){
+    let projectCount = 0;
 
-    return "₱"+Number(value||0).toLocaleString();
+    projectsSnapshot.forEach(doc => {
 
-}
+        projectCount++;
 
-window.money=money;
+        const data = doc.data();
 
+        projectContainer.innerHTML += `
 
-// ================= TOTAL COLLECTION =================
+<div class="card">
 
-function totalCollections(){
+<h3>${data.title}</h3>
 
-    let total=0;
+<p>${data.description}</p>
 
-    dashboard.collections.forEach(item=>{
+<p>Status: ${data.status}</p>
 
-        total+=
-        Number(item.firstYear||0)+
-        Number(item.secondYear||0)+
-        Number(item.thirdYear||0)+
-        Number(item.fourthYear||0);
+</div>
 
-    });
-
-    return total;
-
-}
-
-window.totalCollections=totalCollections;
-
-
-// ================= TOTAL EXPENSE =================
-
-function totalExpenses(){
-
-    let total=0;
-
-    dashboard.expenses.forEach(item=>{
-
-        total+=Number(item.amount||0);
+`;
 
     });
 
-    return total;
+    // Announcements
+
+    const announcementSnapshot = await getDocs(collection(db, "announcements"));
+
+    const announcementContainer = document.getElementById("announcementContainer");
+
+    announcementContainer.innerHTML = "";
+
+    announcementSnapshot.forEach(doc => {
+
+        const data = doc.data();
+
+        announcementContainer.innerHTML += `
+
+<div class="card">
+
+<h3>${data.title}</h3>
+
+<p>${data.message}</p>
+
+</div>
+
+`;
+
+    });
+
+    // SUMMARY
+
+    document.getElementById("totalCollection").innerHTML =
+        "₱" + totalCollection.toLocaleString();
+
+    document.getElementById("totalExpenses").innerHTML =
+        "₱" + totalExpense.toLocaleString();
+
+    document.getElementById("currentBalance").innerHTML =
+        "₱" + (totalCollection - totalExpense).toLocaleString();
+
+    document.getElementById("projectCount").innerHTML =
+        projectCount;
+
+    document.getElementById("firstYear").innerHTML =
+        "₱" + first.toLocaleString();
+
+    document.getElementById("secondYear").innerHTML =
+        "₱" + second.toLocaleString();
+
+    document.getElementById("thirdYear").innerHTML =
+        "₱" + third.toLocaleString();
+
+    document.getElementById("fourthYear").innerHTML =
+        "₱" + fourth.toLocaleString();
 
 }
 
-window.totalExpenses=totalExpenses;
-
-
-// ================= START =================
-
-async function initializeDashboard(){
-
-    try{
-
-        await loadCollections();
-
-        await loadExpenses();
-
-        await loadProjects();
-
-        await loadAnnouncements();
-
-        console.log("✅ Dashboard Data Ready");
-
-    }
-
-    catch(err){
-
-        console.error(err);
-
-    }
-
-}
-
-window.initializeDashboard=initializeDashboard;
-
-console.log("✅ dashboard.js PART 1 READY");
+loadDashboard();
