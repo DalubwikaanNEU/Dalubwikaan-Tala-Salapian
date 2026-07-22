@@ -1,3 +1,4 @@
+alert("THEME JS LOADED");
 const button = document.getElementById("themeToggle");
 
 // Load saved theme
