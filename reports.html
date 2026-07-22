@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dalubwikaan Monthly Report</title>
+<title>Dalubwikaan Monthly Financial Report</title>
 
 
 <link rel="stylesheet" href="style.css">
@@ -22,15 +22,14 @@
 <body>
 
 
-<header class="adminHeader">
+<header class="adminHeader printHeader">
 
 <h1>
-📊 Dalubwikaan Monthly Report
+📚 DALUBWIKAAN
 </h1>
 
-
 <p>
-Financial Summary and Transparency Report
+Monthly Financial Transparency Report
 </p>
 
 
@@ -41,8 +40,39 @@ Financial Summary and Transparency Report
 
 
 
-
 <main class="adminContainer">
+
+
+
+
+
+<section class="reportTitle">
+
+
+<h1>
+Financial Report Summary
+</h1>
+
+
+<p id="reportMonth">
+
+📅 Month:
+
+</p>
+
+
+<p id="generatedDate">
+
+Generated:
+
+</p>
+
+
+</section>
+
+
+
+
 
 
 
@@ -70,7 +100,6 @@ Total Collection
 
 
 
-
 <div class="card">
 
 <h3>
@@ -89,11 +118,10 @@ Total Expenses
 
 
 
-
 <div class="card">
 
 <h3>
-Balance
+Remaining Balance
 </h3>
 
 
@@ -115,8 +143,7 @@ Balance
 
 
 
-
-<section class="adminCard">
+<section class="adminCard noPrint">
 
 
 <h2>
@@ -128,77 +155,40 @@ Balance
 <select id="monthFilter">
 
 
-<option value="0">
-January
-</option>
+<option value="0">January</option>
 
+<option value="1">February</option>
 
-<option value="1">
-February
-</option>
+<option value="2">March</option>
 
+<option value="3">April</option>
 
-<option value="2">
-March
-</option>
+<option value="4">May</option>
 
+<option value="5">June</option>
 
-<option value="3">
-April
-</option>
+<option value="6">July</option>
 
+<option value="7">August</option>
 
-<option value="4">
-May
-</option>
+<option value="8">September</option>
 
+<option value="9">October</option>
 
-<option value="5">
-June
-</option>
+<option value="10">November</option>
 
-
-<option value="6">
-July
-</option>
-
-
-<option value="7">
-August
-</option>
-
-
-<option value="8">
-September
-</option>
-
-
-<option value="9">
-October
-</option>
-
-
-<option value="10">
-November
-</option>
-
-
-<option value="11">
-December
-</option>
+<option value="11">December</option>
 
 
 </select>
 
 
-
 <br><br>
-
 
 
 <button id="printButton">
 
-🖨️ Print Monthly Report
+🖨️ Print Report
 
 </button>
 
@@ -213,31 +203,80 @@ December
 
 
 
-<!-- REPORT INFORMATION -->
+
+<section class="signatureSection">
 
 
-<section class="adminCard">
+<div>
 
 
-<h2>
-📄 Report Information
-</h2>
+<p>Prepared by:</p>
+
+<br><br>
 
 
+<strong>
+____________________
+</strong>
 
-<p id="reportMonth">
 
-📅 Month:
-
+<p>
+Ingat-Yaman
 </p>
 
 
+</div>
 
-<p id="generatedDate">
 
-Generated:
 
+
+
+
+<div>
+
+
+<p>Checked by:</p>
+
+<br><br>
+
+
+<strong>
+____________________
+</strong>
+
+
+<p>
+Bise Presidente Panloob
 </p>
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+
+<p>Approved by:</p>
+
+<br><br>
+
+
+<strong>
+____________________
+</strong>
+
+
+<p>
+Pangulo
+</p>
+
+
+</div>
 
 
 
