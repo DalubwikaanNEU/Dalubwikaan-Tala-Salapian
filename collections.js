@@ -6,369 +6,170 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-
-
 // ================= FIREBASE =================
-
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
-
-  authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
-
-  projectId: "dalubwikaan--26-8e646",
-
-  storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
-
-  messagingSenderId: "409516392020",
-
-  appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+    apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+    authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+    projectId: "dalubwikaan--26-8e646",
+    storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+    messagingSenderId: "409516392020",
+    appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 };
 
-
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-
-
-console.log("🔥 Collections Firebase Connected!");
-
-
-
-
+console.log("💰 Collections Connected!");
 
 let collectionsData = [];
 
+// ================= LOAD =================
 
+async function loadCollections() {
 
+    const snapshot = await getDocs(collection(db, "collections"));
 
+    collectionsData = [];
 
+    snapshot.forEach((doc) => {
 
+        collectionsData.push({
+            id: doc.id,
+            ...doc.data()
+        });
 
-// ================= LOAD DATA =================
+    });
 
+    collectionsData.sort((a, b) => {
 
-async function loadCollections(){
+        const A = a.createdAt?.seconds || 0;
+        const B = b.createdAt?.seconds || 0;
 
+        return B - A;
 
-try{
+    });
 
-
-const snapshot =
-await getDocs(collection(db,"collections"));
-
-
-
-collectionsData = [];
-
-
-
-snapshot.forEach((doc)=>{
-
-
-collectionsData.push(doc.data());
-
-
-});
-
-
-
-displayCollections("all");
-
-
+    displayCollections(collectionsData);
 
 }
-
-
-
-catch(error){
-
-
-console.error(
-"Collection Error:",
-error
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
 
 // ================= DISPLAY =================
 
+function displayCollections(list) {
 
-function displayCollections(filter){
+    const container = document.getElementById("collectionList");
 
+    const totalDisplay = document.getElementById("totalCollection");
 
+    const countDisplay = document.getElementById("collectionCount");
 
-const container =
-document.getElementById("collectionList");
+    container.innerHTML = "";
 
+    let grandTotal = 0;
 
+    countDisplay.innerHTML = list.length;
 
-const totalDisplay =
-document.getElementById("totalCollection");
+    list.forEach((data) => {
 
+        const total =
+            Number(data.firstYear || 0) +
+            Number(data.secondYear || 0) +
+            Number(data.thirdYear || 0) +
+            Number(data.fourthYear || 0);
 
+        grandTotal += total;
 
-if(!container) return;
-
-
-
-container.innerHTML = "";
-
-
-
-let total = 0;
-
-
-
-
-if(collectionsData.length === 0){
-
-
-container.innerHTML = `
-
-<p>
-No collection records yet.
-</p>
-
-`;
-
-
-if(totalDisplay){
-
-totalDisplay.innerHTML="₱0";
-
-}
-
-
-return;
-
-
-}
-
-
-
-
-
-
-collectionsData.forEach((data)=>{
-
-
-let amount = 0;
-
-
-
-// ALL YEARS
-
-if(filter === "all"){
-
-
-amount =
-
-Number(data.firstYear || 0) +
-
-Number(data.secondYear || 0) +
-
-Number(data.thirdYear || 0) +
-
-Number(data.fourthYear || 0);
-
-
-}
-
-
-
-
-// FILTER YEAR LEVEL
-
-
-if(filter === "1"){
-
-
-amount =
-Number(data.firstYear || 0);
-
-
-}
-
-
-
-if(filter === "2"){
-
-
-amount =
-Number(data.secondYear || 0);
-
-
-}
-
-
-
-if(filter === "3"){
-
-
-amount =
-Number(data.thirdYear || 0);
-
-
-}
-
-
-
-if(filter === "4"){
-
-
-amount =
-Number(data.fourthYear || 0);
-
-
-}
-
-
-
-
-total += amount;
-
-
-
-
-
-container.innerHTML += `
-
+        container.innerHTML += `
 
 <div class="expense">
 
+<h2>💰 ${data.week}</h2>
 
-<h3>
+<p>📅 ${data.date}</p>
 
-Week: ${data.week || "No Week"}
-
-</h3>
-
-
-
-<p>
-
-📅 Date:
-${data.date || "No Date"}
-
-</p>
-
-
-
-<p>
-
-👤 Collector:
-${data.collector || "Unknown"}
-
-</p>
-
-
+<p>👤 <strong>${data.collector}</strong></p>
 
 <hr>
 
+<p>1️⃣ First Year :
+₱${Number(data.firstYear || 0).toLocaleString()}</p>
 
+<p>2️⃣ Second Year :
+₱${Number(data.secondYear || 0).toLocaleString()}</p>
 
-<p>
+<p>3️⃣ Third Year :
+₱${Number(data.thirdYear || 0).toLocaleString()}</p>
 
-💰 Amount:
+<p>4️⃣ Fourth Year :
+₱${Number(data.fourthYear || 0).toLocaleString()}</p>
 
-₱${amount.toLocaleString()}
+<hr>
 
-</p>
-
-
+<h3>💵 Total:
+₱${total.toLocaleString()}</h3>
 
 </div>
 
-
 `;
 
+    });
 
-
-});
-
-
-
-
-
-
-
-if(totalDisplay){
-
-
-totalDisplay.innerHTML =
-
-"₱" + total.toLocaleString();
-
+    totalDisplay.innerHTML = "₱" + grandTotal.toLocaleString();
 
 }
 
+// ================= SEARCH + FILTER =================
 
+function filterCollections() {
 
-}
+    const keyword = document
+        .getElementById("searchCollection")
+        .value
+        .toLowerCase();
 
+    const year = document
+        .getElementById("yearFilter")
+        .value;
 
+    const filtered = collectionsData.filter((item) => {
 
+        const matchSearch =
+            (item.week || "").toLowerCase().includes(keyword) ||
+            (item.collector || "").toLowerCase().includes(keyword);
 
+        if (year === "all") return matchSearch;
 
+        let amount = 0;
 
+        if (year === "1") amount = Number(item.firstYear || 0);
 
+        if (year === "2") amount = Number(item.secondYear || 0);
 
+        if (year === "3") amount = Number(item.thirdYear || 0);
 
+        if (year === "4") amount = Number(item.fourthYear || 0);
 
-// ================= FILTER =================
+        return matchSearch && amount > 0;
 
+    });
 
-
-const filter =
-document.getElementById("yearFilter");
-
-
-
-if(filter){
-
-
-filter.addEventListener(
-"change",
-function(){
-
-
-displayCollections(
-this.value
-);
-
-
-});
-
-
+    displayCollections(filtered);
 
 }
 
+// ================= EVENTS =================
 
+document
+.getElementById("searchCollection")
+.addEventListener("input", filterCollections);
 
+document
+.getElementById("yearFilter")
+.addEventListener("change", filterCollections);
 
-
-
-
-
-// START
+// ================= START =================
 
 loadCollections();
