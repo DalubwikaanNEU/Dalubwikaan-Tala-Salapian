@@ -64,7 +64,19 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
+onAuthStateChanged(auth, (user) => {
+    console.log("Current User:", user);
+
+    if (user) {
+        console.log("Email:", user.email);
+    } else {
+        console.log("No user logged in");
+    }
+});
 
 console.log("🔥 Firebase Connected");
 
