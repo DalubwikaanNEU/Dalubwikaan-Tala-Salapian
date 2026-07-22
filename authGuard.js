@@ -1,15 +1,11 @@
-import { initializeApp }
+import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
 
-import {
-
+import { 
 getAuth,
-
-onAuthStateChanged
-
-}
-
+onAuthStateChanged 
+} 
 from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 
@@ -34,13 +30,19 @@ appId: "1:409516392020:web:87d462a5927449c69eb7c1"
 
 const app = initializeApp(firebaseConfig);
 
-
 const auth = getAuth(app);
 
 
 
+console.log("🔐 Auth Guard Loaded");
+
+
 
 onAuthStateChanged(auth,(user)=>{
+
+
+console.log("Current Admin:", user);
+
 
 
 if(!user){
@@ -49,11 +51,10 @@ if(!user){
 alert("🔒 Admin access only");
 
 
-window.location.href="login.html";
+window.location.href = "login.html";
 
 
 }
-
 
 
 });
