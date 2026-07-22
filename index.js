@@ -10,7 +10,7 @@ import {
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+  apiKey: "AIzaSyDx5TRi1YZZsK4JqlvCmuR_0U6H1d3Mr80",
   authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
   projectId: "dalubwikaan--26-8e646",
   storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
@@ -27,48 +27,90 @@ const db = getFirestore(app);
 
 async function loadExpenses(){
 
-    const expenseContainer = document.getElementById("expenseList");
+    try {
+
+        const container = document.getElementById("expenseContainer");
 
 
-    const q = query(
-        collection(db,"expenses"),
-        orderBy("createdAt","desc")
-    );
+        const expenseQuery = query(
+            collection(db,"expenses"),
+            orderBy("createdAt","desc")
+        );
 
 
-    const snapshot = await getDocs(q);
+        const snapshot = await getDocs(expenseQuery);
 
 
-    expenseContainer.innerHTML = "";
+
+        if(snapshot.empty){
+
+            container.innerHTML = `
+                <div class="expense">
+                    <span>No expenses recorded yet.</span>
+                </div>
+            `;
+
+            return;
+
+        }
 
 
-    snapshot.forEach((doc)=>{
 
-        const expense = doc.data();
+        container.innerHTML = "";
 
 
-        expenseContainer.innerHTML += `
 
-        <div class="expenseCard">
+        snapshot.forEach((doc)=>{
 
-            <h3>${expense.title}</h3>
 
-            <p>Category: ${expense.category}</p>
+            const expense = doc.data();
 
-            <p>Amount: ₱${expense.amount}</p>
 
-            <p>Date: ${expense.date}</p>
+            container.innerHTML += `
 
-            <p>${expense.remarks}</p>
+            <div class="expense">
 
+                <h3>${expense.title}</h3>
+
+                <p>
+                Category: ${expense.category}
+                </p>
+
+                <p>
+                Amount: ₱${expense.amount}</p>
+
+                <p>
+                Date: ${expense.date}</p>
+
+                <small>
+                ${expense.remarks || "No remarks"}
+                </small>
+
+            </div>
+
+            `;
+
+
+        });
+
+
+    } catch(error){
+
+        console.error("Error loading expenses:", error);
+
+
+        document.getElementById("expenseContainer").innerHTML = `
+
+        <div class="expense">
+            <span>Error loading expenses.</span>
         </div>
 
         `;
 
-
-    });
+    }
 
 }
+
 
 
 loadExpenses();
