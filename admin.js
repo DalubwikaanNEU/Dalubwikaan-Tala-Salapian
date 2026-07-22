@@ -1081,3 +1081,23 @@ document.getElementById("announcementPriority").value="Low";
 
 
 }
+
+// ================= LOGOUT =================
+
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+const auth = getAuth(app);
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+
+        await signOut(auth);
+
+        alert("✅ Logged out successfully.");
+
+        window.location.href = "login.html";
+
+    });
+}
