@@ -1409,3 +1409,70 @@ transform:translateY(-3px);
 }
 
 <script src="theme.js"></script>
+
+/* ================= THEME MODE ================= */
+
+body{
+    background:#ffffff;
+    color:#222;
+    transition:0.3s ease;
+}
+
+
+/* DARK MODE */
+
+body.dark{
+
+    background:#121212;
+    color:white;
+
+}
+
+
+/* Cards */
+
+body.dark .card,
+body.dark .yearCard,
+body.dark .chartCard,
+body.dark .expense,
+body.dark .projectCard{
+
+    background:#1e1e1e;
+    color:white;
+
+}
+
+
+/* Sections */
+
+body.dark section{
+
+    color:white;
+
+}
+
+
+/* Navbar */
+
+body.dark header{
+
+    background:#181818;
+
+}
+
+
+body.dark nav a{
+
+    color:white;
+
+}
+
+
+/* Footer */
+
+body.dark footer{
+
+    background:#111;
+    color:white;
+
+}
