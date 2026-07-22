@@ -1,290 +1,96 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+// =====================================================
+// DALUBWIKAAN ADMIN SYSTEM
+// FINAL POLISHED ADMIN.JS
+// PART 1/3
+// =====================================================
+
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
 
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc,
-    getDoc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc
+
+} from 
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+import {
+
+getAuth,
+signOut
+
+} from
+"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
 
 
 // ================= FIREBASE =================
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
-  authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
-  projectId: "dalubwikaan--26-8e646",
-  storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
-  messagingSenderId: "409516392020",
-  appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+
+
+apiKey: "AIzaSyDx5TR1iYZZsK4JqlvCmuR_0U6H1d3Mr80",
+
+authDomain: "dalubwikaan--26-8e646.firebaseapp.com",
+
+projectId: "dalubwikaan--26-8e646",
+
+storageBucket: "dalubwikaan--26-8e646.firebasestorage.app",
+
+messagingSenderId: "409516392020",
+
+appId: "1:409516392020:web:87d462a5927449c69eb7c1"
+
+
 };
+
 
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
+const auth = getAuth(app);
 
-console.log("🔥 Admin Firebase Connected!");
 
 
+console.log("🔥 Dalubwikaan Admin Connected!");
 
-// =================================================
-// ================= EXPENSES ======================
-// =================================================
 
 
-let editingExpenseID = null;
 
+// =====================================================
+// ================= COLLECTIONS ========================
+// =====================================================
 
 
-window.saveExpense = async function(){
 
-
-const data = {
-
-title:
-document.getElementById("expenseTitle").value,
-
-category:
-document.getElementById("expenseCategory").value,
-
-amount:
-Number(document.getElementById("expenseAmount").value || 0),
-
-date:
-document.getElementById("expenseDate").value,
-
-receipt:
-document.getElementById("expenseReceipt").value,
-
-remarks:
-document.getElementById("expenseRemarks").value,
-
-createdAt:new Date()
-
-};
-
-
-
-if(editingExpenseID){
-
-
-await updateDoc(
-doc(db,"expenses",editingExpenseID),
-data
-);
-
-
-alert("✅ Expense updated!");
-
-
-editingExpenseID=null;
-
-
-}
-
-else{
-
-
-await addDoc(
-collection(db,"expenses"),
-data
-);
-
-
-alert("✅ Expense saved!");
-
-}
-
-
-clearExpenseForm();
-
-loadAdminExpenses();
-
-
-};
-
-
-
-
-
-
-
-async function loadAdminExpenses(){
-
-
-const container =
-document.getElementById("adminExpenseList");
-
-
-if(!container)return;
-
-
-const snapshot =
-await getDocs(collection(db,"expenses"));
-
-
-container.innerHTML="";
-
-
-
-snapshot.forEach(item=>{
-
-
-const data=item.data();
-
-
-
-container.innerHTML += `
-
-<div class="expense">
-
-<h3>${data.title}</h3>
-
-<p>
-${data.category}
-</p>
-
-<p>
-₱${Number(data.amount).toLocaleString()}
-</p>
-
-
-<button onclick="editExpense('${item.id}')">
-✏️ Edit
-</button>
-
-
-<button onclick="deleteExpense('${item.id}')">
-🗑️ Delete
-</button>
-
-
-</div>
-
-`;
-
-});
-
-
-}
-
-
-loadAdminExpenses();
-
-
-
-
-
-
-
-window.deleteExpense = async function(id){
-
-
-await deleteDoc(
-doc(db,"expenses",id)
-);
-
-
-alert("🗑️ Expense deleted!");
-
-
-loadAdminExpenses();
-
-
-};
-
-
-
-
-
-window.editExpense = async function(id){
-
-
-const snap =
-await getDoc(
-doc(db,"expenses",id)
-);
-
-
-const data=snap.data();
-
-
-
-document.getElementById("expenseTitle").value=data.title;
-
-document.getElementById("expenseCategory").value=data.category;
-
-document.getElementById("expenseAmount").value=data.amount;
-
-document.getElementById("expenseDate").value=data.date;
-
-document.getElementById("expenseReceipt").value=data.receipt || "";
-
-document.getElementById("expenseRemarks").value=data.remarks || "";
-
-
-editingExpenseID=id;
-
-
-alert("✏️ Edit Expense Mode");
-
-
-};
-
-
-
-
-function clearExpenseForm(){
-
-
-[
-"expenseTitle",
-"expenseCategory",
-"expenseAmount",
-"expenseDate",
-"expenseReceipt",
-"expenseRemarks"
-
-].forEach(id=>{
-
-document.getElementById(id).value="";
-
-});
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================================
-// ================= COLLECTIONS ===================
-// =================================================
-
-
-let editingCollectionID=null;
+let editingCollectionID = null;
 
 
 
 window.saveCollection = async function(){
 
 
-const data={
+try{
+
+
+const data = {
 
 
 week:
-document.getElementById("week").value,
+document.getElementById("week").value.trim(),
 
 
 date:
@@ -292,29 +98,37 @@ document.getElementById("collectionDate").value,
 
 
 firstYear:
-Number(document.getElementById("firstYearCollection").value||0),
+Number(
+document.getElementById("firstYearCollection").value || 0
+),
 
 
 secondYear:
-Number(document.getElementById("secondYearCollection").value||0),
+Number(
+document.getElementById("secondYearCollection").value || 0
+),
 
 
 thirdYear:
-Number(document.getElementById("thirdYearCollection").value||0),
+Number(
+document.getElementById("thirdYearCollection").value || 0
+),
 
 
 fourthYear:
-Number(document.getElementById("fourthYearCollection").value||0),
+Number(
+document.getElementById("fourthYearCollection").value || 0
+),
 
 
 collector:
-document.getElementById("collector").value,
+document.getElementById("collector").value.trim(),
 
 
 createdAt:new Date()
 
-
 };
+
 
 
 
@@ -322,15 +136,18 @@ if(editingCollectionID){
 
 
 await updateDoc(
+
 doc(db,"collections",editingCollectionID),
+
 data
+
 );
 
 
 alert("✅ Collection updated!");
 
-
 editingCollectionID=null;
+
 
 
 }
@@ -339,13 +156,16 @@ else{
 
 
 await addDoc(
+
 collection(db,"collections"),
+
 data
+
 );
 
 
-alert("✅ Collection saved!");
 
+alert("✅ Collection saved!");
 
 }
 
@@ -356,8 +176,24 @@ clearCollectionForm();
 loadAdminCollections();
 
 
-};
 
+}
+
+
+
+catch(error){
+
+
+console.error(error);
+
+alert("❌ Failed saving collection");
+
+
+}
+
+
+
+};
 
 
 
@@ -371,12 +207,17 @@ const container =
 document.getElementById("adminCollectionList");
 
 
-if(!container)return;
+if(!container) return;
 
+
+
+try{
 
 
 const snapshot =
-await getDocs(collection(db,"collections"));
+await getDocs(
+collection(db,"collections")
+);
 
 
 
@@ -384,53 +225,165 @@ container.innerHTML="";
 
 
 
+if(snapshot.empty){
+
+
+container.innerHTML =
+"<p>No collection records yet.</p>";
+
+return;
+
+
+}
+
+
+
+
+let records=[];
+
+
+
 snapshot.forEach(item=>{
 
 
-const data=item.data();
+records.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+
+});
+
+
+
+
+records.sort((a,b)=>{
+
+
+return (
+
+(b.createdAt?.seconds || 0)
+
+-
+
+(a.createdAt?.seconds || 0)
+
+);
+
+
+});
+
+
+
+
+
+records.forEach(data=>{
 
 
 let total =
-Number(data.firstYear||0)+
-Number(data.secondYear||0)+
-Number(data.thirdYear||0)+
-Number(data.fourthYear||0);
+
+
+Number(data.firstYear || 0)
+
++
+
+Number(data.secondYear || 0)
+
++
+
+Number(data.thirdYear || 0)
+
++
+
+Number(data.fourthYear || 0);
+
+
+
 
 
 
 container.innerHTML += `
 
+
 <div class="expense">
 
-<h3>${data.week}</h3>
+
+<h3>
+💰 ${data.week || "No Week"}
+</h3>
+
 
 <p>
-Collector: ${data.collector}
+👤 Collector:
+${data.collector || "N/A"}
 </p>
+
 
 <p>
-Total: ₱${total.toLocaleString()}
+📅 Date:
+${data.date || "N/A"}
 </p>
 
 
-<button onclick="editCollection('${item.id}')">
+
+<h3>
+
+Total:
+₱${total.toLocaleString()}
+
+</h3>
+
+
+
+<button onclick="editCollection('${data.id}')">
+
 ✏️ Edit
+
 </button>
 
 
-<button onclick="deleteCollection('${item.id}')">
+
+<button onclick="deleteCollection('${data.id}')">
+
 🗑️ Delete
+
 </button>
 
 
 </div>
 
+
 `;
+
+
 
 });
 
 
+
+
 }
+
+catch(error){
+
+
+console.error(error);
+
+
+container.innerHTML =
+"<p>❌ Failed loading collections.</p>";
+
+}
+
+
+
+}
+
+
+
 
 
 loadAdminCollections();
@@ -444,15 +397,485 @@ loadAdminCollections();
 window.deleteCollection = async function(id){
 
 
+
+if(!confirm("Delete this collection?")) return;
+
+
+
 await deleteDoc(
+
 doc(db,"collections",id)
+
 );
+
 
 
 alert("🗑️ Collection deleted!");
 
 
 loadAdminCollections();
+
+
+
+};
+
+
+
+
+
+
+
+window.editCollection = async function(id){
+
+
+const snap = await getDoc(
+
+doc(db,"collections",id)
+
+);
+
+
+
+const data=snap.data();
+
+
+
+document.getElementById("week").value =
+data.week || "";
+
+
+document.getElementById("collectionDate").value =
+data.date || "";
+
+
+document.getElementById("firstYearCollection").value =
+data.firstYear || 0;
+
+
+document.getElementById("secondYearCollection").value =
+data.secondYear || 0;
+
+
+document.getElementById("thirdYearCollection").value =
+data.thirdYear || 0;
+
+
+document.getElementById("fourthYearCollection").value =
+data.fourthYear || 0;
+
+
+document.getElementById("collector").value =
+data.collector || "";
+
+
+
+editingCollectionID=id;
+
+
+alert("✏️ Editing Collection");
+
+
+
+};
+
+
+
+
+
+
+function clearCollectionForm(){
+
+
+[
+
+"week",
+
+"collectionDate",
+
+"firstYearCollection",
+
+"secondYearCollection",
+
+"thirdYearCollection",
+
+"fourthYearCollection",
+
+"collector"
+
+
+].forEach(id=>{
+
+
+const element=document.getElementById(id);
+
+
+if(element){
+
+element.value="";
+
+}
+
+
+});
+
+
+
+}
+
+
+
+
+// =====================================================
+// ================= EXPENSES ===========================
+// =====================================================
+
+
+
+let editingExpenseID=null;
+
+
+
+window.saveExpense = async function(){
+
+
+try{
+
+
+const data={
+
+
+title:
+document.getElementById("expenseTitle").value.trim(),
+
+
+category:
+document.getElementById("expenseCategory").value.trim(),
+
+
+amount:
+Number(
+document.getElementById("expenseAmount").value || 0
+),
+
+
+date:
+document.getElementById("expenseDate").value,
+
+
+receipt:
+document.getElementById("expenseReceipt").value,
+
+
+remarks:
+document.getElementById("expenseRemarks").value,
+
+
+createdAt:new Date()
+
+
+};
+
+
+
+
+if(editingExpenseID){
+
+
+await updateDoc(
+
+doc(db,"expenses",editingExpenseID),
+
+data
+
+);
+
+
+alert("✅ Expense updated!");
+
+editingExpenseID=null;
+
+
+}
+
+else{
+
+
+await addDoc(
+
+collection(db,"expenses"),
+
+data
+
+);
+
+
+
+alert("✅ Expense saved!");
+
+}
+
+
+
+clearExpenseForm();
+
+loadAdminExpenses();
+
+
+}
+
+
+
+catch(error){
+
+
+console.error(error);
+
+alert("❌ Expense saving failed");
+
+
+}
+
+
+
+};
+
+// =================================================
+// ================= COLLECTIONS ===================
+// =================================================
+
+let editingCollectionID = null;
+
+
+window.saveCollection = async function(){
+
+    const data = {
+
+        week: document.getElementById("week").value,
+
+        date: document.getElementById("collectionDate").value,
+
+        firstYear: Number(
+            document.getElementById("firstYearCollection").value || 0
+        ),
+
+        secondYear: Number(
+            document.getElementById("secondYearCollection").value || 0
+        ),
+
+        thirdYear: Number(
+            document.getElementById("thirdYearCollection").value || 0
+        ),
+
+        fourthYear: Number(
+            document.getElementById("fourthYearCollection").value || 0
+        ),
+
+        collector:
+        document.getElementById("collector").value,
+
+        createdAt:new Date()
+
+    };
+
+
+    try{
+
+
+        if(editingCollectionID){
+
+
+            await updateDoc(
+                doc(db,"collections",editingCollectionID),
+                data
+            );
+
+
+            alert("✅ Collection updated!");
+
+            editingCollectionID=null;
+
+
+        }
+        else{
+
+
+            await addDoc(
+                collection(db,"collections"),
+                data
+            );
+
+
+            alert("✅ Collection saved!");
+
+        }
+
+
+
+        clearCollectionForm();
+
+        loadAdminCollections();
+
+
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("❌ Failed saving collection.");
+
+    }
+
+
+};
+
+
+
+
+
+async function loadAdminCollections(){
+
+
+    const container =
+    document.getElementById("adminCollectionList");
+
+
+    if(!container) return;
+
+
+
+    const snapshot =
+    await getDocs(collection(db,"collections"));
+
+
+
+    container.innerHTML="";
+
+
+
+    if(snapshot.empty){
+
+
+        container.innerHTML=
+        `<p>No collection records yet.</p>`;
+
+
+        return;
+
+    }
+
+
+
+
+
+    snapshot.forEach(item=>{
+
+
+        const data=item.data();
+
+
+
+        const total =
+
+        Number(data.firstYear || 0)+
+
+        Number(data.secondYear || 0)+
+
+        Number(data.thirdYear || 0)+
+
+        Number(data.fourthYear || 0);
+
+
+
+
+        container.innerHTML += `
+
+
+        <div class="expense">
+
+
+            <h3>
+            💰 ${data.week || "No Week"}
+            </h3>
+
+
+            <p>
+            📅 ${data.date || "No Date"}
+            </p>
+
+
+            <p>
+            👤 Collector:
+            ${data.collector || "N/A"}
+            </p>
+
+
+
+            <p>
+            Total:
+            ₱${total.toLocaleString()}
+            </p>
+
+
+
+            <button 
+            class="btn"
+            onclick="editCollection('${item.id}')">
+
+            ✏️ Edit
+
+            </button>
+
+
+
+
+            <button 
+            class="logoutBtn"
+            onclick="deleteCollection('${item.id}')">
+
+            🗑️ Delete
+
+            </button>
+
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+}
+
+
+
+loadAdminCollections();
+
+
+
+
+
+
+window.deleteCollection = async function(id){
+
+
+    if(!confirm("Delete this collection record?"))
+    return;
+
+
+
+    await deleteDoc(
+        doc(db,"collections",id)
+    );
+
+
+    alert("🗑️ Collection deleted!");
+
+    loadAdminCollections();
 
 
 };
@@ -465,36 +888,51 @@ loadAdminCollections();
 window.editCollection = async function(id){
 
 
-const snap =
-await getDoc(
-doc(db,"collections",id)
-);
+    const snap =
+    await getDoc(
+        doc(db,"collections",id)
+    );
 
 
-const data=snap.data();
-
-
-
-document.getElementById("week").value=data.week;
-
-document.getElementById("collectionDate").value=data.date;
-
-document.getElementById("firstYearCollection").value=data.firstYear;
-
-document.getElementById("secondYearCollection").value=data.secondYear;
-
-document.getElementById("thirdYearCollection").value=data.thirdYear;
-
-document.getElementById("fourthYearCollection").value=data.fourthYear;
-
-document.getElementById("collector").value=data.collector;
+    const data=snap.data();
 
 
 
-editingCollectionID=id;
+    document.getElementById("week").value =
+    data.week || "";
 
 
-alert("✏️ Edit Collection Mode");
+    document.getElementById("collectionDate").value =
+    data.date || "";
+
+
+    document.getElementById("firstYearCollection").value =
+    data.firstYear || 0;
+
+
+    document.getElementById("secondYearCollection").value =
+    data.secondYear || 0;
+
+
+    document.getElementById("thirdYearCollection").value =
+    data.thirdYear || 0;
+
+
+    document.getElementById("fourthYearCollection").value =
+    data.fourthYear || 0;
+
+
+    document.getElementById("collector").value =
+    data.collector || "";
+
+
+
+    editingCollectionID=id;
+
+
+
+    alert("✏️ Editing Collection");
+
 
 
 };
@@ -519,7 +957,12 @@ function clearCollectionForm(){
 ].forEach(id=>{
 
 
-document.getElementById(id).value="";
+    const element =
+    document.getElementById(id);
+
+
+    if(element)
+    element.value="";
 
 
 });
@@ -530,12 +973,14 @@ document.getElementById(id).value="";
 
 
 
+
+
 // =================================================
 // ================= PROJECTS ======================
 // =================================================
 
 
-let editingProjectID = null;
+let editingProjectID=null;
 
 
 
@@ -545,75 +990,88 @@ window.saveProject = async function(){
 const projectData = {
 
 
-title:
-document.getElementById("projectTitle").value,
+    title:
+    document.getElementById("projectTitle").value,
 
 
-description:
-document.getElementById("projectDescription").value,
+    description:
+    document.getElementById("projectDescription").value,
 
 
-budget:
-Number(document.getElementById("projectBudget").value || 0),
+    budget:
+    Number(
+    document.getElementById("projectBudget").value || 0
+    ),
 
 
-spent:
-Number(document.getElementById("projectSpent").value || 0),
+    spent:
+    Number(
+    document.getElementById("projectSpent").value || 0
+    ),
 
 
-status:
-document.getElementById("projectStatus").value,
+    status:
+    document.getElementById("projectStatus").value,
 
 
-createdAt:new Date()
-
-
-};
-
-
-
-
-if(editingProjectID){
-
-
-await updateDoc(
-doc(db,"projects",editingProjectID),
-projectData
-);
-
-
-alert("✅ Project updated!");
-
-
-editingProjectID=null;
-
-
-}
-
-else{
-
-
-await addDoc(
-collection(db,"projects"),
-projectData
-);
-
-
-alert("✅ Project saved!");
-
-
-}
-
-
-
-clearProjectForm();
-
-loadAdminProjects();
-
+    createdAt:new Date()
 
 };
 
 
+
+try{
+
+
+    if(editingProjectID){
+
+
+        await updateDoc(
+            doc(db,"projects",editingProjectID),
+            projectData
+        );
+
+
+        alert("✅ Project updated!");
+
+        editingProjectID=null;
+
+
+    }
+
+    else{
+
+
+        await addDoc(
+            collection(db,"projects"),
+            projectData
+        );
+
+
+        alert("✅ Project saved!");
+
+    }
+
+
+
+    clearProjectForm();
+
+    loadAdminProjects();
+
+
+
+}
+catch(error){
+
+    console.error(error);
+
+    alert("❌ Project saving failed.");
+
+}
+
+
+
+};
 
 
 
@@ -627,7 +1085,7 @@ const container =
 document.getElementById("adminProjectList");
 
 
-if(!container)return;
+if(!container) return;
 
 
 
@@ -643,13 +1101,13 @@ container.innerHTML="";
 if(snapshot.empty){
 
 
-container.innerHTML =
+container.innerHTML=
 "<p>No projects available.</p>";
 
 return;
 
-
 }
+
 
 
 
@@ -668,40 +1126,36 @@ container.innerHTML += `
 
 
 <h3>
-📂 ${data.title}
+📂 ${data.title || "Untitled Project"}
 </h3>
 
 
-
 <p>
-${data.description}
+${data.description || "No description"}
 </p>
-
 
 
 <p>
 💰 Budget:
-₱${Number(data.budget).toLocaleString()}
+₱${Number(data.budget || 0).toLocaleString()}
 </p>
-
 
 
 <p>
 💸 Spent:
-₱${Number(data.spent).toLocaleString()}
+₱${Number(data.spent || 0).toLocaleString()}
 </p>
-
 
 
 <p>
 📌 Status:
-${data.status}
+${data.status || "Planning"}
 </p>
 
 
 
-
-<button onclick="editProject('${item.id}')">
+<button class="btn"
+onclick="editProject('${item.id}')">
 
 ✏️ Edit
 
@@ -709,7 +1163,8 @@ ${data.status}
 
 
 
-<button onclick="deleteProject('${item.id}')">
+<button class="logoutBtn"
+onclick="deleteProject('${item.id}')">
 
 🗑️ Delete
 
@@ -727,42 +1182,37 @@ ${data.status}
 });
 
 
+
 }
 
 
 
 loadAdminProjects();
 
-
-
-
-
-
+// =================================================
+// ================= PROJECT CONTINUATION ==========
+// =================================================
 
 
 window.deleteProject = async function(id){
 
 
-if(!confirm("Delete this project?")) return;
+    if(!confirm("Delete this project?"))
+    return;
 
 
-
-await deleteDoc(
-doc(db,"projects",id)
-);
-
+    await deleteDoc(
+        doc(db,"projects",id)
+    );
 
 
-alert("🗑️ Project deleted!");
+    alert("🗑️ Project deleted!");
 
 
-
-loadAdminProjects();
+    loadAdminProjects();
 
 
 };
-
-
 
 
 
@@ -772,43 +1222,42 @@ loadAdminProjects();
 window.editProject = async function(id){
 
 
-const snap =
-await getDoc(
-doc(db,"projects",id)
-);
+    const snap =
+    await getDoc(
+        doc(db,"projects",id)
+    );
+
+
+    const data=snap.data();
 
 
 
-const data=snap.data();
+    document.getElementById("projectTitle").value =
+    data.title || "";
+
+
+    document.getElementById("projectDescription").value =
+    data.description || "";
+
+
+    document.getElementById("projectBudget").value =
+    data.budget || 0;
+
+
+    document.getElementById("projectSpent").value =
+    data.spent || 0;
+
+
+    document.getElementById("projectStatus").value =
+    data.status || "Planning";
 
 
 
-document.getElementById("projectTitle").value =
-data.title;
-
-
-document.getElementById("projectDescription").value =
-data.description;
-
-
-document.getElementById("projectBudget").value =
-data.budget;
-
-
-document.getElementById("projectSpent").value =
-data.spent;
-
-
-document.getElementById("projectStatus").value =
-data.status;
+    editingProjectID=id;
 
 
 
-editingProjectID=id;
-
-
-
-alert("✏️ Edit Project Mode ON");
+    alert("✏️ Editing Project Mode");
 
 
 };
@@ -818,21 +1267,34 @@ alert("✏️ Edit Project Mode ON");
 
 
 
-
-
 function clearProjectForm(){
 
 
-document.getElementById("projectTitle").value="";
+const fields=[
+
+"projectTitle",
+"projectDescription",
+"projectBudget",
+"projectSpent"
+
+];
 
 
-document.getElementById("projectDescription").value="";
+
+fields.forEach(id=>{
 
 
-document.getElementById("projectBudget").value="";
+const element =
+document.getElementById(id);
 
 
-document.getElementById("projectSpent").value="";
+
+if(element)
+element.value="";
+
+
+});
+
 
 
 document.getElementById("projectStatus").value="Planning";
@@ -846,8 +1308,9 @@ document.getElementById("projectStatus").value="Planning";
 
 
 
+
 // =================================================
-// ================= ANNOUNCEMENTS ================
+// ================= ANNOUNCEMENTS =================
 // =================================================
 
 
@@ -855,26 +1318,27 @@ let editingAnnouncementID=null;
 
 
 
-window.saveAnnouncement = async function(){
 
+
+window.saveAnnouncement = async function(){
 
 
 const data={
 
 
-title:
-document.getElementById("announcementTitle").value,
+    title:
+    document.getElementById("announcementTitle").value,
 
 
-message:
-document.getElementById("announcementMessage").value,
+    message:
+    document.getElementById("announcementMessage").value,
 
 
-priority:
-document.getElementById("announcementPriority").value,
+    priority:
+    document.getElementById("announcementPriority").value,
 
 
-createdAt:new Date()
+    createdAt:new Date()
 
 
 };
@@ -883,45 +1347,84 @@ createdAt:new Date()
 
 
 
-if(editingAnnouncementID){
+try{
 
 
-await updateDoc(
-doc(db,"announcements",editingAnnouncementID),
-data
-);
+    if(editingAnnouncementID){
 
 
-alert("✅ Announcement updated!");
+        await updateDoc(
+
+            doc(
+                db,
+                "announcements",
+                editingAnnouncementID
+            ),
+
+            data
+
+        );
 
 
-editingAnnouncementID=null;
+
+        alert("✅ Announcement updated!");
+
+
+        editingAnnouncementID=null;
+
+
+
+    }
+
+
+    else{
+
+
+        await addDoc(
+
+            collection(
+                db,
+                "announcements"
+            ),
+
+            data
+
+        );
+
+
+
+        alert("📢 Announcement posted!");
+
+
+    }
+
+
+
+
+    clearAnnouncementForm();
+
+
+    loadAdminAnnouncements();
+
 
 
 }
 
-else{
+catch(error){
 
 
-await addDoc(
-collection(db,"announcements"),
-data
-);
+    console.error(error);
 
 
-alert("✅ Announcement posted!");
+    alert("❌ Failed saving announcement.");
 
 
 }
 
 
 
-clearAnnouncementForm();
-
-loadAdminAnnouncements();
-
-
 };
+
 
 
 
@@ -937,16 +1440,36 @@ document.getElementById("adminAnnouncementList");
 
 
 
-if(!container)return;
+if(!container)
+return;
 
 
 
 const snapshot =
-await getDocs(collection(db,"announcements"));
+await getDocs(
+collection(db,"announcements")
+);
 
 
 
 container.innerHTML="";
+
+
+
+
+if(snapshot.empty){
+
+
+container.innerHTML=
+"<p>No announcements yet.</p>";
+
+
+return;
+
+
+}
+
+
 
 
 
@@ -957,6 +1480,7 @@ const data=item.data();
 
 
 
+
 container.innerHTML += `
 
 
@@ -964,28 +1488,51 @@ container.innerHTML += `
 
 
 <h3>
-📢 ${data.title}
+📢 ${data.title || "Untitled"}
 </h3>
 
 
+
 <p>
-${data.message}
+
+${data.message || "No message"}
+
 </p>
 
 
+
 <p>
-Priority: ${data.priority}
+
+Priority:
+<strong>
+${data.priority || "Low"}
+</strong>
+
 </p>
 
 
-<button onclick="editAnnouncement('${item.id}')">
+
+
+<button 
+class="btn"
+onclick="editAnnouncement('${item.id}')">
+
 ✏️ Edit
+
 </button>
 
 
-<button onclick="deleteAnnouncement('${item.id}')">
+
+
+
+<button 
+class="logoutBtn"
+onclick="deleteAnnouncement('${item.id}')">
+
 🗑️ Delete
+
 </button>
+
 
 
 </div>
@@ -994,13 +1541,17 @@ Priority: ${data.priority}
 `;
 
 
+
 });
+
 
 
 }
 
 
+
 loadAdminAnnouncements();
+
 
 
 
@@ -1011,15 +1562,30 @@ loadAdminAnnouncements();
 window.deleteAnnouncement = async function(id){
 
 
+
+if(!confirm("Delete this announcement?"))
+return;
+
+
+
 await deleteDoc(
-doc(db,"announcements",id)
+
+doc(
+db,
+"announcements",
+id
+)
+
 );
+
 
 
 alert("🗑️ Announcement deleted!");
 
 
+
 loadAdminAnnouncements();
+
 
 
 };
@@ -1033,9 +1599,16 @@ loadAdminAnnouncements();
 window.editAnnouncement = async function(id){
 
 
+
 const snap =
 await getDoc(
-doc(db,"announcements",id)
+
+doc(
+db,
+"announcements",
+id
+)
+
 );
 
 
@@ -1044,20 +1617,29 @@ const data=snap.data();
 
 
 
-document.getElementById("announcementTitle").value=data.title;
+
+document.getElementById("announcementTitle").value =
+data.title || "";
 
 
-document.getElementById("announcementMessage").value=data.message;
+
+document.getElementById("announcementMessage").value =
+data.message || "";
 
 
-document.getElementById("announcementPriority").value=data.priority;
+
+document.getElementById("announcementPriority").value =
+data.priority || "Low";
+
+
 
 
 
 editingAnnouncementID=id;
 
 
-alert("✏️ Edit Announcement Mode");
+
+alert("✏️ Editing Announcement Mode");
 
 
 };
@@ -1068,13 +1650,28 @@ alert("✏️ Edit Announcement Mode");
 
 
 
+
 function clearAnnouncementForm(){
 
 
-document.getElementById("announcementTitle").value="";
+
+const title =
+document.getElementById("announcementTitle");
 
 
-document.getElementById("announcementMessage").value="";
+const message =
+document.getElementById("announcementMessage");
+
+
+
+if(title)
+title.value="";
+
+
+
+if(message)
+message.value="";
+
 
 
 document.getElementById("announcementPriority").value="Low";
@@ -1082,22 +1679,98 @@ document.getElementById("announcementPriority").value="Low";
 
 }
 
-// ================= LOGOUT =================
 
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-const auth = getAuth(app);
 
-const logoutBtn = document.getElementById("logoutBtn");
 
-if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
 
-        await signOut(auth);
 
-        alert("✅ Logged out successfully.");
 
-        window.location.href = "login.html";
+// =================================================
+// ================= LOGOUT ========================
+// =================================================
 
-    });
+
+import {
+
+getAuth,
+
+signOut
+
 }
+
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+
+
+
+const auth =
+getAuth(app);
+
+
+
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+
+
+if(logoutBtn){
+
+
+
+logoutBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+
+try{
+
+
+await signOut(auth);
+
+
+
+alert("✅ Logged out successfully.");
+
+
+
+window.location.href="login.html";
+
+
+
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+alert("❌ Logout failed.");
+
+
+
+}
+
+
+
+}
+
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+console.log("✅ Admin Dashboard Fully Loaded!");
