@@ -32,33 +32,64 @@
 
 
 
+
 <main class="adminContainer">
 
 
 
-<!-- COLLECTIONS -->
+<!-- ================= COLLECTIONS ================= -->
 
 <section class="adminCard">
 
 <h2>💰 Weekly Collection</h2>
 
-<input type="text" id="week" placeholder="Week">
 
-<input type="date" id="collectionDate">
+<input 
+type="text" 
+id="week" 
+placeholder="Week">
 
-<input type="number" id="firstYearCollection" placeholder="1st Year">
 
-<input type="number" id="secondYearCollection" placeholder="2nd Year">
+<input 
+type="date" 
+id="collectionDate">
 
-<input type="number" id="thirdYearCollection" placeholder="3rd Year">
 
-<input type="number" id="fourthYearCollection" placeholder="4th Year">
+<input 
+type="number" 
+id="firstYearCollection" 
+placeholder="1st Year">
 
-<input type="text" id="collector" placeholder="Collector">
+
+<input 
+type="number" 
+id="secondYearCollection" 
+placeholder="2nd Year">
+
+
+<input 
+type="number" 
+id="thirdYearCollection" 
+placeholder="3rd Year">
+
+
+<input 
+type="number" 
+id="fourthYearCollection" 
+placeholder="4th Year">
+
+
+<input 
+type="text" 
+id="collector" 
+placeholder="Collector">
+
 
 
 <button onclick="saveCollection()">
+
 Save Collection
+
 </button>
 
 
@@ -68,36 +99,62 @@ Save Collection
 
 
 
-<!-- EXPENSES -->
+
+
+
+<!-- ================= EXPENSES ================= -->
 
 <section class="adminCard">
 
 <h2>💸 Add Expense</h2>
 
 
-<input type="text" id="expenseTitle" placeholder="Expense Title">
+<input 
+type="text" 
+id="expenseTitle" 
+placeholder="Expense Title">
 
 
-<input type="text" id="expenseCategory" placeholder="Category">
+
+<input 
+type="text" 
+id="expenseCategory" 
+placeholder="Category">
 
 
-<input type="number" id="expenseAmount" placeholder="Amount">
+
+<input 
+type="number" 
+id="expenseAmount" 
+placeholder="Amount">
 
 
-<input type="date" id="expenseDate">
+
+<input 
+type="date" 
+id="expenseDate">
 
 
-<input type="url" id="expenseReceipt" placeholder="Google Drive Receipt Link">
+
+<input 
+type="url" 
+id="expenseReceipt" 
+placeholder="Google Drive Receipt Link">
 
 
-<textarea id="expenseRemarks" placeholder="Remarks"></textarea>
+
+<textarea 
+id="expenseRemarks" 
+placeholder="Remarks">
+</textarea>
 
 
 
 <button onclick="saveExpense()">
-Save Expense
-</button>
 
+Save Expense
+
+</button>
 
 
 </section>
@@ -107,7 +164,9 @@ Save Expense
 
 
 
-<!-- MANAGE EXPENSES -->
+
+
+<!-- ================= MANAGE EXPENSES ================= -->
 
 <section class="adminCard">
 
@@ -116,7 +175,7 @@ Save Expense
 
 
 <p>
-Edit or remove existing budget allocations.
+Edit or remove current budget allocations.
 </p>
 
 
@@ -128,7 +187,6 @@ Loading expenses...
 </div>
 
 
-
 </section>
 
 
@@ -137,36 +195,63 @@ Loading expenses...
 
 
 
-<!-- PROJECTS -->
+
+
+<!-- ================= PROJECTS ================= -->
 
 <section class="adminCard">
+
 
 <h2>📂 Add Project</h2>
 
 
-<input type="text" id="projectTitle" placeholder="Project Title">
+
+<input 
+type="text" 
+id="projectTitle" 
+placeholder="Project Title">
 
 
-<textarea id="projectDescription" placeholder="Description"></textarea>
+
+<textarea 
+id="projectDescription" 
+placeholder="Description">
+</textarea>
 
 
-<input type="number" id="projectBudget" placeholder="Budget">
+
+<input 
+type="number" 
+id="projectBudget" 
+placeholder="Budget">
 
 
-<input type="number" id="projectSpent" placeholder="Spent">
+
+<input 
+type="number" 
+id="projectSpent" 
+placeholder="Spent">
+
+
 
 
 
 <select id="projectStatus">
 
 
-<option>Planning</option>
+<option>
+Planning
+</option>
 
 
-<option>Ongoing</option>
+<option>
+Ongoing
+</option>
 
 
-<option>Completed</option>
+<option>
+Completed
+</option>
 
 
 </select>
@@ -175,7 +260,9 @@ Loading expenses...
 
 
 <button onclick="saveProject()">
+
 Save Project
+
 </button>
 
 
@@ -190,7 +277,8 @@ Save Project
 
 
 
-<!-- ANNOUNCEMENTS -->
+<!-- ================= ANNOUNCEMENTS ================= -->
+
 
 <section class="adminCard">
 
@@ -199,11 +287,17 @@ Save Project
 
 
 
-<input type="text" id="announcementTitle" placeholder="Title">
+<input 
+type="text" 
+id="announcementTitle" 
+placeholder="Title">
 
 
 
-<textarea id="announcementMessage" placeholder="Announcement"></textarea>
+<textarea 
+id="announcementMessage" 
+placeholder="Announcement">
+</textarea>
 
 
 
@@ -211,13 +305,19 @@ Save Project
 <select id="announcementPriority">
 
 
-<option>Low</option>
+<option>
+Low
+</option>
 
 
-<option>Medium</option>
+<option>
+Medium
+</option>
 
 
-<option>High</option>
+<option>
+High
+</option>
 
 
 </select>
@@ -226,7 +326,9 @@ Save Project
 
 
 <button onclick="saveAnnouncement()">
+
 Post Announcement
+
 </button>
 
 
@@ -236,7 +338,10 @@ Post Announcement
 
 
 
+
 </main>
+
+
 
 
 
