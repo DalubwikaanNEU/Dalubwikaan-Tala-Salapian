@@ -1638,3 +1638,131 @@ padding:22px;
 }
 
 /* ================= END ================= */
+/* =====================================================
+   DALUBWIKAAN DARK MODE
+===================================================== */
+
+
+body.dark-mode{
+
+    background:#121212;
+    color:white;
+
+}
+
+
+
+
+body.dark-mode .adminHeader{
+
+    background:#1f1f1f;
+    color:white;
+
+}
+
+
+
+
+body.dark-mode .adminCard{
+
+    background:#1e1e1e;
+    color:white;
+
+    border-color:#333;
+
+}
+
+
+
+
+
+body.dark-mode .dashboardCard{
+
+    background:#1e1e1e;
+    color:white;
+
+}
+
+
+
+
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select{
+
+
+    background:#2a2a2a;
+
+    color:white;
+
+    border:1px solid #555;
+
+
+}
+
+
+
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder{
+
+
+    color:#bbb;
+
+
+}
+
+
+
+
+body.dark-mode .expense{
+
+
+    background:#252525;
+
+    color:white;
+
+    border:1px solid #444;
+
+
+}
+
+
+
+
+body.dark-mode footer{
+
+
+    background:#1f1f1f;
+
+    color:white;
+
+
+}
+
+
+
+
+body.dark-mode .btn{
+
+
+    background:#6b4eff;
+
+    color:white;
+
+
+}
+
+
+
+
+body.dark-mode .themeBtn{
+
+
+    background:#f1c40f;
+
+    color:black;
+
+
+}
