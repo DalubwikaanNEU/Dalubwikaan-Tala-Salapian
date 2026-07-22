@@ -1,61 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <title>Dalubwikaan Transparency Portal</title>
 
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
+
+
 <link rel="stylesheet" href="style.css">
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
 </head>
+
+
 
 <body>
 
+
 <!-- ================= NAVBAR ================= -->
+
 
 <header>
 
-<!-- ================= DASHBOARD SEARCH ================= -->
 
-<section class="searchSection">
-
-
-<h2>
-🔎 Search Transparency Records
-</h2>
-
-
-<input 
-id="dashboardSearch"
-type="text"
-placeholder="Search collections, expenses, projects, announcements..."
->
-
-
-<div id="dashboardSearchResults">
-
-
-<div class="expense">
-
-<p>
-Type something to search...
-</p>
-
-</div>
-
-
-</div>
-
-
-</section>
 
 <div class="logo">
 
@@ -63,35 +48,112 @@ Type something to search...
 
 </div>
 
+
+
+
 <nav>
 
-<a href="index.html" class="active">Dashboard</a>
 
-<a href="collections.html">Collections</a>
+<a href="index.html" class="active">
+Dashboard
+</a>
 
-<a href="expenses.html">Expenses</a>
 
-<a href="projects.html">Projects</a>
+<a href="collections.html">
+Collections
+</a>
 
-<a href="reports.html">Reports</a>
 
-<a href="announcements.html">Announcements</a>
+<a href="expenses.html">
+Expenses
+</a>
 
-<a href="login.html">🔐 Admin</a>
+
+<a href="projects.html">
+Projects
+</a>
+
+
+<a href="reports.html">
+Reports
+</a>
+
+
+<a href="announcements.html">
+Announcements
+</a>
+
+
+<a href="login.html">
+🔐 Admin
+</a>
+
+
 
 <button id="themeToggle" class="themeBtn">
+
 🌙 Dark Mode
+
 </button>
 
+
+
 </nav>
-  
+
+
+
 </header>
+
+
+
+
+
+<!-- ================= SMALL DASHBOARD SEARCH ================= -->
+
+
+<div class="miniSearch">
+
+
+<input 
+
+id="dashboardSearch"
+
+type="text"
+
+placeholder="🔎 Search transparency records..."
+
+>
+
+
+
+<div id="dashboardSearchResults">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
 
 <!-- ================= HERO ================= -->
 
+
 <section class="hero">
 
-<h1>Transparency Portal</h1>
+
+<h1>
+
+Transparency Portal
+
+</h1>
+
+
 
 <p>
 
@@ -99,49 +161,118 @@ Every contribution from our members is accounted for with integrity and transpar
 
 </p>
 
+
+
 </section>
+
+
+
+
+
+
 
 <!-- ================= DASHBOARD ================= -->
 
+
 <section class="dashboard">
 
-<div class="card">
 
-<h3>Total Collection</h3>
-
-<h2 id="totalCollection">₱0</h2>
-
-</div>
 
 <div class="card">
 
-<h3>Total Expenses</h3>
 
-<h2 id="totalExpenses">₱0</h2>
+<h3>
+Total Collection
+</h3>
+
+
+<h2 id="totalCollection">
+
+₱0
+
+</h2>
+
 
 </div>
+
+
+
+
 
 <div class="card">
 
-<h3>Current Balance</h3>
 
-<h2 id="currentBalance">₱0</h2>
+<h3>
+Total Expenses
+</h3>
+
+
+<h2 id="totalExpenses">
+
+₱0
+
+</h2>
+
 
 </div>
+
+
+
+
 
 <div class="card">
 
-<h3>Projects</h3>
 
-<h2 id="projectCount">0</h2>
+<h3>
+Current Balance
+</h3>
+
+
+<h2 id="currentBalance">
+
+₱0
+
+</h2>
+
 
 </div>
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+Projects
+</h3>
+
+
+<h2 id="projectCount">
+
+0
+
+</h2>
+
+
+</div>
+
+
 
 </section>
 
+
+
+
+
+
+
 <!-- ================= YEAR LEVEL ================= -->
 
+
 <section class="yearSection">
+
 
 <h2>
 
@@ -149,11 +280,20 @@ Collection by Year Level
 
 </h2>
 
+
+
+
 <div class="yearCards">
+
+
 
 <div class="yearCard">
 
-<h3>1st Year</h3>
+
+<h3>
+1st Year
+</h3>
+
 
 <h1 id="firstYear">
 
@@ -161,11 +301,20 @@ Collection by Year Level
 
 </h1>
 
+
 </div>
+
+
+
+
 
 <div class="yearCard">
 
-<h3>2nd Year</h3>
+
+<h3>
+2nd Year
+</h3>
+
 
 <h1 id="secondYear">
 
@@ -173,11 +322,20 @@ Collection by Year Level
 
 </h1>
 
+
 </div>
+
+
+
+
 
 <div class="yearCard">
 
-<h3>3rd Year</h3>
+
+<h3>
+3rd Year
+</h3>
+
 
 <h1 id="thirdYear">
 
@@ -185,11 +343,20 @@ Collection by Year Level
 
 </h1>
 
+
 </div>
+
+
+
+
 
 <div class="yearCard">
 
-<h3>4th Year</h3>
+
+<h3>
+4th Year
+</h3>
+
 
 <h1 id="fourthYear">
 
@@ -197,17 +364,31 @@ Collection by Year Level
 
 </h1>
 
-</div>
 
 </div>
+
+
+
+
+</div>
+
 
 </section>
 
+
+
+
+
+
+
 <!-- ================= CHART ================= -->
+
 
 <section class="chartSection">
 
+
 <div class="chartCard">
+
 
 <h2>
 
@@ -215,15 +396,28 @@ Collection Statistics
 
 </h2>
 
+
+
 <canvas id="collectionChart"></canvas>
+
+
 
 </div>
 
+
 </section>
 
-<!-- ================= RECENT EXPENSES ================= -->
+
+
+
+
+
+
+<!-- ================= EXPENSES ================= -->
+
 
 <section class="recentExpenses">
+
 
 <h2>
 
@@ -231,21 +425,39 @@ Recent Budget Allocation
 
 </h2>
 
+
+
+
 <div id="expenseContainer">
+
 
 <div class="expense">
 
-<span>Loading...</span>
+<span>
+Loading...
+</span>
 
 </div>
 
+
+
 </div>
+
 
 </section>
 
+
+
+
+
+
+
+
 <!-- ================= PROJECTS ================= -->
 
+
 <section class="projectSection">
+
 
 <h2>
 
@@ -253,7 +465,11 @@ Current Projects
 
 </h2>
 
+
+
+
 <div id="projectContainer">
+
 
 <div class="projectCard">
 
@@ -261,13 +477,24 @@ Loading...
 
 </div>
 
+
+
 </div>
+
 
 </section>
 
+
+
+
+
+
+
 <!-- ================= FOOTER ================= -->
 
+
 <footer>
+
 
 <p>
 
@@ -279,16 +506,26 @@ Created for transparency and accountability.
 
 </p>
 
+
+
 </footer>
+
+
+
+
+
+
+<!-- ================= SCRIPTS ================= -->
 
 
 <script type="module" src="index.js"></script>
 
+
 <script src="./theme.js"></script>
 
-<script>
-alert("HTML SCRIPT WORKING");
-</script>
+
+
 
 </body>
+
 </html>
