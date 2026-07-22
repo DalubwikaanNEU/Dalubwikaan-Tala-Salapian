@@ -1,42 +1,45 @@
-const button = document.getElementById("themeToggle");
+// ===========================
+// DALUBWIKAAN THEME SYSTEM
+// ===========================
 
+const themeBtn = document.getElementById("themeToggle");
 
-let savedTheme = localStorage.getItem("theme");
+// Load saved theme
+const savedTheme = localStorage.getItem("theme");
 
+if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
 
-if(savedTheme === "dark"){
+    if (themeBtn) {
+        themeBtn.innerHTML = "☀️ Light Mode";
+    }
+} else {
+    document.body.classList.remove("dark-mode");
 
-    document.body.classList.add("dark");
-
-    button.innerHTML="☀️ Light Mode";
-
+    if (themeBtn) {
+        themeBtn.innerHTML = "🌙 Dark Mode";
+    }
 }
 
+// Toggle Theme
+if (themeBtn) {
 
+    themeBtn.addEventListener("click", () => {
 
-button.addEventListener("click",()=>{
+        document.body.classList.toggle("dark-mode");
 
+        if (document.body.classList.contains("dark-mode")) {
 
-    document.body.classList.toggle("dark");
+            localStorage.setItem("theme", "dark");
+            themeBtn.innerHTML = "☀️ Light Mode";
 
+        } else {
 
-    if(document.body.classList.contains("dark")){
+            localStorage.setItem("theme", "light");
+            themeBtn.innerHTML = "🌙 Dark Mode";
 
+        }
 
-        localStorage.setItem("theme","dark");
+    });
 
-        button.innerHTML="☀️ Light Mode";
-
-
-    }else{
-
-
-        localStorage.setItem("theme","light");
-
-        button.innerHTML="🌙 Dark Mode";
-
-
-    }
-
-
-});
+}
