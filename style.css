@@ -1,6 +1,6 @@
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   POLISHED STYLE.CSS
+   CLEAN STYLE.CSS
    PART 1/4
 ========================================================== */
 
@@ -16,12 +16,11 @@
     --light:#fdf8f2;
     --white:#ffffff;
 
-    --text:#333333;
-    --muted:#777777;
+    --text:#333;
+    --muted:#777;
 
     --green:#4f8a5b;
     --red:#c74a4a;
-    --blue:#4678d6;
 
     --shadow:0 10px 30px rgba(0,0,0,.12);
 
@@ -30,6 +29,7 @@
 
 
 /* ================= DARK MODE ================= */
+
 
 body.dark{
 
@@ -45,7 +45,9 @@ body.dark{
 
 
 
+
 /* ================= RESET ================= */
+
 
 *{
 
@@ -79,7 +81,9 @@ body{
 
 
 
-/* ================= NAVBAR ================= */
+/* ==========================================================
+   NAVBAR
+========================================================== */
 
 
 header{
@@ -108,9 +112,6 @@ header{
 
     box-shadow:0 5px 15px rgba(0,0,0,.08);
 
-
-    transition:.3s;
-
 }
 
 
@@ -129,9 +130,9 @@ body.dark header{
 
     font-family:'Patrick Hand',cursive;
 
-    color:var(--primary);
-
     font-weight:bold;
+
+    color:var(--primary);
 
 }
 
@@ -144,8 +145,6 @@ body.dark .logo{
 }
 
 
-
-/* ================= NAV LINKS ================= */
 
 
 nav{
@@ -190,7 +189,6 @@ nav a:hover{
 
 
 
-/* ================= THEME BUTTON ================= */
 
 
 .themeBtn{
@@ -203,11 +201,12 @@ nav a:hover{
 
     cursor:pointer;
 
+
     background:var(--primary);
 
     color:white;
 
-    font-weight:600;
+    font-weight:bold;
 
     transition:.3s;
 
@@ -217,33 +216,152 @@ nav a:hover{
 
 .themeBtn:hover{
 
-    transform:translateY(-3px);
-
     background:var(--secondary);
+
+    transform:translateY(-3px);
 
 }
 
 
 
 
-/* ================= HERO ================= */
+/* ==========================================================
+   SMALL DASHBOARD SEARCH BAR
+   (HINDI SASAKOP NG BUONG DASHBOARD)
+========================================================== */
+
+
+.miniSearch{
+
+
+    width:100%;
+
+    max-width:600px;
+
+
+    margin:25px auto 10px;
+
+
+    padding:0 20px;
+
+
+    position:relative;
+
+
+}
+
+
+
+#dashboardSearch{
+
+
+    width:100%;
+
+
+    padding:12px 22px;
+
+
+    border-radius:50px;
+
+
+    border:2px solid var(--accent);
+
+
+    background:var(--white);
+
+
+    color:var(--text);
+
+
+    font-size:15px;
+
+
+    outline:none;
+
+
+    box-shadow:var(--shadow);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+#dashboardSearch:focus{
+
+
+    border-color:var(--primary);
+
+    transform:scale(1.02);
+
+
+}
+
+
+
+#dashboardSearchResults{
+
+
+    position:absolute;
+
+
+    top:55px;
+
+
+    left:20px;
+
+    right:20px;
+
+
+    z-index:100;
+
+
+    background:var(--white);
+
+
+    border-radius:20px;
+
+
+    box-shadow:var(--shadow);
+
+
+    max-height:350px;
+
+
+    overflow-y:auto;
+
+
+}
+
+
+
+
+/* ==========================================================
+   HERO SECTION
+========================================================== */
 
 
 .hero{
 
-    padding:80px 20px;
+
+    padding:70px 20px;
+
 
     text-align:center;
 
 
     background:linear-gradient(
+
         135deg,
+
         #fffdf8,
+
         #f7ecdf
+
     );
 
-
-    transition:.3s;
 
 }
 
@@ -251,11 +369,17 @@ nav a:hover{
 
 body.dark .hero{
 
+
     background:linear-gradient(
+
         135deg,
+
         #181818,
+
         #242424
+
     );
+
 
 }
 
@@ -263,19 +387,25 @@ body.dark .hero{
 
 .hero h1{
 
+
     font-size:58px;
+
 
     color:var(--primary);
 
+
     font-family:'Patrick Hand',cursive;
 
+
     margin-bottom:15px;
+
 
 }
 
 
 
 body.dark .hero h1{
+
 
     color:var(--accent);
 
@@ -285,28 +415,37 @@ body.dark .hero h1{
 
 .hero p{
 
+
     max-width:700px;
+
 
     margin:auto;
 
+
     line-height:1.8;
+
+
+    color:var(--muted);
+
 
     font-size:18px;
 
-    color:var(--muted);
 
 }
 
 
 
 
-
-/* ================= DASHBOARD CARDS ================= */
+/* ==========================================================
+   DASHBOARD CARDS
+========================================================== */
 
 
 .dashboard{
 
+
     max-width:1300px;
+
 
     margin:auto;
 
@@ -316,11 +455,14 @@ body.dark .hero h1{
 
     display:grid;
 
+
     grid-template-columns:
+
     repeat(auto-fit,minmax(240px,1fr));
 
 
     gap:30px;
+
 
 }
 
@@ -328,48 +470,27 @@ body.dark .hero h1{
 
 .card{
 
+
     background:var(--white);
 
-    border-radius:25px;
 
     padding:35px;
+
+
+    border-radius:25px;
 
 
     box-shadow:var(--shadow);
 
 
-    transition:.35s;
-
-
     position:relative;
+
 
     overflow:hidden;
 
-}
 
+    transition:.3s;
 
-
-.card::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-
-    width:100%;
-
-    height:7px;
-
-
-    background:linear-gradient(
-        to right,
-        var(--primary),
-        var(--accent)
-    );
 
 }
 
@@ -377,7 +498,45 @@ body.dark .hero h1{
 
 .card:hover{
 
-    transform:translateY(-10px);
+
+    transform:translateY(-8px);
+
+
+}
+
+
+
+.card::before{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    top:0;
+
+
+    left:0;
+
+
+    width:100%;
+
+
+    height:7px;
+
+
+    background:linear-gradient(
+
+        to right,
+
+        var(--primary),
+
+        var(--accent)
+
+    );
+
 
 }
 
@@ -385,9 +544,12 @@ body.dark .hero h1{
 
 .card h3{
 
+
     color:var(--muted);
 
+
     margin-bottom:15px;
+
 
 }
 
@@ -395,9 +557,12 @@ body.dark .hero h1{
 
 .card h2{
 
+
     font-size:40px;
 
+
     color:var(--primary);
+
 
 }
 
@@ -405,19 +570,23 @@ body.dark .hero h1{
 
 body.dark .card h2{
 
+
     color:var(--accent);
+
 
 }
 
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   POLISHED STYLE.CSS
+   CLEAN STYLE.CSS
    PART 2/4
 ========================================================== */
 
 
 
-/* ================= YEAR SECTION ================= */
+/* ==========================================================
+   YEAR COLLECTION SECTION
+========================================================== */
 
 
 .yearSection{
@@ -455,15 +624,19 @@ body.dark .yearSection h2{
 
 
 
-
 .yearCards{
+
 
     display:grid;
 
+
     grid-template-columns:
+
     repeat(auto-fit,minmax(230px,1fr));
 
+
     gap:25px;
+
 
 }
 
@@ -473,21 +646,30 @@ body.dark .yearSection h2{
 
 .yearCard{
 
+
     background:var(--white);
+
 
     border-radius:22px;
 
+
     padding:30px;
+
 
     box-shadow:var(--shadow);
 
-    transition:.35s;
 
     border:2px dashed #e8d7c4;
 
+
+    transition:.3s;
+
+
     position:relative;
 
+
     overflow:hidden;
+
 
 }
 
@@ -495,35 +677,50 @@ body.dark .yearSection h2{
 
 .yearCard:hover{
 
-    transform:translateY(-8px) scale(1.02);
+
+    transform:translateY(-8px);
+
 
 }
+
 
 
 
 .yearCard::after{
 
+
     content:"📚";
+
 
     position:absolute;
 
+
     right:15px;
+
 
     top:10px;
 
+
     font-size:55px;
 
+
     opacity:.08;
+
 
 }
 
 
 
+
+
 .yearCard h3{
+
 
     color:var(--muted);
 
+
     margin-bottom:15px;
+
 
 }
 
@@ -531,9 +728,12 @@ body.dark .yearSection h2{
 
 .yearCard h1{
 
-    color:var(--green);
 
     font-size:42px;
+
+
+    color:var(--green);
+
 
 }
 
@@ -541,18 +741,22 @@ body.dark .yearSection h2{
 
 
 
-
-
-/* ================= CHART ================= */
+/* ==========================================================
+   CHART SECTION
+========================================================== */
 
 
 .chartSection{
 
+
     max-width:1300px;
+
 
     margin:auto;
 
+
     padding:10px 30px 60px;
+
 
 }
 
@@ -562,35 +766,50 @@ body.dark .yearSection h2{
 
 .chartCard{
 
+
     background:var(--white);
+
 
     border-radius:25px;
 
+
     padding:35px;
+
 
     box-shadow:var(--shadow);
 
+
 }
+
+
 
 
 
 .chartCard h2{
 
-    margin-bottom:25px;
 
     color:var(--primary);
 
+
     font-family:'Patrick Hand',cursive;
 
+
     font-size:30px;
+
+
+    margin-bottom:25px;
+
 
 }
 
 
 
+
 body.dark .chartCard h2{
 
+
     color:var(--accent);
+
 
 }
 
@@ -600,9 +819,12 @@ body.dark .chartCard h2{
 
 .chartCard canvas{
 
-    width:100% !important;
 
-    height:420px !important;
+    width:100%!important;
+
+
+    height:420px!important;
+
 
 }
 
@@ -612,32 +834,43 @@ body.dark .chartCard h2{
 
 
 
-/* ================= EXPENSE SECTION ================= */
+/* ==========================================================
+   EXPENSE SECTION
+========================================================== */
+
 
 
 .recentExpenses{
 
+
     max-width:1300px;
+
 
     margin:auto;
 
+
     padding:20px 30px 70px;
 
-}
 
+}
 
 
 
 
 .recentExpenses h2{
 
-    margin-bottom:25px;
-
-    color:var(--primary);
 
     font-size:32px;
 
+
+    margin-bottom:25px;
+
+
+    color:var(--primary);
+
+
     font-family:'Patrick Hand',cursive;
+
 
 }
 
@@ -645,7 +878,9 @@ body.dark .chartCard h2{
 
 body.dark .recentExpenses h2{
 
+
     color:var(--accent);
+
 
 }
 
@@ -655,16 +890,19 @@ body.dark .recentExpenses h2{
 
 #expenseContainer{
 
+
     display:grid;
 
+
     grid-template-columns:
+
     repeat(auto-fit,minmax(300px,1fr));
+
 
     gap:22px;
 
+
 }
-
-
 
 
 
@@ -672,25 +910,36 @@ body.dark .recentExpenses h2{
 
 .expense{
 
+
     background:var(--white);
+
 
     padding:25px;
 
+
     border-radius:20px;
+
 
     box-shadow:var(--shadow);
 
-    transition:.35s;
 
     border-left:8px solid var(--red);
+
+
+    transition:.3s;
+
 
 }
 
 
 
+
+
 .expense:hover{
 
+
     transform:translateY(-8px);
+
 
 }
 
@@ -700,9 +949,12 @@ body.dark .recentExpenses h2{
 
 .expense h3{
 
+
     color:var(--text);
 
+
     margin-bottom:12px;
+
 
 }
 
@@ -712,13 +964,15 @@ body.dark .recentExpenses h2{
 
 .expenseAmount{
 
+
     font-size:34px;
+
 
     color:var(--red);
 
+
     font-weight:bold;
 
-    margin:10px 0;
 
 }
 
@@ -728,9 +982,12 @@ body.dark .recentExpenses h2{
 
 .expenseDate{
 
+
     color:var(--muted);
 
+
     font-size:14px;
+
 
 }
 
@@ -740,21 +997,30 @@ body.dark .recentExpenses h2{
 
 .expenseCategory{
 
+
     display:inline-block;
+
 
     margin-top:15px;
 
-    background:#fdecec;
-
-    color:var(--red);
 
     padding:7px 15px;
 
+
     border-radius:50px;
+
+
+    background:#fdecec;
+
+
+    color:var(--red);
+
 
     font-size:14px;
 
-    font-weight:600;
+
+    font-weight:bold;
+
 
 }
 
@@ -764,19 +1030,26 @@ body.dark .recentExpenses h2{
 
 
 
+/* ==========================================================
+   PROJECT SECTION
+========================================================== */
 
-/* ================= PROJECT SECTION ================= */
 
 
 .projectSection{
 
+
     max-width:1300px;
+
 
     margin:auto;
 
+
     padding:10px 30px 80px;
 
+
 }
+
 
 
 
@@ -784,13 +1057,18 @@ body.dark .recentExpenses h2{
 
 .projectSection h2{
 
-    margin-bottom:30px;
-
-    color:var(--primary);
 
     font-size:32px;
 
+
+    margin-bottom:30px;
+
+
+    color:var(--primary);
+
+
     font-family:'Patrick Hand',cursive;
+
 
 }
 
@@ -798,9 +1076,12 @@ body.dark .recentExpenses h2{
 
 body.dark .projectSection h2{
 
+
     color:var(--accent);
 
+
 }
+
 
 
 
@@ -808,15 +1089,19 @@ body.dark .projectSection h2{
 
 #projectContainer{
 
+
     display:grid;
 
+
     grid-template-columns:
+
     repeat(auto-fit,minmax(300px,1fr));
+
 
     gap:25px;
 
-}
 
+}
 
 
 
@@ -825,19 +1110,27 @@ body.dark .projectSection h2{
 
 .projectCard{
 
+
     background:var(--white);
+
 
     border-radius:22px;
 
+
     padding:30px;
+
 
     box-shadow:var(--shadow);
 
-    transition:.35s;
 
     position:relative;
 
+
     overflow:hidden;
+
+
+    transition:.3s;
+
 
 }
 
@@ -847,7 +1140,9 @@ body.dark .projectSection h2{
 
 .projectCard:hover{
 
+
     transform:translateY(-10px);
+
 
 }
 
@@ -855,27 +1150,38 @@ body.dark .projectSection h2{
 
 
 
+
 .projectCard::before{
+
 
     content:"";
 
+
     position:absolute;
 
-    left:0;
 
     top:0;
 
 
+    left:0;
+
+
     width:100%;
+
 
     height:7px;
 
 
     background:linear-gradient(
+
         to right,
+
         var(--green),
+
         #78c091
+
     );
+
 
 }
 
@@ -885,11 +1191,15 @@ body.dark .projectSection h2{
 
 .projectCard h3{
 
+
     margin-bottom:15px;
+
 
     color:var(--text);
 
+
 }
+
 
 
 
@@ -897,15 +1207,21 @@ body.dark .projectSection h2{
 
 .projectBudget{
 
+
     font-size:34px;
+
 
     color:var(--green);
 
+
     font-weight:bold;
+
 
     margin-bottom:15px;
 
+
 }
+
 
 
 
@@ -913,9 +1229,12 @@ body.dark .projectSection h2{
 
 .projectInfo{
 
+
     color:var(--muted);
 
+
     line-height:1.8;
+
 
 }
 
@@ -925,58 +1244,70 @@ body.dark .projectSection h2{
 
 
 
-/* ================= BADGES ================= */
+/* ==========================================================
+   STATUS BADGES
+========================================================== */
 
 
 .badge{
 
+
     display:inline-block;
+
 
     padding:8px 16px;
 
+
     border-radius:50px;
 
-    font-size:13px;
-
-    font-weight:700;
 
     margin-top:18px;
 
+
+    font-size:13px;
+
+
+    font-weight:bold;
+
+
 }
-
-
 
 
 
 .completed{
 
+
     background:#dff6e4;
+
 
     color:#2d8a45;
 
+
 }
-
-
 
 
 
 .ongoing{
 
+
     background:#dcecff;
+
 
     color:#2360d9;
 
+
 }
-
-
 
 
 
 .planning{
 
+
     background:#fff3cf;
 
+
     color:#b77a00;
+
 
 }
 
@@ -984,34 +1315,40 @@ body.dark .projectSection h2{
 
 
 
-
-
-/* ================= BUTTONS ================= */
+/* ==========================================================
+   BUTTONS
+========================================================== */
 
 
 .btn{
 
+
     display:inline-block;
+
 
     margin-top:20px;
 
+
     padding:12px 22px;
 
-    border:none;
 
     border-radius:50px;
 
-    cursor:pointer;
 
     background:var(--primary);
 
+
     color:white;
 
-    font-weight:600;
+
+    text-decoration:none;
+
+
+    font-weight:bold;
+
 
     transition:.3s;
 
-    text-decoration:none;
 
 }
 
@@ -1021,62 +1358,26 @@ body.dark .projectSection h2{
 
 .btn:hover{
 
+
     background:var(--secondary);
 
+
     transform:translateY(-3px);
+
 
 }
 
 /* ==========================================================
    DALUBWIKAAN TRANSPARENCY PORTAL
-   POLISHED STYLE.CSS
+   CLEAN STYLE.CSS
    PART 3/4
 ========================================================== */
 
 
 
-/* ================= FOOTER ================= */
-
-
-footer{
-
-    margin-top:80px;
-
-    background:#5b3418;
-
-    color:white;
-
-    text-align:center;
-
-    padding:35px 20px;
-
-}
-
-
-
-footer p{
-
-    line-height:2;
-
-    opacity:.9;
-
-}
-
-
-
-body.dark footer{
-
-    background:#000;
-
-}
-
-
-
-
-
-
-
-/* ================= TABLE ================= */
+/* ==========================================================
+   TABLE DESIGN
+========================================================== */
 
 
 table{
@@ -1097,8 +1398,6 @@ table{
 
 
 
-
-
 table th{
 
     background:var(--primary);
@@ -1107,9 +1406,9 @@ table th{
 
     padding:18px;
 
+    text-align:left;
+
 }
-
-
 
 
 
@@ -1125,15 +1424,11 @@ table td{
 
 
 
-
-
 body.dark table td{
 
     border-color:#333;
 
 }
-
-
 
 
 
@@ -1145,11 +1440,9 @@ table tr:hover{
 
 
 
-
-
 body.dark table tr:hover{
 
-    background:#2a2a2a;
+    background:#292929;
 
 }
 
@@ -1158,36 +1451,44 @@ body.dark table tr:hover{
 
 
 
-
-
-
-/* ================= FORMS ================= */
+/* ==========================================================
+   FORM DESIGN
+========================================================== */
 
 
 input,
 select,
 textarea{
 
+
     width:100%;
+
 
     padding:15px;
 
+
     border-radius:12px;
+
 
     border:2px solid #ddd;
 
+
     outline:none;
 
-    font-size:16px;
 
     background:var(--white);
 
+
     color:var(--text);
+
+
+    font-size:16px;
+
 
     transition:.3s;
 
-}
 
+}
 
 
 
@@ -1196,9 +1497,12 @@ input:focus,
 select:focus,
 textarea:focus{
 
+
     border-color:var(--primary);
 
+
 }
+
 
 
 
@@ -1206,85 +1510,15 @@ textarea:focus{
 
 label{
 
+
     display:block;
+
 
     margin-bottom:10px;
 
+
     font-weight:600;
 
-}
-
-
-
-
-
-
-
-
-
-/* ================= DASHBOARD SEARCH ================= */
-
-
-/* 
-IMPORTANT:
-Ilalagay ang search section sa ilalim ng navbar,
-hindi sa loob ng header.
-*/
-
-
-.searchSection{
-
-
-    max-width:1200px;
-
-
-    margin:60px auto 40px;
-
-
-    padding:30px;
-
-
-    background:var(--white);
-
-
-    border-radius:25px;
-
-
-    box-shadow:var(--shadow);
-
-
-}
-
-
-
-
-
-.searchSection h2{
-
-
-    color:var(--primary);
-
-
-    font-family:'Patrick Hand',cursive;
-
-
-    font-size:32px;
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-
-body.dark .searchSection h2{
-
-
-    color:var(--accent);
-
 
 }
 
@@ -1294,90 +1528,11 @@ body.dark .searchSection h2{
 
 
 
-#dashboardSearch{
 
-
-    width:100%;
-
-
-    padding:16px 25px;
-
-
-    border-radius:50px;
-
-
-    border:2px solid var(--accent);
-
-
-    font-size:16px;
-
-
-    outline:none;
-
-
-    background:var(--white);
-
-
-    color:var(--text);
-
-
-}
-
-
-
-
-
-#dashboardSearch:focus{
-
-
-    border-color:var(--primary);
-
-
-}
-
-
-
-
-
-#dashboardSearchResults{
-
-
-    margin-top:25px;
-
-
-    display:grid;
-
-
-    gap:20px;
-
-
-}
-
-
-
-
-
-
-
-#dashboardSearchResults .expense,
-#dashboardSearchResults .projectCard,
-#dashboardSearchResults .announcementCard{
-
-
-    animation:fade .4s ease;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ================= OLD SEARCH FIX ================= */
+/* ==========================================================
+   SEARCH RESULTS
+   (HINDI ITO YUNG MAIN SEARCH BAR)
+========================================================== */
 
 
 #searchResults{
@@ -1397,7 +1552,6 @@ body.dark .searchSection h2{
 
 
 
-
 #searchResults .expense{
 
 
@@ -1410,53 +1564,9 @@ body.dark .searchSection h2{
 
 
 
-#globalSearch{
-
-
-    margin-top:15px;
-
-
-    border:2px solid var(--accent);
-
-
-}
-
-
-
-
-
-#searchResults .expense h2{
-
-
-    font-size:22px;
-
-
-    color:var(--primary);
-
-
-}
-
-
-
-
-
-body.dark #searchResults .expense h2{
-
-
-    color:var(--accent);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ================= STAT CARDS ================= */
+/* ==========================================================
+   STAT CARD
+========================================================== */
 
 
 .statCard{
@@ -1465,10 +1575,10 @@ body.dark #searchResults .expense h2{
     background:var(--white);
 
 
-    border-radius:20px;
-
-
     padding:30px;
+
+
+    border-radius:20px;
 
 
     box-shadow:var(--shadow);
@@ -1482,18 +1592,16 @@ body.dark #searchResults .expense h2{
 
 
 
-
 .statCard h2{
-
-
-    color:var(--primary);
 
 
     font-size:42px;
 
 
-}
+    color:var(--primary);
 
+
+}
 
 
 
@@ -1505,7 +1613,6 @@ body.dark .statCard h2{
 
 
 }
-
 
 
 
@@ -1525,8 +1632,9 @@ body.dark .statCard h2{
 
 
 
-
-/* ================= ANNOUNCEMENTS ================= */
+/* ==========================================================
+   ANNOUNCEMENT SECTION
+========================================================== */
 
 
 .announcementContainer{
@@ -1546,7 +1654,6 @@ body.dark .statCard h2{
 
 
 
-
 .announcementSection h2{
 
 
@@ -1557,6 +1664,20 @@ body.dark .statCard h2{
 
 
     margin-bottom:30px;
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+
+body.dark .announcementSection h2{
+
+
+    color:var(--accent);
 
 
 }
@@ -1596,7 +1717,6 @@ body.dark .statCard h2{
 
 
 
-
 .announcementCard:hover{
 
 
@@ -1604,7 +1724,6 @@ body.dark .statCard h2{
 
 
 }
-
 
 
 
@@ -1619,8 +1738,6 @@ body.dark .statCard h2{
 
 
 
-
-
 .announcementCard.medium{
 
 
@@ -1628,7 +1745,6 @@ body.dark .statCard h2{
 
 
 }
-
 
 
 
@@ -1648,17 +1764,16 @@ body.dark .statCard h2{
 .announcementMessage{
 
 
+    margin-top:20px;
+
+
     font-size:16px;
 
 
     line-height:1.7;
 
 
-    margin-top:20px;
-
-
 }
-
 
 
 
@@ -1669,10 +1784,10 @@ body.dark .statCard h2{
     margin-top:20px;
 
 
-    font-size:13px;
-
-
     color:var(--muted);
+
+
+    font-size:13px;
 
 
 }
@@ -1684,8 +1799,9 @@ body.dark .statCard h2{
 
 
 
-
-/* ================= ADMIN LOGIN ================= */
+/* ==========================================================
+   ADMIN LOGIN DESIGN
+========================================================== */
 
 
 .adminContainer{
@@ -1747,7 +1863,6 @@ body.dark .statCard h2{
 
 
 
-
 .logoutBtn:hover{
 
 
@@ -1759,73 +1874,40 @@ body.dark .statCard h2{
 
 }
 
+
+
+
+
+
+
+
 /* ==========================================================
-   DALUBWIKAAN TRANSPARENCY PORTAL
-   POLISHED STYLE.CSS
-   PART 4/4
+   GLASS EFFECT
 ========================================================== */
-
-
-
-/* ================= GLASS EFFECT ================= */
 
 
 .glass{
 
+
     background:rgba(255,255,255,.6);
+
 
     backdrop-filter:blur(14px);
 
+
     border:1px solid rgba(255,255,255,.4);
 
+
 }
+
 
 
 
 body.dark .glass{
 
+
     background:rgba(30,30,30,.7);
 
-}
-
-
-
-
-
-
-
-/* ================= ANIMATION ================= */
-
-
-.fade{
-
-    animation:fade .8s ease;
-
-}
-
-
-
-@keyframes fade{
-
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
-    }
-
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
 
 }
 
@@ -1835,105 +1917,23 @@ body.dark .glass{
 
 
 
-.float{
 
-
-    animation:float 4s ease-in-out infinite;
-
-
-}
-
-
-
-
-
-@keyframes float{
-
-
-    0%{
-
-        transform:translateY(0);
-
-    }
-
-
-
-    50%{
-
-        transform:translateY(-8px);
-
-    }
-
-
-
-    100%{
-
-        transform:translateY(0);
-
-    }
-
-
-}
-
-
-
-
-
-
-
-/* ================= SCROLLBAR ================= */
-
-
-::-webkit-scrollbar{
-
-    width:12px;
-
-}
-
-
-
-
-
-::-webkit-scrollbar-track{
-
-    background:#efe4d5;
-
-}
-
-
-
-
-
-::-webkit-scrollbar-thumb{
-
-    background:var(--primary);
-
-    border-radius:50px;
-
-}
-
-
-
-
-
-
-
-/* ================= DARK MODE FIX ================= */
+/* ==========================================================
+   DARK MODE EXTRA FIXES
+========================================================== */
 
 
 body.dark .announcementCard,
-body.dark .adminContainer,
-body.dark .searchSection,
-body.dark .statCard{
+body.dark .adminContainer{
 
 
     background:#1e1e1e;
+
 
     color:white;
 
 
 }
-
 
 
 
@@ -1945,7 +1945,6 @@ body.dark .announcementMessage{
 
 
 }
-
 
 
 
@@ -1977,10 +1976,261 @@ body.dark .projectCard{
 
 
 
+/* ==========================================================
+   ANIMATION
+========================================================== */
 
 
-/* ================= RESPONSIVE ================= */
+.fade{
 
+
+    animation:fade .8s ease;
+
+
+}
+
+
+
+
+@keyframes fade{
+
+
+    from{
+
+
+        opacity:0;
+
+
+        transform:translateY(20px);
+
+
+    }
+
+
+    to{
+
+
+        opacity:1;
+
+
+        transform:translateY(0);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+.float{
+
+
+    animation:float 4s ease-in-out infinite;
+
+
+}
+
+
+
+
+
+
+@keyframes float{
+
+
+    0%{
+
+
+        transform:translateY(0);
+
+
+    }
+
+
+
+    50%{
+
+
+        transform:translateY(-8px);
+
+
+    }
+
+
+
+    100%{
+
+
+        transform:translateY(0);
+
+
+    }
+
+
+}
+
+/* ==========================================================
+   DALUBWIKAAN TRANSPARENCY PORTAL
+   CLEAN STYLE.CSS
+   PART 4/4
+========================================================== */
+
+
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+
+::-webkit-scrollbar{
+
+
+    width:12px;
+
+
+}
+
+
+
+::-webkit-scrollbar-track{
+
+
+    background:#efe4d5;
+
+
+}
+
+
+
+::-webkit-scrollbar-thumb{
+
+
+    background:var(--primary);
+
+
+    border-radius:50px;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================================
+   MINI SEARCH RESULT CARD FIX
+========================================================== */
+
+
+#dashboardSearchResults .expense,
+#dashboardSearchResults .projectCard,
+#dashboardSearchResults .announcementCard{
+
+
+    margin:10px;
+
+
+    box-shadow:none;
+
+
+}
+
+
+
+
+
+#dashboardSearchResults h3{
+
+
+    color:var(--primary);
+
+
+}
+
+
+
+body.dark #dashboardSearchResults h3{
+
+
+    color:var(--accent);
+
+
+}
+
+
+
+
+
+
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+
+footer{
+
+
+    margin-top:80px;
+
+
+    background:#5b3418;
+
+
+    color:white;
+
+
+    text-align:center;
+
+
+    padding:35px 20px;
+
+
+}
+
+
+
+
+footer p{
+
+
+    line-height:2;
+
+
+    opacity:.9;
+
+
+}
+
+
+
+
+body.dark footer{
+
+
+    background:#000;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================
+   RESPONSIVE TABLET
+========================================================== */
 
 
 @media(max-width:1100px){
@@ -1993,11 +2243,18 @@ header{
     padding:20px;
 
 
+    flex-direction:column;
+
+
 }
 
 
 
+
 nav{
+
+
+    margin-top:15px;
 
 
     flex-wrap:wrap;
@@ -2022,6 +2279,8 @@ nav{
 
 
 
+
+
 }
 
 
@@ -2030,6 +2289,10 @@ nav{
 
 
 
+
+/* ==========================================================
+   RESPONSIVE MOBILE
+========================================================== */
 
 
 @media(max-width:768px){
@@ -2073,13 +2336,15 @@ nav{
 
 
 
+
 .chartCard canvas{
 
 
-    height:300px !important;
+    height:300px!important;
 
 
 }
+
 
 
 
@@ -2088,10 +2353,11 @@ nav{
 .hero{
 
 
-    padding:60px 20px;
+    padding:50px 20px;
 
 
 }
+
 
 
 
@@ -2109,14 +2375,10 @@ nav{
 
 
 
-.searchSection{
+.miniSearch{
 
 
-    margin:40px 20px;
-
-
-}
-
+    max-width:100%;
 
 
 }
@@ -2126,7 +2388,31 @@ nav{
 
 
 
+#dashboardSearch{
 
+
+    font-size:14px;
+
+
+    padding:12px 18px;
+
+
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   SMALL PHONE
+========================================================== */
 
 
 @media(max-width:480px){
@@ -2164,6 +2450,7 @@ nav a{
 
 
 }
+
 
 
 
@@ -2217,16 +2504,6 @@ footer{
 
 
 
-.searchSection h2{
-
-
-    font-size:26px;
-
-
-}
-
-
-
 }
 
 
@@ -2235,7 +2512,10 @@ footer{
 
 
 
-/* ================= TEXT SELECTION ================= */
+
+/* ==========================================================
+   TEXT SELECTION
+========================================================== */
 
 
 ::selection{
@@ -2248,3 +2528,41 @@ footer{
 
 
 }
+
+
+
+
+
+/* ==========================================================
+   FINAL SEARCH DROPDOWN BEHAVIOR
+========================================================== */
+
+
+
+#dashboardSearchResults:empty{
+
+
+    display:none;
+
+
+}
+
+
+
+
+
+#dashboardSearchResults{
+
+
+    animation:fade .3s ease;
+
+
+}
+
+
+
+
+
+/* ==========================================================
+   END OF DALUBWIKAAN CSS
+========================================================== */
