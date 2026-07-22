@@ -2566,3 +2566,380 @@ footer{
 /* ==========================================================
    END OF DALUBWIKAAN CSS
 ========================================================== */
+/* ==================================================
+   DALUBWIKAAN MOBILE RESPONSIVE FIX
+================================================== */
+
+
+@media(max-width:768px){
+
+
+/* BODY */
+
+body{
+
+    overflow-x:hidden;
+
+}
+
+
+
+/* HEADER */
+
+header{
+
+    padding:15px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    position:relative;
+
+}
+
+
+
+.logo{
+
+    font-size:24px;
+
+    text-align:center;
+
+}
+
+
+
+/* NAVIGATION */
+
+nav{
+
+    width:100%;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:8px;
+
+}
+
+
+
+nav a{
+
+    font-size:12px;
+
+    padding:8px 12px;
+
+    background:var(--white);
+
+    border-radius:20px;
+
+}
+
+
+
+.themeBtn{
+
+    font-size:12px;
+
+    padding:8px 15px;
+
+}
+
+
+
+/* SEARCH BAR */
+
+.miniSearch,
+.searchSection{
+
+    width:90%;
+
+    margin:20px auto;
+
+}
+
+
+
+#dashboardSearch{
+
+    font-size:14px;
+
+    padding:12px 18px;
+
+}
+
+
+
+/* HERO */
+
+.hero{
+
+    padding:50px 20px;
+
+}
+
+
+
+.hero h1{
+
+    font-size:38px;
+
+}
+
+
+
+.hero p{
+
+    font-size:15px;
+
+}
+
+
+
+/* DASHBOARD CARDS */
+
+.dashboard{
+
+    padding:20px;
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:20px;
+
+}
+
+
+
+.card{
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+
+.card h2{
+
+    font-size:32px;
+
+}
+
+
+
+/* YEAR LEVEL */
+
+
+.yearSection{
+
+    padding:20px;
+
+}
+
+
+.yearCards{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.yearCard{
+
+    padding:25px;
+
+}
+
+
+
+.yearCard h1{
+
+    font-size:35px;
+
+}
+
+
+
+/* CHART */
+
+
+.chartSection{
+
+    padding:20px;
+
+}
+
+
+
+.chartCard{
+
+    padding:20px;
+
+}
+
+
+
+.chartCard canvas{
+
+    height:250px !important;
+
+}
+
+
+
+/* EXPENSE */
+
+
+.recentExpenses{
+
+    padding:20px;
+
+}
+
+
+
+#expenseContainer{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.expense{
+
+    padding:20px;
+
+}
+
+
+
+/* PROJECTS */
+
+
+.projectSection{
+
+    padding:20px;
+
+}
+
+
+
+#projectContainer{
+
+    grid-template-columns:1fr;
+
+}
+
+
+
+.projectCard{
+
+    padding:20px;
+
+}
+
+
+
+/* TABLE FIX */
+
+
+table{
+
+    display:block;
+
+    overflow-x:auto;
+
+    white-space:nowrap;
+
+}
+
+
+
+/* FOOTER */
+
+
+footer{
+
+    padding:25px 15px;
+
+    font-size:13px;
+
+}
+
+
+
+}
+
+
+
+
+/* SMALL PHONES */
+
+
+@media(max-width:480px){
+
+
+
+.logo{
+
+    font-size:21px;
+
+}
+
+
+
+nav a{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+
+
+.hero h1{
+
+    font-size:32px;
+
+}
+
+
+
+.card h2{
+
+    font-size:28px;
+
+}
+
+
+
+.yearCard h1{
+
+    font-size:30px;
+
+}
+
+
+
+.chartCard canvas{
+
+    height:220px !important;
+
+}
+
+
+
+}
